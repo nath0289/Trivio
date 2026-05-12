@@ -461,10 +461,10 @@ tr:hover td{background:var(--surface2)}
 /* ══════════════════════════════════════════
    CONFIG SUPABASE — remplacez ces 2 valeurs
    ══════════════════════════════════════════ */
-var _SB_U = 'https://xyqzdbrgztxfdplcfoff.supabase.co';
-var _SB_K = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5cXpkYnJnenR4ZmRwbGNmb2ZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1MDkxNjgsImV4cCI6MjA5NDA4NTE2OH0.jyUVfxX6Iv13ntFSueik8vKltCY8GuJr1ATP5qSN6n4';
+const SUPABASE_URL = 'VOTRE_URL_SUPABASE';
+const SUPABASE_KEY = 'VOTRE_ANON_KEY_SUPABASE';
 
-const sb = supabase.createClient(_SB_U, _SB_K);
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 /* ══════ STATE ══════ */
 let currentUser  = null;
