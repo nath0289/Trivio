@@ -841,11 +841,6 @@ self.addEventListener('fetch',e=>{
           <div class="umi danger" onclick="doLogout()">🚪 Déconnexion</div>
         </div>
       </div>
-        <div id="umenu" style="display:none;position:absolute;top:calc(100% + 6px);right:0;background:#1a2030;border:1px solid #252d3e;border-radius:10px;padding:6px;min-width:160px;z-index:500">
-          <div onclick="go('params');toggleUM()" style="padding:9px 12px;border-radius:7px;color:#e8eaf0;cursor:pointer;font-size:13px">⚙️ Paramètres</div>
-          <div onclick="doLogout()" style="padding:9px 12px;border-radius:7px;color:#ef4444;cursor:pointer;font-size:13px">🚪 Déconnexion</div>
-        </div>
-      </div>
     </div>
     <div id="cnt"></div>
   </div>
@@ -1571,14 +1566,14 @@ function pageEpargnes(){
       +'<button onclick="addProg('+o.id+',200)">+200€</button>'
       +'<button onclick="openAddProg('+o.id+')" style="flex:0;padding:5px 10px">+ autre</button></div>'
       // Projection sur 5 ans si taux renseigné
-      +(o.taux>0?'<div style="margin-top:10px;padding-top:10px;border-top:1px solid #252d3e">'
-        +'<div style="font-size:11px;color:#7a869a;margin-bottom:6px">📈 Projection avec intérêts composés</div>'
-        +'<div style="display:flex;gap:6px;flex-wrap:wrap">'
+      +(o.taux>0?'<div style="margin-top:12px;padding:14px;background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.12);border-radius:12px">'
+        +'<div style="font-size:11px;font-weight:600;color:#f59e0b;margin-bottom:10px;display:flex;align-items:center;gap:5px;letter-spacing:.02em;text-transform:uppercase">📈 Projection avec intérêts composés</div>'
+        +'<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">'
         +[1,2,3,5].map(function(yr){
           var proj=Math.round(o.actuel*Math.pow(1+o.taux/100,yr)*100)/100;
-          return '<div style="flex:1;min-width:60px;background:#20293a;border-radius:6px;padding:6px 8px;text-align:center">'
-            +'<div style="font-size:10px;color:#7a869a">'+yr+' an'+(yr>1?'s':'')+'</div>'
-            +'<div style="font-size:13px;font-weight:600;color:#f59e0b">'+fmt(proj)+'</div></div>';
+          return '<div style="background:var(--surface-mid);border:1px solid var(--outline-var);border-radius:10px;padding:10px 6px;text-align:center">'
+            +'<div style="font-size:10px;font-weight:600;color:var(--t3);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px">'+yr+' an'+(yr>1?'s':'')+'</div>'
+            +'<div style="font-size:14px;font-weight:700;color:#f59e0b;font-family:\'Sora\',sans-serif;letter-spacing:-0.02em">'+fmt(proj)+'</div></div>';
         }).join('')
         +'</div></div>':'')
       +'</div>';
