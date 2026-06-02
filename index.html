@@ -176,7 +176,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 }
 
 /* Main */
-#main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; min-width: 0; }
+#main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
 
 /* ── HEADER minimaliste ── */
 #hdr {
@@ -331,6 +331,14 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 .kpi { border-radius: var(--r); padding: 14px 16px; background: var(--glass); border: 1px solid var(--border); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
 .klab { font-size: 10px; color: var(--t3); margin-bottom: 5px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
 .kval { font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: -0.04em; }
+
+/* ── DASHBOARD 2-COL GRIDS ── */
+.g2, .g2pie, .g2his { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+
+/* ── DONUT LEGEND ── */
+.pl { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
+.plr { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--t2); font-weight: 500; }
+.pld { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
 
 /* ── PROGRESS BARS — razor thin ── */
 .pb { height: 3px; border-radius: 2px; background: var(--outline-var); overflow: hidden; margin: 6px 0; }
