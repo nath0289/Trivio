@@ -46,7 +46,6 @@ body {
   font-size: 14px;
   background: #09090B;
   color: #e5e1e4;
-  overflow: hidden;
 }
 
 button { cursor: pointer; font-family: inherit; border: none; outline: none; }
@@ -176,7 +175,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 }
 
 /* Main */
-#main { flex: 1; overflow-y: auto; min-width: 0; min-height: 0; }
+#main { flex: 1; overflow: hidden; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
 
 /* ── HEADER minimaliste ── */
 #hdr {
@@ -247,7 +246,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 .umi:hover { background: var(--surface-high); }
 .umi.danger { color: var(--red); }
 
-#cnt { padding: 0 20px 32px; }
+#cnt { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 20px 32px; }
 
 /* ══════════════════════
    SIDEBAR desktop
@@ -627,10 +626,9 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   #sb  { display: none !important; }
   #ov  { display: none !important; }
   #app { flex-direction: column; }
-  #main { padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
 
   #hdr { padding: 10px 16px 8px; }
-  #cnt { padding: 0 16px 20px; }
+  #cnt { padding: 0 16px calc(72px + env(safe-area-inset-bottom, 0px)); }
   #psub { display: none; }
   #ptit { font-size: 18px !important; }
 
@@ -1236,6 +1234,7 @@ function go(p){
   renderNav();
   renderBottomNav();
   setHdr();render();
+  var c=$('cnt'); if(c) c.scrollTop=0;
   if(window.innerWidth<=768) closeSB();
 }
 
