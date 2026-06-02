@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <!-- PWA — Trivio webapp -->
   <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIlRyaXZpbyIsICJzaG9ydF9uYW1lIjogIlRyaXZpbyIsICJkZXNjcmlwdGlvbiI6ICJHXHUwMGU5cmV6IHZvcyBmaW5hbmNlcyBwZXJzb25uZWxsZXMgYXZlYyBsYSByXHUwMGU4Z2xlIDUwLzMwLzIwIiwgInN0YXJ0X3VybCI6ICIvIiwgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwOTA5MEIiLCAidGhlbWVfY29sb3IiOiAiIzA5MDkwQiIsICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdCIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsJTNDc3ZnJTIweG1sbnMlM0QlMjJodHRwJTNBLy93d3cudzMub3JnLzIwMDAvc3ZnJTIyJTIwdmlld0JveCUzRCUyMjAlMjAwJTIwNTEyJTIwNTEyJTIyJTNFJTBBJTIwJTIwJTNDcmVjdCUyMHdpZHRoJTNEJTIyNTEyJTIyJTIwaGVpZ2h0JTNEJTIyNTEyJTIyJTIwcnglM0QlMjIxMjAlMjIlMjBmaWxsJTNEJTIyJTIzMDkwOTBCJTIyLyUzRSUwQSUyMCUyMCUzQ3JlY3QlMjB4JTNEJTIyNjAlMjIlMjB5JTNEJTIyMzIwJTIyJTIwd2lkdGglM0QlMjI4MCUyMiUyMGhlaWdodCUzRCUyMjEzMiUyMiUyMHJ4JTNEJTIyMjAlMjIlMjBmaWxsJTNEJTIydXJsJTI4JTIzZzElMjklMjIvJTNFJTBBJTIwJTIwJTNDcmVjdCUyMHglM0QlMjIxNzYlMjIlMjB5JTNEJTIyMjIwJTIyJTIwd2lkdGglM0QlMjI4MCUyMiUyMGhlaWdodCUzRCUyMjIzMiUyMiUyMHJ4JTNEJTIyMjAlMjIlMjBmaWxsJTNEJTIydXJsJTI4JTIzZzIlMjklMjIvJTNFJTBBJTIwJTIwJTNDcmVjdCUyMHglM0QlMjIyOTIlMjIlMjB5JTNEJTIyMTAwJTIyJTIwd2lkdGglM0QlMjI4MCUyMiUyMGhlaWdodCUzRCUyMjM1MiUyMiUyMHJ4JTNEJTIyMjAlMjIlMjBmaWxsJTNEJTIydXJsJTI4JTIzZzMlMjklMjIvJTNFJTBBJTIwJTIwJTNDcmVjdCUyMHglM0QlMjI0MDglMjIlMjB5JTNEJTIyMTgwJTIyJTIwd2lkdGglM0QlMjI4MCUyMiUyMGhlaWdodCUzRCUyMjI3MiUyMiUyMHJ4JTNEJTIyMjAlMjIlMjBmaWxsJTNEJTIydXJsJTI4JTIzZzElMjklMjIvJTNFJTBBJTIwJTIwJTNDZGVmcyUzRSUwQSUyMCUyMCUyMCUyMCUzQ2xpbmVhckdyYWRpZW50JTIwaWQlM0QlMjJnMSUyMiUyMHgxJTNEJTIyMCUyMiUyMHkxJTNEJTIyMCUyMiUyMHgyJTNEJTIyMCUyMiUyMHkyJTNEJTIyMSUyMiUzRSUwQSUyMCUyMCUyMCUyMCUyMCUyMCUzQ3N0b3AlMjBvZmZzZXQlM0QlMjIwJTIyJTIwc3RvcC1jb2xvciUzRCUyMiUyMzAwZjU5YiUyMi8lM0UlMEElMjAlMjAlMjAlMjAlMjAlMjAlM0NzdG9wJTIwb2Zmc2V0JTNEJTIyMSUyMiUyMHN0b3AtY29sb3IlM0QlMjIlMjMwMGE4NmIlMjIvJTNFJTBBJTIwJTIwJTIwJTIwJTNDL2xpbmVhckdyYWRpZW50JTNFJTBBJTIwJTIwJTIwJTIwJTNDbGluZWFyR3JhZGllbnQlMjBpZCUzRCUyMmcyJTIyJTIweDElM0QlMjIwJTIyJTIweTElM0QlMjIwJTIyJTIweDIlM0QlMjIwJTIyJTIweTIlM0QlMjIxJTIyJTNFJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTNDc3RvcCUyMG9mZnNldCUzRCUyMjAlMjIlMjBzdG9wLWNvbG9yJTNEJTIyJTIzMDBmNTliJTIyLyUzRSUwQSUyMCUyMCUyMCUyMCUyMCUyMCUzQ3N0b3AlMjBvZmZzZXQlM0QlMjIxJTIyJTIwc3RvcC1jb2xvciUzRCUyMiUyMzAwOTk2MCUyMi8lM0UlMEElMjAlMjAlMjAlMjAlM0MvbGluZWFyR3JhZGllbnQlM0UlMEElMjAlMjAlMjAlMjAlM0NsaW5lYXJHcmFkaWVudCUyMGlkJTNEJTIyZzMlMjIlMjB4MSUzRCUyMjAlMjIlMjB5MSUzRCUyMjAlMjIlMjB4MiUzRCUyMjAlMjIlMjB5MiUzRCUyMjElMjIlM0UlMEElMjAlMjAlMjAlMjAlMjAlMjAlM0NzdG9wJTIwb2Zmc2V0JTNEJTIyMCUyMiUyMHN0b3AtY29sb3IlM0QlMjIlMjMwMGY1OWIlMjIvJTNFJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTNDc3RvcCUyMG9mZnNldCUzRCUyMjElMjIlMjBzdG9wLWNvbG9yJTNEJTIyJTIzMDA3YTRkJTIyLyUzRSUwQSUyMCUyMCUyMCUyMCUzQy9saW5lYXJHcmFkaWVudCUzRSUwQSUyMCUyMCUzQy9kZWZzJTNFJTBBJTNDL3N2ZyUzRSIsICJzaXplcyI6ICJhbnkiLCAidHlwZSI6ICJpbWFnZS9zdmcreG1sIiwgInB1cnBvc2UiOiAiYW55IG1hc2thYmxlIn1dfQ=="/>
 
@@ -176,7 +176,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 }
 
 /* Main */
-#main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+#main { flex: 1; overflow-y: auto; min-width: 0; min-height: 0; }
 
 /* ── HEADER minimaliste ── */
 #hdr {
@@ -627,7 +627,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   #sb  { display: none !important; }
   #ov  { display: none !important; }
   #app { flex-direction: column; }
-  #main { padding-bottom: 80px; }
+  #main { padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
 
   #hdr { padding: 10px 16px 8px; }
   #cnt { padding: 0 16px 20px; }
@@ -659,20 +659,22 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
     border-top: 1px solid var(--border);
     z-index: 300;
     padding-top: 8px;
-    padding-bottom: calc(env(safe-area-inset-bottom, 8px) + 8px);
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);
+    padding-left: max(env(safe-area-inset-left, 0px), 8px);
+    padding-right: max(env(safe-area-inset-right, 0px), 8px);
     box-shadow: 0 -1px 0 var(--border2), 0 -8px 32px rgba(0,0,0,.4);
   }
   .bn-item {
     flex: 1; display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    gap: 4px; cursor: pointer; padding: 4px 2px;
+    gap: 3px; cursor: pointer; padding: 4px 4px;
     -webkit-tap-highlight-color: transparent;
     min-height: 44px; transition: opacity .1s;
-    position: relative;
+    position: relative; min-width: 0;
   }
   .bn-item:active { opacity: .5; }
-  .bn-icon  { font-size: 20px; line-height: 1; color: var(--t4); transition: all .2s; }
-  .bn-label { font-size: 10px; font-weight: 600; color: var(--t4); letter-spacing: .01em; transition: color .15s; font-family: 'Geist', sans-serif; }
+  .bn-icon  { font-size: 20px; line-height: 1; color: var(--t4); transition: all .2s; flex-shrink: 0; }
+  .bn-label { font-size: 9.5px; font-weight: 600; color: var(--t4); letter-spacing: .01em; transition: color .15s; font-family: 'Geist', sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
   /* Actif : Electric Emerald */
   .bn-item.active .bn-icon  { color: var(--accent); filter: drop-shadow(0 0 6px rgba(0,245,155,.5)); }
   .bn-item.active .bn-label { color: var(--accent); }
