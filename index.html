@@ -28,13 +28,14 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html, body {
+html {
   height: 100%;
-  overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 body {
+  height: 100%;
+  overflow: hidden;
   font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 14px;
   background: #09090B;
@@ -152,7 +153,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 /* ══════════════════════
    APP LAYOUT
 ══════════════════════ */
-#app { display: none; position: fixed; inset: 0; overflow: hidden; }
+#app { display: none; height: 100vh; height: 100dvh; overflow: hidden; }
 #app.show { display: flex; }
 
 /* Sidebar desktop */
@@ -173,7 +174,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 /* ── HEADER minimaliste ── */
 #hdr {
   display: flex; align-items: center;
-  padding: calc(16px + env(safe-area-inset-top, 0px)) 20px 12px;
+  padding: 16px 20px 12px;
   gap: 10px;
   flex-shrink: 0;
   background: rgba(9,9,11,.9);
@@ -620,7 +621,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   #ov  { display: none !important; }
   #app { flex-direction: column; }
 
-  #hdr { padding: calc(10px + env(safe-area-inset-top, 0px)) 16px 8px; }
+  #hdr { padding: 10px 16px 8px; }
   #cnt { padding: 0 16px calc(72px + env(safe-area-inset-bottom, 0px)); }
   #psub { display: none; }
   #ptit { font-size: 18px !important; }
