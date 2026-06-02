@@ -853,13 +853,9 @@ self.addEventListener('fetch',e=>{
     <span class="bn-icon">⊞</span>
     <span class="bn-label">Accueil</span>
   </div>
-  <div class="bn-item" id="bn-revenus" onclick="go('revenus')">
-    <span class="bn-icon">↗</span>
-    <span class="bn-label">Revenus</span>
-  </div>
   <div class="bn-item" id="bn-transactions" onclick="go('transactions')">
     <span class="bn-icon">⇄</span>
-    <span class="bn-label">Dépenses</span>
+    <span class="bn-label">Transactions</span>
   </div>
   <div class="bn-item" id="bn-epargnes" onclick="go('epargnes')">
     <span class="bn-icon">◆</span>
@@ -873,7 +869,6 @@ self.addEventListener('fetch',e=>{
     <span class="bn-icon">∿</span>
     <span class="bn-label">SIC</span>
   </div>
-
 </div>
 
 <script>
@@ -1162,7 +1157,6 @@ function applyTheme(){
 // ── NAV ───────────────────────────────────────────────
 var NAVS=[
   {id:'dashboard',   icon:'⊞',label:'Tableau de bord'},
-  {id:'revenus',     icon:'↗',label:'Revenus'},
   {id:'transactions',icon:'⇄',label:'Transactions'},
   {id:'epargnes',    icon:'◆',label:'Épargnes'},
   {id:'prelvs',      icon:'◷',label:'Prélèvements'},
@@ -1170,14 +1164,12 @@ var NAVS=[
 ];
 
 function renderBottomNav(){
-  var a = acc();
-  var pages = ['dashboard','revenus','transactions','epargnes','prelvs','sic'];
+  var pages = ['dashboard','transactions','epargnes','prelvs','sic'];
   pages.forEach(function(p){
     var el = document.getElementById('bn-'+p);
     if(!el) return;
-    var isActive = S.page === p;
+    var isActive = S.page === p || (p === 'transactions' && S.page === 'revenus');
     el.classList.toggle('active', isActive);
-    // style géré par CSS active class // '#7a869a';
   });
 }
 
@@ -1206,8 +1198,8 @@ function setHdr(){
   var totPl=S.prelvs.reduce(function(s,p){return s+p.montant;},0);
   var PI={
     dashboard:{t:'Tableau de bord',s:"Vue d'ensemble de vos finances"},
-    revenus:{t:'Revenus',s:mlab},
-    transactions:{t:'Transactions',s:'Gérez vos dépenses et épargne'},
+    revenus:{t:'Transactions',s:mlab},
+    transactions:{t:'Transactions',s:mlab},
     epargnes:{t:'Épargnes & Objectifs',s:fmt(totA)+' épargnés sur '+fmt(totC)},
     prelvs:{t:'Prélèvements récurrents',s:'Total mensuel : '+fmt(totPl)},
     params:{t:'Paramètres',s:'Personnalisez votre expérience Trivio'},
@@ -1406,20 +1398,56 @@ function pageDashboard(){
   });
 }
 
+var _txTab = 'depenses';
+
+function setTxTab(t){ _txTab = t; pageTxCombined(); }
+
+function pageTxCombined(){
+  var a = acc();
+  var isRev = _txTab === 'revenus';
+
+  // Onglets
+  var tabs = '<div style="display:flex;gap:8px;margin-bottom:16px">'
+    +'<button onclick="setTxTab(\'revenus\')" style="flex:1;padding:10px;border-radius:var(--r-full);font-family:\'Sora\',sans-serif;font-weight:600;font-size:13px;border:1px solid '+(isRev?a.main:'var(--outline-var)')+';background:'+(isRev?a.main:'var(--surface-high)')+';color:'+(isRev?'#003920':'var(--t2)')+';transition:all .15s;cursor:pointer">↗ Revenus</button>'
+    +'<button onclick="setTxTab(\'depenses\')" style="flex:1;padding:10px;border-radius:var(--r-full);font-family:\'Sora\',sans-serif;font-weight:600;font-size:13px;border:1px solid '+(!isRev?a.main:'var(--outline-var)')+';background:'+(!isRev?a.main:'var(--surface-high)')+';color:'+(!isRev?'#003920':'var(--t2)')+';transition:all .15s;cursor:pointer">💸 Dépenses</button>'
+    +'</div>';
+
+  if(isRev){
+    var rl=revList(), rt=revTot();
+    var rows=rl.map(function(r){
+      return '<div class="txrow"><span style="font-weight:600">'+san(r.source)+'</span>'
+        +'<div style="display:flex;align-items:center;gap:10px"><span class="grn" style="font-weight:700">+'+fmt(r.montant)+'</span>'
+        +'<button class="bi d" onclick="delRevCombined('+r.id+')">✕</button></div></div>';
+    }).join('');
+    $('cnt').innerHTML = mnavHTML() + tabs
+      +'<div class="card" style="margin-bottom:14px"><div class="klab">Total encaissé ce mois</div>'
+      +'<div style="font-size:28px;font-weight:700;color:'+a.main+';margin:4px 0">'+fmt(rt)+'</div>'
+      +'<div class="klab">'+rl.length+' entrée(s)</div></div>'
+      +'<div class="card"><div class="srow"><div class="ctit" style="margin:0">Détail des revenus</div>'
+      +'<button class="bp" onclick="openAddRev()" style="background:'+a.main+'">+ Ajouter</button></div>'
+      +(rl.length?rows:'<div class="emp"><div style="font-size:32px;margin-bottom:10px">⬇</div>Aucun revenu ce mois</div>')+'</div>';
+  } else {
+    var txs=txList();
+    var rows2=txs.map(function(t){
+      var eb=t.auto?'':'<button class="bi" onclick="openEditTx('+t.id+')">✏</button>';
+      return '<div class="txrow"><div><div class="txn">'+san(t.nom)+(t.auto?'<span style="font-size:10px;background:rgba(100,116,139,.2);color:#94a3b8;padding:1px 5px;border-radius:8px;margin-left:4px">auto</span>':'')+'</div>'
+        +'<div class="txm">'+t.date+' '+tag(t.cat)+'</div></div>'
+        +'<div style="display:flex;align-items:center;gap:6px"><span class="txa '+(t.montant<0?'red':'grn')+'">'+(t.montant>0?'+':'')+fmt(t.montant)+'</span>'
+        +eb+'<button class="bi d" onclick="delTx('+t.id+')">✕</button></div></div>';
+    }).join('');
+    $('cnt').innerHTML = mnavHTML() + tabs
+      +'<div class="card"><div class="srow"><div class="ctit" style="margin:0">'+txs.length+' transaction(s)</div>'
+      +'<button class="bp" onclick="openTxForm(null)" style="background:'+a.main+'">+ Ajouter</button></div>'
+      +(txs.length?rows2:'<div class="emp">Aucune transaction ce mois</div>')+'</div>';
+  }
+}
+
+function delRevCombined(id){
+  S.revenus[mk()]=revList().filter(function(r){return r.id!==id;}); dbSave(); pageTxCombined();
+}
+
 function pageRevenus(){
-  var rl=revList(), rt=revTot(), a=acc();
-  var rows=rl.map(function(r){
-    return '<div class="txrow"><span style="font-weight:600">'+san(r.source)+'</span>'
-      +'<div style="display:flex;align-items:center;gap:10px"><span class="grn" style="font-weight:700">+'+fmt(r.montant)+'</span>'
-      +'<button class="bi d" onclick="delRev('+r.id+')">✕</button></div></div>';
-  }).join('');
-  $('cnt').innerHTML=mnavHTML()
-    +'<div class="card" style="margin-bottom:14px"><div class="klab">Total encaissé ce mois</div>'
-    +'<div style="font-size:28px;font-weight:700;color:'+a.main+';margin:4px 0">'+fmt(rt)+'</div>'
-    +'<div class="klab">'+rl.length+' entrée(s)</div></div>'
-    +'<div class="card"><div class="srow"><div class="ctit" style="margin:0">Détail des revenus</div>'
-    +'<button class="bp" onclick="openAddRev()" style="background:'+a.main+'">+ Ajouter</button></div>'
-    +(rl.length?rows:'<div class="emp"><div style="font-size:32px;margin-bottom:10px">⬇</div>Aucun revenu ce mois</div>')+'</div>';
+  pageTxCombined();
 }
 
 function openAddRev(){
@@ -1517,7 +1545,7 @@ function saveTx(){
   }
   if(_etid) S.txData[mk()]=list.map(function(t){return t.id===tx.id?tx:t;});
   else S.txData[mk()]=[tx].concat(list);
-  dbSave(); closeM(); pageTx();
+  dbSave(); closeM(); pageTxCombined();
 }
 function delTx(id){
   var t=(S.txData[mk()]||[]).find(function(x){return x.id===id;});
@@ -1530,7 +1558,7 @@ function delTx(id){
     });
   }
   S.txData[mk()]=(S.txData[mk()]||[]).filter(function(t){return t.id!==id;});
-  dbSave(); pageTx();
+  dbSave(); pageTxCombined();
 }
 
 function pageEpargnes(){
@@ -2367,7 +2395,7 @@ function sicDrawChart(dataAvec, dataSans, dataInter, years, a){
 
 // ── ROUTER ────────────────────────────────────────────
 function render(){
-  var f={dashboard:pageDashboard,revenus:pageRevenus,transactions:pageTx,
+  var f={dashboard:pageDashboard,revenus:pageTxCombined,transactions:pageTxCombined,
     epargnes:pageEpargnes,prelvs:pagePrelevements,params:pageParams,sic:pageSIC};
   if(f[S.page]) f[S.page]();
   // Auto-tuto : uniquement à la PREMIÈRE connexion, page par page
