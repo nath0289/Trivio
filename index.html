@@ -1361,7 +1361,7 @@ function pageDashboard(){
   var a=acc(), txs=txList(), revT=revTot();
   var dC=txs.filter(function(t){return t.cat==='Charges fixes';}).reduce(function(s,t){return s+Math.abs(t.montant);},0);
   var dP=txs.filter(function(t){return t.cat==='Plaisirs';}).reduce(function(s,t){return s+Math.abs(t.montant);},0);
-  var dE=txs.filter(function(t){return t.cat==='Épargne'&&t.montant<0;}).reduce(function(s,t){return s+Math.abs(t.montant);},0);
+  var dE=txs.filter(function(t){return t.cat==='Épargne';}).reduce(function(s,t){return s+Math.abs(t.montant);},0);
   var sold=revT-dC-dP-dE;
   var eTotal=S.objs.reduce(function(s,o){return s+o.actuel;},0);
   var bC=revT*(S.regle.charges/100), bP=revT*(S.regle.plaisirs/100), bE=revT*(S.regle.epargne/100);
@@ -1375,7 +1375,7 @@ function pageDashboard(){
       mois:MONTHS[hd.getMonth()],
       c:ht.filter(function(t){return t.cat==='Charges fixes';}).reduce(function(s,t){return s+Math.abs(t.montant);},0),
       p:ht.filter(function(t){return t.cat==='Plaisirs';}).reduce(function(s,t){return s+Math.abs(t.montant);},0),
-      e:ht.filter(function(t){return t.cat==='Épargne'&&t.montant<0;}).reduce(function(s,t){return s+Math.abs(t.montant);},0)
+      e:ht.filter(function(t){return t.cat==='Épargne';}).reduce(function(s,t){return s+Math.abs(t.montant);},0)
     });
   }
 
@@ -1576,7 +1576,7 @@ function saveTx(){
   var tx={id:_etid||Date.now(),nom:nom,montant:mont,cat:$('m-cat').value,sous:san($('m-sous').value),date:$('m-date').value,objId:objId};
   var list=txList();
   // Si catégorie Épargne et objectif sélectionné → mettre à jour l'objectif
-  if(tx.cat==='Épargne' && objId && mont<0){
+  if(tx.cat==='Épargne' && objId){
     var montant=Math.abs(mont);
     S.objs=S.objs.map(function(o){
       if(o.id==objId){
@@ -1600,7 +1600,7 @@ function delTx(id){
   var t=(S.txData[mk()]||[]).find(function(x){return x.id===id;});
   if(t&&t.auto&&t.autoId) delete S.plDone[t.autoId+'-'+S.y+'-'+S.m];
   // Si c'était une épargne liée à un objectif, annuler la mise à jour
-  if(t&&t.cat==='Épargne'&&t.objId&&t.montant<0){
+  if(t&&t.cat==='Épargne'&&t.objId){
     S.objs=S.objs.map(function(o){
       if(o.id==t.objId) o.actuel=Math.max(0,o.actuel-Math.abs(t.montant));
       return o;
