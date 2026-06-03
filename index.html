@@ -3308,15 +3308,15 @@ function obFinish(){
   if(OB.data.objectifPrincipal&&OB.data.objectifPrincipal!=='securite'){
     var obj2={id:Date.now()+1,actuel:0,echeance:'',livret:'',taux:0,actif:true,priorite:2};
     if(OB.data.objectifPrincipal==='projet'){
-      obj2.nom='🏠 Mon projet'; obj2.emoji='🏠'; obj2.cible=sal>0?sal*12:10000;
+      obj2.nom='Mon projet'; obj2.emoji='🏠'; obj2.cible=sal>0?sal*12:10000;
     } else if(OB.data.objectifPrincipal==='retraite'){
-      obj2.nom='🌴 Retraite'; obj2.emoji='🌴'; obj2.cible=sal>0?sal*24:20000; obj2.livret='Assurance-vie'; obj2.taux=2.6;
+      obj2.nom='Retraite'; obj2.emoji='🌴'; obj2.cible=sal>0?sal*24:20000; obj2.livret='Assurance-vie'; obj2.taux=2.6;
     } else if(OB.data.objectifPrincipal==='voyage'){
-      obj2.nom='✈️ Voyage'; obj2.emoji='✈️'; obj2.cible=sal>0?sal*3:3000;
+      obj2.nom='Voyage'; obj2.emoji='✈️'; obj2.cible=sal>0?sal*3:3000;
     } else if(OB.data.objectifPrincipal==='liberte'){
-      obj2.nom='💎 Liberté financière'; obj2.emoji='💎'; obj2.cible=sal>0?sal*36:30000; obj2.livret='Assurance-vie'; obj2.taux=2.6;
+      obj2.nom='Liberté financière'; obj2.emoji='💎'; obj2.cible=sal>0?sal*36:30000; obj2.livret='Assurance-vie'; obj2.taux=2.6;
     } else if(OB.data.objectifPrincipal==='quotidien'){
-      obj2.nom='📊 Épargne mensuelle'; obj2.emoji='📊'; obj2.cible=sal>0?sal*6:5000;
+      obj2.nom='Épargne mensuelle'; obj2.emoji='📊'; obj2.cible=sal>0?sal*6:5000;
     }
     if(obj2.nom) S.objs.push(obj2);
   }
