@@ -839,6 +839,7 @@ self.addEventListener('fetch',e=>{
   </div>
 </div>
 <div id="mroot"></div>
+<div id="push-banner" style="display:none;position:fixed;bottom:calc(env(safe-area-inset-bottom, 0px) + 64px);left:0;right:0;z-index:299;padding:0 14px"></div>
 
 <!-- BOTTOM NAV (mobile uniquement) -->
 <div id="bottom-nav">
@@ -1763,8 +1764,8 @@ function delPl(id){S.prelvs=S.prelvs.filter(function(p){return p.id!==id;});dbSa
 
 function pageParams(){
   var a=acc();
-  var tabs=['compte','apparence','regle'].map(function(t){
-    var labels={compte:'Mon compte',apparence:'Apparence',regle:'Règle budgétaire'};
+  var tabs=['compte','apparence','regle','notifs'].map(function(t){
+    var labels={compte:'Mon compte',apparence:'Apparence',regle:'Règle budgétaire',notifs:'Notifications'};
     var act=S.stab===t;
     return '<button class="stab'+(act?' active':'')+'" onclick="setStab(\''+t+'\')"'+(act?' style="background:'+a.main+';border-color:'+a.main+';color:#fff"':'')+'>'+labels[t]+'</button>';
   }).join('');
@@ -1803,6 +1804,9 @@ function pageParams(){
     }).join('');
     body='<div class="card" style="margin-bottom:14px"><div class="ctit">🎨 Couleur principale</div><div style="display:flex;gap:10px;flex-wrap:wrap">'+cBtns+'</div></div>'
       +'<div class="card"><div class="ctit">🌙 Apparence</div><div style="display:flex;gap:12px">'+tBtns+'</div></div>';
+  } else if(S.stab==='notifs'){
+    body=pushSettingsHTML();
+    setTimeout(pushRender, 0);
   } else {
     var r=S.regle, sum=r.charges+r.plaisirs+r.epargne;
     body='<div class="card"><div class="ctit">Règle budgétaire</div>'
@@ -3303,9 +3307,11 @@ function bootUser(){
     if(isNewUser && !S.onboardingDone){
       setTimeout(showOnboarding, 300);
     }
+    pushSetup();
   }).catch(function(){
     applyTheme(); renderNav(); setHdr(); render();
     if(!S.onboardingDone) setTimeout(showOnboarding, 300);
+    pushSetup();
   });
 }
 
@@ -3390,6 +3396,170 @@ renderAuth();
     }
   }
 })();
+
+// ═══════════════════════════════════════════════════════
+// PUSH NOTIFICATIONS
+// ═══════════════════════════════════════════════════════
+var _swReg = null;
+var _pushSub = null;
+
+function pushSupported(){
+  return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+}
+
+function pushStatus(){
+  if(!pushSupported()) return 'unsupported';
+  if(Notification.permission === 'denied') return 'denied';
+  if(_pushSub) return 'subscribed';
+  return 'default';
+}
+
+function urlB64ToUint8(b64){
+  var padding='='.repeat((4-b64.length%4)%4);
+  var base64=(b64+padding).replace(/-/g,'+').replace(/_/g,'/');
+  var raw=atob(base64);
+  var arr=new Uint8Array(raw.length);
+  for(var i=0;i<raw.length;i++) arr[i]=raw.charCodeAt(i);
+  return arr;
+}
+
+function pushRender(){
+  var el=$('push-toggle-area');
+  if(!el) return;
+  var a=acc();
+  var st=pushStatus();
+  var html='';
+  if(st==='unsupported'){
+    html='<div style="font-size:12px;color:#7a869a;padding:4px 0">'
+      +'Pour activer les notifications, ajoute Trivio à ton écran d\'accueil (iOS 16.4+ requis).</div>';
+  } else if(st==='denied'){
+    html='<div style="font-size:12px;color:#ffb4ab;padding:4px 0">'
+      +'🚫 Notifications bloquées dans les réglages de ton navigateur.</div>';
+  } else {
+    var on=st==='subscribed';
+    html='<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0">'
+      +'<div>'
+        +'<div style="font-size:13px;font-weight:600;color:#e8eaf0">'+(on?'Activées ✓':'Désactivées')+'</div>'
+        +'<div style="font-size:12px;color:#7a869a;margin-top:2px">'+(on?'Tu recevras les rappels Trivio':'Appuie pour activer')+'</div>'
+      +'</div>'
+      +'<button onclick="pushToggle()" style="width:52px;height:30px;border-radius:20px;border:none;cursor:pointer;background:'+(on?a.main:'#2a2f3e')+';position:relative;transition:background .2s;flex-shrink:0">'
+        +'<div style="position:absolute;top:4px;'+(on?'right:4px':'left:4px')+';width:22px;height:22px;border-radius:50%;background:#fff;transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)"></div>'
+      +'</button></div>';
+  }
+  el.innerHTML=html;
+}
+
+function pushSettingsHTML(){
+  return '<div class="card"><div class="ctit">🔔 Notifications push</div>'
+    +'<div id="push-toggle-area" style="min-height:36px"></div>'
+    +'<div style="margin-top:16px;border-top:1px solid #252d3e;padding-top:16px">'
+    +'<div style="font-size:12px;color:#7a869a;line-height:1.7">'
+    +'📊 <b>1er du mois</b> — rappel pour saisir tes revenus<br>'
+    +'🧾 <b>Chaque jour à midi</b> — rappel dépenses si rien saisi<br>'
+    +'🌙 <b>Chaque soir à 20h</b> — rappel dépenses si rien saisi<br>'
+    +'💰 <b>Chaque matin à 7h</b> — intérêts générés cette nuit'
+    +'</div></div></div>';
+}
+
+function pushToggle(){
+  if(pushStatus()==='subscribed') pushUnsubscribe().then(pushRender);
+  else pushSubscribe().then(pushRender);
+}
+
+function pushSubscribe(){
+  if(!pushSupported()||!USER) return Promise.resolve();
+  return fetch('/api/vapid')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if(!data.publicKey) throw new Error('No VAPID key');
+      return navigator.serviceWorker.register('/sw.js')
+        .then(function(reg){
+          _swReg=reg;
+          return navigator.serviceWorker.ready;
+        })
+        .then(function(){
+          return Notification.requestPermission();
+        })
+        .then(function(perm){
+          if(perm!=='granted') return;
+          return _swReg.pushManager.subscribe({
+            userVisibleOnly:true,
+            applicationServerKey:urlB64ToUint8(data.publicKey)
+          });
+        })
+        .then(function(sub){
+          if(!sub) return;
+          _pushSub=sub;
+          try{localStorage.setItem('_push_asked','1');}catch(e){}
+          pushBannerHide();
+          return fetch('/api/subscribe',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({subscription:sub.toJSON(),token:TOKEN})
+          });
+        });
+    })
+    .catch(function(e){ console.warn('Push subscribe error',e); });
+}
+
+function pushUnsubscribe(){
+  if(!_pushSub) return Promise.resolve();
+  return _pushSub.unsubscribe()
+    .then(function(){
+      _pushSub=null;
+      return fetch('/api/subscribe',{
+        method:'DELETE',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({token:TOKEN})
+      });
+    })
+    .catch(function(e){ console.warn('Push unsubscribe error',e); });
+}
+
+function pushSetup(){
+  if(!pushSupported()) return;
+  navigator.serviceWorker.register('/sw.js')
+    .then(function(reg){
+      _swReg=reg;
+      return navigator.serviceWorker.ready;
+    })
+    .then(function(){
+      return _swReg.pushManager.getSubscription();
+    })
+    .then(function(sub){
+      _pushSub=sub;
+      var asked=false;
+      try{asked=!!localStorage.getItem('_push_asked');}catch(e){}
+      if(!_pushSub && !asked && Notification.permission==='default'){
+        setTimeout(pushBannerShow, 2500);
+      }
+    })
+    .catch(function(e){ console.warn('Push setup error',e); });
+}
+
+function pushBannerShow(){
+  var el=$('push-banner');
+  if(!el) return;
+  var a=acc();
+  el.innerHTML='<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:#1a1e27;border:1px solid #252d3e;border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.5)">'
+    +'<div style="font-size:22px;flex-shrink:0">🔔</div>'
+    +'<div style="flex:1;min-width:0">'
+      +'<div style="font-size:13px;font-weight:600;color:#e8eaf0">Activer les notifications ?</div>'
+      +'<div style="font-size:11px;color:#7a869a;margin-top:1px">Rappels dépenses, intérêts du jour…</div>'
+    +'</div>'
+    +'<button onclick="pushSubscribe().then(pushRender)" style="padding:7px 13px;border-radius:8px;background:'+a.main+';color:#09090b;font-size:12px;font-weight:700;border:none;cursor:pointer;flex-shrink:0;white-space:nowrap">Activer</button>'
+    +'<button onclick="pushBannerHide()" style="width:26px;height:26px;border-radius:50%;background:#20293a;border:1px solid #252d3e;color:#7a869a;font-size:13px;cursor:pointer;flex-shrink:0">✕</button>'
+    +'</div>';
+  el.style.display='block';
+}
+
+function pushBannerHide(){
+  var el=$('push-banner');
+  if(el){el.innerHTML='';el.style.display='none';}
+  try{localStorage.setItem('_push_asked','1');}catch(e){}
+}
+
+// ── FIN PUSH NOTIFICATIONS ────────────────────────────
 
 // Tenter de restaurer la session
 (function(){

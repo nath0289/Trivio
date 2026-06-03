@@ -1,0 +1,8 @@
+{
+  "crons": [
+    { "path": "/api/notify?type=revenue",         "schedule": "0 5 1 * *"  },
+    { "path": "/api/notify?type=expenses-noon",   "schedule": "0 10 * * *" },
+    { "path": "/api/notify?type=expenses-evening","schedule": "0 18 * * *" },
+    { "path": "/api/notify?type=interest",        "schedule": "0 5 * * *"  }
+  ]
+}
