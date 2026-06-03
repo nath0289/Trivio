@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
 <!-- PWA — Trivio webapp -->
   <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIlRyaXZpbyIsICJzaG9ydF9uYW1lIjogIlRyaXZpbyIsICJkZXNjcmlwdGlvbiI6ICJHXHUwMGU5cmV6IHZvcyBmaW5hbmNlcyBwZXJzb25uZWxsZXMgYXZlYyBsYSByXHUwMGU4Z2xlIDUwLzMwLzIwIiwgInN0YXJ0X3VybCI6ICIvIiwgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwOTA5MEIiLCAidGhlbWVfY29sb3IiOiAiIzA5MDkwQiIsICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdCIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsJTNDc3ZnJTIweG1sbnMlM0QlMjJodHRwJTNBLy93d3cudzMub3JnLzIwMDAvc3ZnJTIyJTIwdmlld0JveCUzRCUyMjAlMjAwJTIwNTEyJTIwNTEyJTIyJTNFJTBBJTIwJTIwJTNDcmVjdCUyMHdpZHRoJTNEJTIyNTEyJTIyJTIwaGVpZ2h0JTNEJTIyNTEyJTIyJTIwcnglM0QlMjIxMjAlMjIlMjBmaWxsJTNEJTIyJTIzMDkwOTBCJTIyLyUzRSUwQSUyMCUyMCUzQ3JlY3QlMjB4JTNEJTIyNjAlMjIlMjB5JTNEJTIyMzIwJTIyJTIwd2lkdGglM0QlMjI4MCUyMiUyMGhlaWdodCUzRCUyMjEzMiUyMiUyMHJ4JTNEJTIyMjAlMjIlMjBmaWxsJTNEJTIydXJsJTI4JTIzZzElMjklMjIvJTNFJTBBJTIwJTIwJTNDcmVjdCUyMHglM0QlMjIxNzYlMjIlMjB5JTNEJTIyMjIwJTIyJTIwd2lkdGglM0QlMjI4MCUyMiUyMGhlaWdodCUzRCUyMjIzMiUyMiUyMHJ4JTNEJTIyMjAlMjIlMjBmaWxsJTNEJTIydXJsJTI4JTIzZzIlMjklMjIvJTNFJTBBJTIwJTIwJTNDcmVjdCUyMHglM0QlMjIyOTIlMjIlMjB5JTNEJTIyMTAwJTIyJTIwd2lkdGglM0QlMjI4MCUyMiUyMGhlaWdodCUzRCUyMjM1MiUyMiUyMHJ4JTNEJTIyMjAlMjIlMjBmaWxsJTNEJTIydXJsJTI4JTIzZzMlMjklMjIvJTNFJTBBJTIwJTIwJTNDcmVjdCUyMHglM0QlMjI0MDglMjIlMjB5JTNEJTIyMTgwJTIyJTIwd2lkdGglM0QlMjI4MCUyMiUyMGhlaWdodCUzRCUyMjI3MiUyMiUyMHJ4JTNEJTIyMjAlMjIlMjBmaWxsJTNEJTIydXJsJTI4JTIzZzElMjklMjIvJTNFJTBBJTIwJTIwJTNDZGVmcyUzRSUwQSUyMCUyMCUyMCUyMCUzQ2xpbmVhckdyYWRpZW50JTIwaWQlM0QlMjJnMSUyMiUyMHgxJTNEJTIyMCUyMiUyMHkxJTNEJTIyMCUyMiUyMHgyJTNEJTIyMCUyMiUyMHkyJTNEJTIyMSUyMiUzRSUwQSUyMCUyMCUyMCUyMCUyMCUyMCUzQ3N0b3AlMjBvZmZzZXQlM0QlMjIwJTIyJTIwc3RvcC1jb2xvciUzRCUyMiUyMzAwZjU5YiUyMi8lM0UlMEElMjAlMjAlMjAlMjAlMjAlMjAlM0NzdG9wJTIwb2Zmc2V0JTNEJTIyMSUyMiUyMHN0b3AtY29sb3IlM0QlMjIlMjMwMGE4NmIlMjIvJTNFJTBBJTIwJTIwJTIwJTIwJTNDL2xpbmVhckdyYWRpZW50JTNFJTBBJTIwJTIwJTIwJTIwJTNDbGluZWFyR3JhZGllbnQlMjBpZCUzRCUyMmcyJTIyJTIweDElM0QlMjIwJTIyJTIweTElM0QlMjIwJTIyJTIweDIlM0QlMjIwJTIyJTIweTIlM0QlMjIxJTIyJTNFJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTNDc3RvcCUyMG9mZnNldCUzRCUyMjAlMjIlMjBzdG9wLWNvbG9yJTNEJTIyJTIzMDBmNTliJTIyLyUzRSUwQSUyMCUyMCUyMCUyMCUyMCUyMCUzQ3N0b3AlMjBvZmZzZXQlM0QlMjIxJTIyJTIwc3RvcC1jb2xvciUzRCUyMiUyMzAwOTk2MCUyMi8lM0UlMEElMjAlMjAlMjAlMjAlM0MvbGluZWFyR3JhZGllbnQlM0UlMEElMjAlMjAlMjAlMjAlM0NsaW5lYXJHcmFkaWVudCUyMGlkJTNEJTIyZzMlMjIlMjB4MSUzRCUyMjAlMjIlMjB5MSUzRCUyMjAlMjIlMjB4MiUzRCUyMjAlMjIlMjB5MiUzRCUyMjElMjIlM0UlMEElMjAlMjAlMjAlMjAlMjAlMjAlM0NzdG9wJTIwb2Zmc2V0JTNEJTIyMCUyMiUyMHN0b3AtY29sb3IlM0QlMjIlMjMwMGY1OWIlMjIvJTNFJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTNDc3RvcCUyMG9mZnNldCUzRCUyMjElMjIlMjBzdG9wLWNvbG9yJTNEJTIyJTIzMDA3YTRkJTIyLyUzRSUwQSUyMCUyMCUyMCUyMCUzQy9saW5lYXJHcmFkaWVudCUzRSUwQSUyMCUyMCUzQy9kZWZzJTNFJTBBJTNDL3N2ZyUzRSIsICJzaXplcyI6ICJhbnkiLCAidHlwZSI6ICJpbWFnZS9zdmcreG1sIiwgInB1cnBvc2UiOiAiYW55IG1hc2thYmxlIn1dfQ=="/>
 
@@ -20,7 +20,7 @@
    TRIVIO — Obsidian Kinetic Design System
    High-Tech Wealth Management UI
    Polices: Sora (headlines) + Geist (data/body)
-   Accent: #00f59b (Electric Emerald)
+   Accent: #22c55e (Electric Emerald)
    Base: #09090B (Midnight Obsidian)
    ═══════════════════════════════════════════════════════ */
 
@@ -38,7 +38,8 @@ body {
   overflow: hidden;
   font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 14px;
-  background: #09090B;
+  background: linear-gradient(160deg, #161618 0%, #0f0f11 45%, #09090B 100%);
+  background-attachment: fixed;
   color: #e5e1e4;
 }
 
@@ -63,11 +64,11 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   --border2:      rgba(255, 255, 255, 0.12);
   --outline:      #849588;
   --outline-var:  #3b4a3f;
-  --accent:       #00f59b;
-  --accent-dim:   #00e38f;
-  --accent-glow:  rgba(0, 245, 155, 0.2);
-  --accent-bg:    rgba(0, 245, 155, 0.08);
-  --accent-bg2:   rgba(0, 245, 155, 0.15);
+  --accent:       #22c55e;
+  --accent-dim:   #1cb855;
+  --accent-glow:  rgba(34, 197, 94, 0.2);
+  --accent-bg:    rgba(34, 197, 94, 0.08);
+  --accent-bg2:   rgba(34, 197, 94, 0.15);
   --red:          #ffb4ab;
   --red-bg:       rgba(147, 0, 10, 0.3);
   --gold:         #ffd166;
@@ -89,7 +90,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 ══════════════════════ */
 #auth {
   position: fixed; inset: 0;
-  background: var(--bg);
+  background: transparent;
   display: flex; align-items: center; justify-content: center;
   padding: 20px; z-index: 9999;
 }
@@ -112,7 +113,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 }
 .asub { font-size: 13px; color: var(--t2); text-align: center; margin-bottom: 24px; letter-spacing: -0.01em; }
 .aerr { background: var(--red-bg); border: 1px solid rgba(255,180,171,.2); color: var(--red); border-radius: var(--r-sm); padding: 10px 14px; font-size: 13px; margin-bottom: 12px; display: none; }
-.aok  { background: var(--accent-bg); border: 1px solid rgba(0,245,155,.2); color: var(--accent); border-radius: var(--r-sm); padding: 10px 14px; font-size: 13px; margin-bottom: 12px; display: none; }
+.aok  { background: var(--accent-bg); border: 1px solid rgba(34,197,94,.2); color: var(--accent); border-radius: var(--r-sm); padding: 10px 14px; font-size: 13px; margin-bottom: 12px; display: none; }
 .ainp {
   width: 100%; padding: 13px 16px;
   border-radius: var(--r-full);
@@ -257,6 +258,19 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 .rr b { color: var(--t1); }
 
 #hbg { display: none; flex-direction: column; justify-content: center; align-items: center; width: 34px; height: 34px; border-radius: var(--r-sm); background: var(--surface-high); border: 1px solid var(--outline-var); gap: 5px; flex-shrink: 0; }
+/* ── BOUTON PARAMÈTRES (engrenage) dans header ── */
+#settings-btn {
+  width: 34px; height: 34px; border-radius: var(--r-sm);
+  background: var(--surface-high);
+  border: 1px solid var(--outline-var);
+  color: var(--t3);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all .15s;
+}
+#settings-btn:hover { border-color: var(--accent); color: var(--accent); }
+
 #hbg span { display: block; width: 16px; height: 2px; background: var(--t1); border-radius: 1px; }
 #ov { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 199; }
 
@@ -280,11 +294,11 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 
 /* ── HERO CARD — Electric Emerald gradient ── */
 .hero-card {
-  background: linear-gradient(135deg, #00f59b 0%, #00a86b 100%);
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
   border-radius: var(--r-md);
   padding: 22px 20px;
   margin-bottom: 12px;
-  box-shadow: 0 8px 32px rgba(0,245,155,.2), 0 0 0 1px rgba(0,245,155,.3), inset 0 1px 0 rgba(255,255,255,.3);
+  box-shadow: 0 8px 32px rgba(34,197,94,.2), 0 0 0 1px rgba(34,197,94,.3), inset 0 1px 0 rgba(255,255,255,.3);
   position: relative; overflow: hidden;
 }
 .hero-card::before {
@@ -352,7 +366,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 .notif-bar {
   display: flex; align-items: flex-start; gap: 12px;
   background: var(--accent-bg);
-  border: 1px solid rgba(0,245,155,.15);
+  border: 1px solid rgba(34,197,94,.15);
   border-radius: var(--r);
   padding: 14px 16px; margin-bottom: 16px;
 }
@@ -484,7 +498,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   padding: 18px 20px;
   transition: border-color .2s;
 }
-.sic-ctrl:focus-within { border-color: rgba(0,245,155,.3); box-shadow: 0 0 16px var(--accent-glow); }
+.sic-ctrl:focus-within { border-color: rgba(34,197,94,.3); box-shadow: 0 0 16px var(--accent-glow); }
 .sic-ctrl-label {
   font-size: 10px; font-weight: 600; color: var(--t3);
   text-transform: uppercase; letter-spacing: .08em;
@@ -507,7 +521,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   width: 20px; height: 20px; border-radius: 50%;
   cursor: pointer; background: var(--accent);
   border: none; margin-top: -8px;
-  box-shadow: 0 0 10px rgba(0,245,155,.5);
+  box-shadow: 0 0 10px rgba(34,197,94,.5);
 }
 .sic-inp-row { display: flex; align-items: center; gap: 10px; }
 .sic-inp {
@@ -556,7 +570,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 .ob-prog { display: flex; gap: 4px; margin-bottom: 24px; justify-content: center; }
 .ob-dot { height: 3px; border-radius: 2px; background: var(--outline-var); transition: all .3s; flex: 1; }
 .ob-dot.active { background: var(--accent); box-shadow: 0 0 8px var(--accent-glow); }
-.ob-dot.done { background: rgba(0,245,155,.3); }
+.ob-dot.done { background: rgba(34,197,94,.3); }
 .ob-step { display: none; }
 .ob-step.show { display: block; }
 .ob-img { width: 100%; height: 150px; border-radius: var(--r-md); overflow: hidden; margin-bottom: 18px; }
@@ -596,7 +610,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 .tuto-title { font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 600; color: var(--t1); margin-bottom: 7px; letter-spacing: -0.02em; }
 .tuto-body { font-size: 12px; color: var(--t2); line-height: 1.65; margin-bottom: 14px; letter-spacing: -0.01em; }
 .tuto-body b { color: var(--t1); }
-.tuto-body .highlight { background: var(--accent-bg); border: 1px solid rgba(0,245,155,.15); border-radius: var(--r-sm); padding: 7px 10px; margin: 6px 0; display: block; font-size: 11px; color: var(--accent); }
+.tuto-body .highlight { background: var(--accent-bg); border: 1px solid rgba(34,197,94,.15); border-radius: var(--r-sm); padding: 7px 10px; margin: 6px 0; display: block; font-size: 11px; color: var(--accent); }
 .tuto-nav { display: flex; justify-content: space-between; align-items: center; }
 .tuto-dots { display: flex; gap: 4px; }
 .tuto-dot { width: 6px; height: 6px; border-radius: 3px; background: var(--outline-var); transition: all .2s; }
@@ -803,7 +817,7 @@ self.addEventListener('fetch',e=>{
     <div id="nav"></div>
     <div style="margin-top:auto">
       <div class="ni" id="nav-params" onclick="go('params')">
-        <span>⚙️</span><span>Paramètres</span>
+        <span style="display:flex;align-items:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06-.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span><span>Paramètres</span>
       </div>
       <div class="rw">
         <div class="rw-t" id="rw-t">Règle 50/30/20</div>
@@ -819,6 +833,7 @@ self.addEventListener('fetch',e=>{
       <button id="hbg" onclick="toggleSB()">
         <span></span><span></span><span></span>
       </button>
+      <button id="settings-btn" onclick="go('params')" title="Paramètres"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06-.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
       <div id="hdr-txt" style="flex:1;min-width:0">
         <div style="display:flex;align-items:center;gap:8px">
           <h1 id="ptit" style="font-size:21px;font-weight:700;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1"></h1>
@@ -830,8 +845,7 @@ self.addEventListener('fetch',e=>{
         <div class="avatar-circle" id="uem-av">N</div>
         <span id="uem"></span>
         <div id="umenu">
-          <div class="umi" onclick="go('params');toggleUM()">⚙️ Paramètres</div>
-          <div class="umi danger" onclick="doLogout()">🚪 Déconnexion</div>
+          <div class="umi danger" onclick="doLogout()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Déconnexion</div>
         </div>
       </div>
     </div>
@@ -900,7 +914,7 @@ var DEFAULTS = {
 
 // ── ACCENTS ──────────────────────────────────────────
 var ACC = {
-  emeraude:{main:'#00f59b',dark:'#00a86b',bg:'rgba(0,245,155,.1)'},
+  emeraude:{main:'#22c55e',dark:'#16a34a',bg:'rgba(34,197,94,.1)'},
   bleu:    {main:'#5b8cff',dark:'#2255cc',bg:'rgba(91,140,255,.1)'},
   violet:  {main:'#b388ff',dark:'#6c3fc1',bg:'rgba(179,136,255,.1)'},
   rose:    {main:'#ff80ab',dark:'#c51162',bg:'rgba(255,128,171,.1)'},
@@ -910,7 +924,7 @@ var ACC = {
 
 var CATS = {
   'Charges fixes':{bg:'rgba(91,140,255,.1)',color:'#5b8cff',label:'Charges fixes'},
-  'Plaisirs':     {bg:'rgba(0,245,155,.1)',color:'#00f59b',label:'Plaisirs'},
+  'Plaisirs':     {bg:'rgba(34,197,94,.1)',color:'#22c55e',label:'Plaisirs'},
   'Épargne':      {bg:'rgba(255,209,102,.1)',color:'#ffd166',label:'Épargne'}
 };
 
@@ -922,6 +936,47 @@ var SOUS = {
 
 var EMOJIS = ['🎯','🛡️','✈️','🚗','🏠','📱','🎓','💍','🏋️','🌴','💻','🎸'];
 var MONTHS = ["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."];
+
+// ══════════════════════════════════════════════════════
+// SYSTÈME D'ICÔNES SVG — remplace les emojis
+// ══════════════════════════════════════════════════════
+var IC = {
+  _s: function(path, size, color, sw) {
+    var s = size || 16; var c = color || 'currentColor'; var w = sw || 1.5;
+    return '<svg width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="'+c+'" stroke-width="'+w+'" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0">'+path+'</svg>';
+  },
+  gear: function(s,c){ return this._s('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06-.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',s,c); },
+  bell: function(s,c){ return this._s('<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>',s,c); },
+  calendar: function(s,c){ return this._s('<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',s,c); },
+  bank: function(s,c){ return this._s('<line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/>',s,c); },
+  chart: function(s,c){ return this._s('<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/>',s,c); },
+  card: function(s,c){ return this._s('<rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>',s,c); },
+  moon: function(s,c){ return this._s('<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',s,c); },
+  sun: function(s,c){ return this._s('<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>',s,c); },
+  wallet: function(s,c){ return this._s('<path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/>',s,c); },
+  home: function(s,c){ return this._s('<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',s,c); },
+  trending: function(s,c){ return this._s('<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',s,c); },
+  bulb: function(s,c){ return this._s('<line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>',s,c); },
+  pencil: function(s,c){ return this._s('<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>',s,c); },
+  trash: function(s,c){ return this._s('<polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>',s,c); },
+  logout: function(s,c){ return this._s('<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',s,c); },
+  warning: function(s,c){ return this._s('<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',s,c); },
+  target: function(s,c){ return this._s('<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',s,c); },
+  shield: function(s,c){ return this._s('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',s,c); },
+  eye: function(s,c){ return this._s('<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',s,c); },
+  eyeoff: function(s,c){ return this._s('<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>',s,c); },
+  coins: function(s,c){ return this._s('<ellipse cx="9" cy="6" rx="6" ry="3"/><path d="M3 6v6c0 1.657 2.686 3 6 3s6-1.343 6-3V6"/><path d="M3 12v6c0 1.657 2.686 3 6 3s6-1.343 6-3v-6"/>',s,c); },
+  palette: function(s,c){ return this._s('<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="1" fill="'+c+'"/><path d="M12 8a4 4 0 0 1 4 4"/>',s,c); },
+  checkCircle: function(s,c){ return this._s('<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',s,c); },
+  rocket: function(s,c){ return this._s('<path d="M9 11l-6 6v3h3l6-6"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/>',s,c); },
+  clock: function(s,c){ return this._s('<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',s,c); },
+  receipt: function(s,c){ return this._s('<polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>',s,c); },
+  notes: function(s,c){ return this._s('<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>',s,c); },
+  sliders: function(s,c){ return this._s('<line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/>',s,c); },
+  user: function(s,c){ return this._s('<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',s,c); }
+};
+
+
 
 // ── HELPERS ──────────────────────────────────────────
 function $(id){return document.getElementById(id);}
@@ -1330,7 +1385,7 @@ function pageDashboard(){
   if(prochains.length){
     var pp=prochains[0];
     pHTML='<div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:8px 12px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center">'
-      +'<span style="font-size:12px;color:#f59e0b">📅 Prochain : <b>'+san(pp.nom)+'</b> dans '+(pp.jour-td)+' j</span>'
+      +'<span style="font-size:12px;color:#f59e0b;display:flex;align-items:center;gap:4px">'+IC.calendar(13,'#f59e0b')+' Prochain : <b>'+san(pp.nom)+'</b> dans '+(pp.jour-td)+' j</span>'
       +'<span style="font-weight:700;color:#ef4444">-'+fmt(pp.montant)+'</span></div>';
   }
 
@@ -1354,7 +1409,7 @@ function pageDashboard(){
   var epHTML='';
   if(S.objs.length){
     epHTML='<div class="card" style="margin-top:14px">'
-      +'<div class="srow"><div class="ctit" style="margin:0">🏦 Épargnes & Objectifs</div>'
+      +'<div class="srow"><div class="ctit" style="margin:0;display:flex;align-items:center;gap:6px">'+IC.bank(15)+' Épargnes & Objectifs</div>'
       +'<button class="bg" onclick="go(\'epargnes\')" style="font-size:12px;padding:5px 10px">Voir tout →</button></div>'
       +S.objs.slice(0,2).map(function(o){
         var pct=o.cible>0?Math.min(100,(o.actuel/o.cible)*100):0;
@@ -1369,8 +1424,8 @@ function pageDashboard(){
 
   $('cnt').innerHTML=mnavHTML()+pHTML
     +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">'
-    +'<div class="kpi" style="background:'+a.main+'"><div class="klab" style="color:rgba(255,255,255,.7)">💳 Solde disponible</div><div class="kval" style="color:#fff">'+fmt(Math.max(0,sold))+'</div><div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:2px">Compte courant</div></div>'
-    +'<div class="stat-card"><div class="stat-label">🏦 Total épargné</div><div class="stat-amount yel">'+fmt(eTotal)+'</div></div>'
+    +'<div class="kpi" style="background:'+a.main+'"><div class="klab" style="color:rgba(255,255,255,.7);display:flex;align-items:center;gap:4px">'+IC.card(11,'rgba(255,255,255,.7)')+' Solde disponible</div><div class="kval" style="color:#fff">'+fmt(Math.max(0,sold))+'</div><div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:2px">Compte courant</div></div>'
+    +'<div class="stat-card"><div class="stat-label" style="display:flex;align-items:center;gap:4px">'+IC.bank(11)+' Total épargné</div><div class="stat-amount yel">'+fmt(eTotal)+'</div></div>'
     +'<div class="kpi card"><div class="klab">Revenus</div><div class="kval grn">'+fmt(revT)+'</div></div>'
     +'<div class="kpi card"><div class="klab">Dépenses</div><div class="kval red">'+fmt(dC+dP)+'</div></div>'
     +'</div>'
@@ -1403,7 +1458,7 @@ function pageTxCombined(){
   // Onglets
   var tabs = '<div style="display:flex;gap:8px;margin-bottom:16px">'
     +'<button onclick="setTxTab(\'revenus\')" style="flex:1;padding:10px;border-radius:var(--r-full);font-family:\'Sora\',sans-serif;font-weight:600;font-size:13px;border:1px solid '+(isRev?a.main:'var(--outline-var)')+';background:'+(isRev?a.main:'var(--surface-high)')+';color:'+(isRev?'#003920':'var(--t2)')+';transition:all .15s;cursor:pointer">↗ Revenus</button>'
-    +'<button onclick="setTxTab(\'depenses\')" style="flex:1;padding:10px;border-radius:var(--r-full);font-family:\'Sora\',sans-serif;font-weight:600;font-size:13px;border:1px solid '+(!isRev?a.main:'var(--outline-var)')+';background:'+(!isRev?a.main:'var(--surface-high)')+';color:'+(!isRev?'#003920':'var(--t2)')+';transition:all .15s;cursor:pointer">💸 Dépenses</button>'
+    +'<button onclick="setTxTab(\'depenses\')" style="flex:1;padding:10px;border-radius:var(--r-full);font-family:\'Sora\',sans-serif;font-weight:600;font-size:13px;border:1px solid '+(!isRev?a.main:'var(--outline-var)')+';background:'+(!isRev?a.main:'var(--surface-high)')+';color:'+(!isRev?'#003920':'var(--t2)')+';transition:all .15s;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px">'+IC.card(13)+' Dépenses</button>'
     +'</div>';
 
   if(isRev){
@@ -1411,7 +1466,7 @@ function pageTxCombined(){
     var rows=rl.map(function(r){
       return '<div class="txrow"><span style="font-weight:600">'+san(r.source)+'</span>'
         +'<div style="display:flex;align-items:center;gap:10px"><span class="grn" style="font-weight:700">+'+fmt(r.montant)+'</span>'
-        +'<button class="bi d" onclick="delRevCombined('+r.id+')">✕</button></div></div>';
+        +'<button class="bi d" onclick="delRevCombined('+r.id+')">'+IC.trash(14,'var(--red)')+'</button></div></div>';
     }).join('');
     $('cnt').innerHTML = mnavHTML() + tabs
       +'<div class="card" style="margin-bottom:14px"><div class="klab">Total encaissé ce mois</div>'
@@ -1423,11 +1478,11 @@ function pageTxCombined(){
   } else {
     var txs=txList();
     var rows2=txs.map(function(t){
-      var eb=t.auto?'':'<button class="bi" onclick="openEditTx('+t.id+')">✏</button>';
+      var eb=t.auto?'':'<button class="bi" onclick="openEditTx('+t.id+')">'+IC.pencil(14)+'</button>';
       return '<div class="txrow"><div><div class="txn">'+san(t.nom)+(t.auto?'<span style="font-size:10px;background:rgba(100,116,139,.2);color:#94a3b8;padding:1px 5px;border-radius:8px;margin-left:4px">auto</span>':'')+'</div>'
         +'<div class="txm">'+t.date+' '+tag(t.cat)+'</div></div>'
         +'<div style="display:flex;align-items:center;gap:6px"><span class="txa '+(t.montant<0?'red':'grn')+'">'+(t.montant>0?'+':'')+fmt(t.montant)+'</span>'
-        +eb+'<button class="bi d" onclick="delTx('+t.id+')">✕</button></div></div>';
+        +eb+'<button class="bi d" onclick="delTx('+t.id+')">'+IC.trash(14,'var(--red)')+'</button></div></div>';
     }).join('');
     $('cnt').innerHTML = mnavHTML() + tabs
       +'<div class="card"><div class="srow"><div class="ctit" style="margin:0">'+txs.length+' transaction(s)</div>'
@@ -1466,11 +1521,11 @@ function delRev(id){
 function pageTx(){
   var txs=txList(), a=acc();
   var rows=txs.map(function(t){
-    var eb=t.auto?'':'<button class="bi" onclick="openEditTx('+t.id+')">✏</button>';
+    var eb=t.auto?'':'<button class="bi" onclick="openEditTx('+t.id+')">'+IC.pencil(14)+'</button>';
     return '<div class="txrow"><div><div class="txn">'+san(t.nom)+(t.auto?'<span style="font-size:10px;background:rgba(100,116,139,.2);color:#94a3b8;padding:1px 5px;border-radius:8px;margin-left:4px">auto</span>':'')+'</div>'
       +'<div class="txm">'+t.date+' '+tag(t.cat)+'</div></div>'
       +'<div style="display:flex;align-items:center;gap:6px"><span class="txa '+(t.montant<0?'red':'grn')+'">'+(t.montant>0?'+':'')+fmt(t.montant)+'</span>'
-      +eb+'<button class="bi d" onclick="delTx('+t.id+')">✕</button></div></div>';
+      +eb+'<button class="bi d" onclick="delTx('+t.id+')">'+IC.trash(14,'var(--red)')+'</button></div></div>';
   }).join('');
   $('cnt').innerHTML=mnavHTML()
     +'<div class="card"><div class="srow"><div class="ctit" style="margin:0">'+txs.length+' transaction(s)</div>'
@@ -1571,8 +1626,8 @@ function pageEpargnes(){
       +(o.livret?'<div style="font-size:12px;color:#7a869a">'+san(o.livret)+(o.taux?' · '+o.taux+'%/an':'')+'</div>':'')
       +'<div style="font-size:12px;color:#7a869a">Échéance : '+ds+'</div></div></div>'
       +'<div style="display:flex;gap:4px">'
-      +'<button class="bi" onclick="openEditObj('+o.id+')">✏</button>'
-      +'<button class="bi d" onclick="delObj('+o.id+')">✕</button></div></div>'
+      +'<button class="bi" onclick="openEditObj('+o.id+')">'+IC.pencil(14)+'</button>'
+      +'<button class="bi d" onclick="delObj('+o.id+')">'+IC.trash(14,'var(--red)')+'</button></div></div>'
       +'<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px">'
       +'<b style="color:'+a.main+'">'+fmt(o.actuel)+'</b>'
       +'<span style="color:#7a869a">'+fmt(o.cible)+'</span></div>'
@@ -1590,7 +1645,7 @@ function pageEpargnes(){
       +'<button onclick="openAddProg('+o.id+')" style="flex:0;padding:5px 10px">+ autre</button></div>'
       // Projection sur 5 ans si taux renseigné
       +(o.taux>0?'<div style="margin-top:12px;padding:14px;background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.12);border-radius:12px">'
-        +'<div style="font-size:11px;font-weight:600;color:#f59e0b;margin-bottom:10px;display:flex;align-items:center;gap:5px;letter-spacing:.02em;text-transform:uppercase">📈 Projection avec intérêts composés</div>'
+        +'<div style="font-size:11px;font-weight:600;color:#f59e0b;margin-bottom:10px;display:flex;align-items:center;gap:5px;letter-spacing:.02em;text-transform:uppercase">'+IC.trending(13,'#f59e0b')+' Projection avec intérêts composés</div>'
         +'<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">'
         +[1,2,3,5].map(function(yr){
           var proj=Math.round(o.actuel*Math.pow(1+o.taux/100,yr)*100)/100;
@@ -1607,10 +1662,10 @@ function pageEpargnes(){
     +'<div class="kpi card"><div class="klab">Objectif total</div><div class="kval">'+fmt(totC)+'</div></div>'
     +'<div class="kpi card"><div class="klab">Progression</div><div class="kval" style="color:'+a.main+'">'+pct.toFixed(1)+'%</div></div></div>'
     +'<div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:14px">'
-    +'<button class="bg" onclick="startTutoEpargnes()" style="padding:8px 12px" title="Aide épargnes">💡 Guide</button>'
+    +'<button class="bg" onclick="startTutoEpargnes()" style="display:flex;align-items:center;gap:5px;padding:8px 12px" title="Aide épargnes">'+IC.bulb(13)+' Guide</button>'
     +'<button class="bp" onclick="openObjForm(null)" style="background:'+a.main+'">+ Nouvel objectif</button></div>'
     +'<div class="ogrid">'+cards+'</div>'
-    +(!S.objs.length?'<div class="emp"><div style="font-size:32px;margin-bottom:10px">🏦</div>Aucun objectif pour l\'instant</div>':'');
+    +(!S.objs.length?'<div class="emp"><div style="margin-bottom:10px;opacity:.4">'+IC.bank(40)+'</div>Aucun objectif pour l\'instant</div>':'');
 }
 
 function addProg(id,v){
@@ -1718,12 +1773,12 @@ function pagePrelevements(){
       +'<div style="flex:1"><div class="txn">'+san(p.nom)+badge+'</div>'
       +'<div class="txm">'+tag(p.cat)+(p.sous?' · '+san(p.sous):'')+'</div></div>'
       +'<span style="font-weight:700;color:#ef4444;font-size:14px">-'+fmt(p.montant)+'</span>'
-      +'<button class="bi" onclick="openEditPl('+p.id+')">✏</button>'
-      +'<button class="bi d" onclick="delPl('+p.id+')">✕</button></div>';
+      +'<button class="bi" onclick="openEditPl('+p.id+')">'+IC.pencil(14)+'</button>'
+      +'<button class="bi d" onclick="delPl('+p.id+')">'+IC.trash(14,'var(--red)')+'</button></div>';
   }).join('');
 
   $('cnt').innerHTML=
-    '<div class="notif-bar">'+'<div class="notif-icon">📅</div>'+'<div class="notif-text">'
+    '<div class="notif-bar">'+'<div class="notif-icon" style="display:flex;align-items:center">'+IC.calendar(18)+'</div>'+'<div class="notif-text">'
     +'<b>Prélèvements automatiques</b> — débités automatiquement le jour configuré.</div></div>'
     +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">'
     +'<div>Total mensuel : <b>'+fmt(tot)+'</b></div>'
@@ -1780,13 +1835,13 @@ function pageParams(){
       +'<div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center">'
       +'<div><div style="font-size:13px;font-weight:600;color:#e8eaf0">Se déconnecter</div>'
       +'<div style="font-size:12px;color:#7a869a">Ferme ta session sur cet appareil</div></div>'
-      +'<button onclick="doLogout()" class="bg" style="font-size:13px;padding:7px 14px">🚪 Déconnexion</button>'
+      +'<button onclick="doLogout()" class="bg" style="display:flex;align-items:center;gap:6px;font-size:13px;padding:7px 14px">'+IC.logout(14)+' Déconnexion</button>'
       +'</div></div>'
       // Zone danger
       +'<div class="card" style="border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.04)">'
-      +'<div style="font-size:13px;font-weight:700;color:#ef4444;margin-bottom:4px">⚠️ Zone dangereuse</div>'
+      +'<div style="font-size:13px;font-weight:700;color:#ef4444;margin-bottom:4px">'+IC.warning(15,'#ef4444')+' Zone dangereuse</div>'
       +'<div style="font-size:12px;color:#7a869a;margin-bottom:14px">La suppression de ton compte est <b style="color:#ef4444">irréversible</b>. Toutes tes données (transactions, épargnes, objectifs, prélèvements) seront définitivement effacées.</div>'
-      +'<button onclick="openDeleteAccount()" style="padding:9px 16px;border-radius:8px;font-weight:600;font-size:13px;color:#ef4444;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);cursor:pointer">🗑 Supprimer mon compte</button>'
+      +'<button onclick="openDeleteAccount()" style="display:flex;align-items:center;gap:6px;padding:9px 16px;border-radius:8px;font-weight:600;font-size:13px;color:#ef4444;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);cursor:pointer">'+IC.trash(14,'#ef4444')+' Supprimer mon compte</button>'
       +'</div>';
   } else if(S.stab==='apparence'){
     var cBtns=Object.keys(ACC).map(function(k){
@@ -1798,12 +1853,12 @@ function pageParams(){
     var tBtns=['clair','sombre'].map(function(t){
       var act=S.theme===t;
       return '<button onclick="setTheme(\''+t+'\')" style="flex:1;padding:18px 10px;border-radius:10px;border:2px solid '+(act?a.main:'#252d3e')+';background:'+(t==='clair'?'#fff':'#0f1117')+';cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px">'
-        +'<span style="font-size:26px">'+(t==='clair'?'☀️':'🌙')+'</span>'
+        +'<span style="font-size:22px">'+(t==='clair'?IC.sun(22):IC.moon(22))+'</span>'
         +'<span style="font-size:13px;font-weight:600;color:'+(t==='clair'?'#1a1f2e':'#e8eaf0')+'">Mode '+t+'</span>'
         +(act?'<span style="color:'+a.main+';font-size:16px">✓</span>':'')+'</button>';
     }).join('');
-    body='<div class="card" style="margin-bottom:14px"><div class="ctit">🎨 Couleur principale</div><div style="display:flex;gap:10px;flex-wrap:wrap">'+cBtns+'</div></div>'
-      +'<div class="card"><div class="ctit">🌙 Apparence</div><div style="display:flex;gap:12px">'+tBtns+'</div></div>';
+    body='<div class="card" style="margin-bottom:14px"><div class="ctit" style="display:flex;align-items:center;gap:6px">'+IC.palette(15)+' Couleur principale</div><div style="display:flex;gap:10px;flex-wrap:wrap">'+cBtns+'</div></div>'
+      +'<div class="card"><div class="ctit">'+IC.moon(15)+' Apparence</div><div style="display:flex;gap:12px">'+tBtns+'</div></div>';
   } else if(S.stab==='notifs'){
     body=pushSettingsHTML();
     setTimeout(pushRender, 0);
@@ -1856,7 +1911,7 @@ function markTutoVu(id){ if(!S.plDone) S.plDone={}; S.plDone['tuto_'+id]=true; d
 function startTutoDashboard(){
   tutoShow([
     {
-      title: '📊 Tableau de bord',
+      title: IC.chart(16)+' Tableau de bord',
       body: 'Bienvenue sur ton tableau de bord Trivio !<br><br>'
         +'C\'est ici que tu vois <b>tout ce qui compte</b> en un coup d\'oeil :<br>'
         +'• Ton <b>solde disponible</b> (compte courant)<br>'
@@ -1865,28 +1920,28 @@ function startTutoDashboard(){
         +'• La <b>règle budgétaire</b> 50/30/20'
     },
     {
-      title: '💳 Le solde disponible',
+      title: IC.card(16)+' Le solde disponible',
       body: 'La carte verte en haut à gauche = ton <b>argent disponible ce mois</b>.<br><br>'
         +'Calcul : <b>Revenus − Charges − Plaisirs − Épargne virée</b><br><br>'
-        +'⚠️ Ce solde <b>ne comprend pas</b> ton épargne — elle est sur un compte séparé.'
+        +'<span style="display:inline-flex;align-items:center;gap:4px">'+IC.warning(13,'#f59e0b')+' Ce solde <b>ne comprend pas</b> ton épargne — elle est sur un compte séparé.</span>'
     },
     {
-      title: '⚖️ La règle 50/30/20',
+      title: IC.palette(16)+' La règle 50/30/20',
       body: 'Trivio suit la règle budgétaire la plus reconnue au monde :<br><br>'
-        +'🏠 <b>50%</b> pour les charges fixes (loyer, factures, abonnements)<br>'
-        +'🎉 <b>30%</b> pour les plaisirs (restos, loisirs, shopping)<br>'
-        +'💰 <b>20%</b> pour l\'épargne et l\'investissement<br><br>'
+        +'<span style="display:inline-flex;align-items:center;gap:4px">'+IC.home(13)+' <b>50%</b> pour les charges fixes (loyer, factures, abonnements)</span><br>'
+        +'<span style="display:inline-flex;align-items:center;gap:4px">'+IC.palette(13)+' <b>30%</b> pour les plaisirs (restos, loisirs, shopping)</span><br>'
+        +'<span style="display:inline-flex;align-items:center;gap:4px">'+IC.coins(13)+' <b>20%</b> pour l\'épargne et l\'investissement</span><br><br>'
         +'Tu peux modifier ces % dans <b>Paramètres → Règle budgétaire</b>.'
     },
     {
-      title: '📅 Navigation mensuelle',
+      title: IC.calendar(16)+' Navigation mensuelle',
       body: 'Utilise les flèches <b>‹ ›</b> en haut pour naviguer entre les mois.<br><br>'
         +'Chaque mois est indépendant — tu peux consulter n\'importe quel mois passé pour analyser tes habitudes.'
     },
     {
-      title: '📈 Historique 6 mois',
+      title: IC.trending(16)+' Historique 6 mois',
       body: 'Le graphique en bas montre l\'évolution de tes dépenses sur les 6 derniers mois.<br><br>'
-        +'🔵 Charges fixes &nbsp; 🟢 Plaisirs &nbsp; 🟡 Épargne<br><br>'
+        +'<span style="color:#5b8cff">■</span> Charges fixes &nbsp; <span style="color:#22c55e">■</span> Plaisirs &nbsp; <span style="color:#ffd166">■</span> Épargne<br><br>'
         +'C\'est ton meilleur outil pour <b>repérer les dérives</b> et corriger le tir.'
     }
   ], 'dashboard');
@@ -1896,19 +1951,19 @@ function startTutoDashboard(){
 function startTutoRevenus(){
   tutoShow([
     {
-      title: '↗ L\'onglet Revenus',
+      title: IC.trending(16)+' L\'onglet Revenus',
       body: 'C\'est ici que tu enregistres <b>tout l\'argent qui rentre</b> chaque mois.<br><br>'
         +'Exemples : salaire, freelance, APL, allocations, revenus locatifs, remboursements...'
     },
     {
-      title: '➕ Ajouter un revenu',
+      title: IC.wallet(16)+' Ajouter un revenu',
       body: 'Clique sur <b>"+ Ajouter"</b> et renseigne :<br><br>'
         +'• <b>Source</b> → ex: "Salaire", "Freelance Acme", "APL"<br>'
         +'• <b>Montant</b> → le montant net reçu ce mois<br><br>'
         +'Tu peux avoir <b>plusieurs sources de revenus</b> par mois.'
     },
     {
-      title: '💡 Bonne pratique',
+      title: IC.bulb(16)+' Bonne pratique',
       body: 'Ajoute tes revenus <b>dès qu\'ils sont versés</b> sur ton compte.<br><br>'
         +'La règle budgétaire (50/30/20) se calcule automatiquement à partir du total de tes revenus du mois — plus c\'est à jour, plus les budgets sont précis.'
     }
@@ -1927,18 +1982,18 @@ function startTutoTransactions(){
         +'• Un <b>remboursement reçu</b> (montant positif)'
     },
     {
-      title: '🏷 Les 3 catégories',
-      body: '🔵 <b>Charges fixes</b> — loyer, factures, assurances, abonnements<br><br>'
-        +'🟢 <b>Plaisirs</b> — restaurants, shopping, loisirs, vacances<br><br>'
-        +'🟡 <b>Épargne</b> — virement vers ton compte d\'épargne. Ce montant est <b>déduit de ton solde courant</b> et comptabilisé dans tes objectifs.'
+      title: IC.notes(16)+' Les 3 catégories',
+      body: '<span style="color:#5b8cff">■</span> <b>Charges fixes</b> — loyer, factures, assurances, abonnements<br><br>'
+        +'<span style="color:#22c55e">■</span> <b>Plaisirs</b> — restaurants, shopping, loisirs, vacances<br><br>'
+        +'<span style="color:#ffd166">■</span> <b>Épargne</b> — virement vers ton compte d\'épargne. Ce montant est <b>déduit de ton solde courant</b> et comptabilisé dans tes objectifs.'
     },
     {
-      title: '⚡ Prélèvements automatiques',
+      title: IC.clock(16)+' Prélèvements automatiques',
       body: 'Les transactions marquées <b>"auto"</b> ont été créées automatiquement depuis ton onglet Prélèvements.<br><br>'
         +'Elles sont débitées chaque mois le jour que tu as configuré — tu n\'as rien à faire.'
     },
     {
-      title: '💡 Conseil d\'utilisation',
+      title: IC.bulb(16)+" Conseil d'utilisation",
       body: 'Prends l\'habitude de saisir tes dépenses <b>dès que tu paies</b> — 10 secondes sur l\'app suffisent.<br><br>'
         +'Ou fais un bilan <b>une fois par semaine</b> en reprenant tes relevés de compte bancaire.'
     }
@@ -1954,7 +2009,7 @@ function startTutoPrelevements(){
         +'Une fois configurés, ils se <b>débitent automatiquement</b> de ton solde le bon jour chaque mois.'
     },
     {
-      title: '➕ Ajouter un prélèvement',
+      title: IC.calendar(16)+' Ajouter un prélèvement',
       body: 'Pour chaque charge récurrente, renseigne :<br><br>'
         +'• <b>Nom</b> → ex: "Loyer", "Spotify", "Mutuelle"<br>'
         +'• <b>Montant</b> → le montant débité chaque mois<br>'
@@ -1962,10 +2017,10 @@ function startTutoPrelevements(){
         +'• <b>Catégorie</b> → Charges fixes dans la plupart des cas'
     },
     {
-      title: '✓ Statut de chaque prélèvement',
+      title: IC.checkCircle(16)+' Statut de chaque prélèvement',
       body: 'Dans la liste, tu vois en temps réel :<br><br>'
-        +'🟢 <b>"✓ débité"</b> → déjà passé en transaction ce mois<br>'
-        +'🔴 <b>"en attente"</b> → le jour est passé mais pas encore traité<br>'
+        +'<span style="color:#22c55e">■</span> <b>"✓ débité"</b> → déjà passé en transaction ce mois<br>'
+        +'<span style="color:#ef4444">■</span> <b>"en attente"</b> → le jour est passé mais pas encore traité<br>'
         +'Aucun badge → prélèvement à venir ce mois'
     }
   ], 'prelvs');
@@ -1975,14 +2030,14 @@ function startTutoPrelevements(){
 function startTutoParams(){
   tutoShow([
     {
-      title: '⚙️ Paramètres',
+      title: IC.gear(16)+' Paramètres',
       body: 'Dans cet onglet tu peux personnaliser entièrement Trivio :<br><br>'
-        +'👤 <b>Mon compte</b> → voir ton email et supprimer ton compte<br>'
-        +'🎨 <b>Apparence</b> → couleur principale et mode clair/sombre<br>'
-        +'⚖️ <b>Règle budgétaire</b> → adapter le 50/30/20 à ta situation'
+        +'<span style="display:inline-flex;align-items:center;gap:4px">'+IC.user(13)+' <b>Mon compte</b> → voir ton email et supprimer ton compte</span><br>'
+        +'<span style="display:inline-flex;align-items:center;gap:4px">'+IC.palette(13)+' <b>Apparence</b> → couleur principale et mode clair/sombre</span><br>'
+        +'<span style="display:inline-flex;align-items:center;gap:4px">'+IC.palette(13)+' <b>Règle budgétaire</b> → adapter le 50/30/20 à ta situation</span>'
     },
     {
-      title: '⚖️ Adapter la règle budgétaire',
+      title: IC.palette(16)+' Adapter la règle budgétaire',
       body: 'La règle 50/30/20 est un point de départ — pas une obligation.<br><br>'
         +'Si tu as un loyer élevé, tu peux passer à <b>60/20/20</b>.<br>'
         +'Si tu veux épargner agressivement : <b>50/20/30</b>.<br><br>'
@@ -2002,27 +2057,27 @@ function startTutoSIC(){
         +'Einstein les appelait <b>"la huitième merveille du monde"</b> — et pour cause : ton argent génère des intérêts, qui génèrent eux-mêmes des intérêts, créant un effet boule de neige.'
     },
     {
-      title: '🎚 Les 4 paramètres',
+      title: IC.sliders(16)+' Les 4 paramètres',
       body: '• <b>Capital de départ</b> — l\'argent que tu places aujourd\'hui<br><br>'
         +'• <b>Versement mensuel</b> — ce que tu ajoutes chaque mois<br><br>'
         +'• <b>Taux annuel</b> — le rendement de ton placement (Livret A = 1,5%, PEL = 2%, actions = ~7%)<br><br>'
         +'• <b>Durée</b> — le temps est ton meilleur allié !'
     },
     {
-      title: '📊 Lire le graphique',
-      body: '🟢 <b>Courbe verte</b> = ton capital <b>avec</b> intérêts composés<br><br>'
-        +'🔵 <b>Courbe bleue</b> pointillée = si tu avais juste mis l\'argent sous ton matelas (sans intérêts)<br><br>'
-        +'🟡 <b>Zone dorée</b> = les intérêts générés — c\'est de l\'argent que tu n\'as pas eu à travailler pour gagner !'
+      title: IC.chart(16)+' Lire le graphique',
+      body: '<span style="color:#22c55e">■</span> <b>Courbe verte</b> = ton capital <b>avec</b> intérêts composés<br><br>'
+        +'<span style="color:#5b8cff">■</span> <b>Courbe bleue</b> pointillée = si tu avais juste mis l\'argent sous ton matelas (sans intérêts)<br><br>'
+        +'<span style="color:#ffd166">■</span> <b>Zone dorée</b> = les intérêts générés — c\'est de l\'argent que tu n\'as pas eu à travailler pour gagner !'
     },
     {
-      title: '💡 Ce que tu dois retenir',
+      title: IC.bulb(16)+' Ce que tu dois retenir',
       body: '<b>Commencer tôt</b> est la variable la plus importante.<br><br>'
         +'Exemple : 100 € / mois à 5% pendant <b>30 ans</b> = <b>83 000 €</b><br>'
         +'Dont seulement <b>36 000 €</b> versés — les <b>47 000 €</b> restants viennent des intérêts !<br><br>'
         +'10 ans de plus (40 ans) → <b>152 000 €</b>. Le temps double presque la mise.',
     },
     {
-      title: '✏️ Saisie précise',
+      title: IC.pencil(16)+' Saisie précise',
       body: 'Tu peux utiliser les <b>sliders</b> pour une exploration rapide, ou cliquer sur les <b>champs de saisie</b> sous chaque slider pour entrer un montant <b>exact à l\'euro près</b>.<br><br>'
         +'Les résultats se mettent à jour instantanément à chaque modification.',
       isLast: true
@@ -2469,9 +2524,9 @@ function renderAuth(){
     if(s) s.textContent='Tes finances, en toute sécurité';
     f.innerHTML='<input class="ainp" id="a-email" type="email" placeholder="Email" autocomplete="email"/>'
       +'<div style="position:relative"><input class="ainp" id="a-pw" type="password" placeholder="Mot de passe" autocomplete="current-password" style="padding-right:42px;margin-bottom:0"/>'
-      +'<button onclick="togglePw()" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#7a869a;font-size:16px;cursor:pointer;padding:0" id="pw-eye">👁</button></div>'
-      +'<div style="text-align:right;margin-bottom:12px"><span onclick="setAMode(\'forgot\')" style="font-size:12px;color:#10b981;cursor:pointer">Mot de passe oublié ?</span></div>'
-      +'<button class="abtn" id="a-sub" onclick="doLogin()" style="background:#10b981">Se connecter</button>'
+      +'<button onclick="togglePw()" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#7a869a;cursor:pointer;padding:0;display:flex;align-items:center" id="pw-eye">'+IC.eye(18)+'</button></div>'
+      +'<div style="text-align:right;margin-bottom:12px"><span onclick="setAMode(\'forgot\')" style="font-size:12px;color:#22c55e;cursor:pointer">Mot de passe oublié ?</span></div>'
+      +'<button class="abtn" id="a-sub" onclick="doLogin()" style="background:#22c55e">Se connecter</button>'
       +'<div class="alink">Pas encore de compte ? <span onclick="setAMode(\'signup\')">Créer un compte</span></div>';
   } else if(_amode==='signup'){
     if(t) t.textContent='Créer un compte';
@@ -2479,13 +2534,13 @@ function renderAuth(){
     f.innerHTML='<input class="ainp" id="a-email" type="email" placeholder="Email" autocomplete="email"/>'
       +'<input class="ainp" id="a-pw" type="password" placeholder="Mot de passe (8 cars min, 1 maj, 1 chiffre)" autocomplete="new-password"/>'
       +'<input class="ainp" id="a-pw2" type="password" placeholder="Confirmer le mot de passe" autocomplete="new-password"/>'
-      +'<button class="abtn" id="a-sub" onclick="doSignup()" style="background:#10b981">Créer mon compte</button>'
+      +'<button class="abtn" id="a-sub" onclick="doSignup()" style="background:#22c55e">Créer mon compte</button>'
       +'<div class="alink">Déjà un compte ? <span onclick="setAMode(\'login\')">Se connecter</span></div>';
   } else {
     if(t) t.textContent='Réinitialiser';
     if(s) s.textContent='Un lien sera envoyé par email';
     f.innerHTML='<input class="ainp" id="a-email" type="email" placeholder="Email"/>'
-      +'<button class="abtn" id="a-sub" onclick="doForgot()" style="background:#10b981">Envoyer le lien</button>'
+      +'<button class="abtn" id="a-sub" onclick="doForgot()" style="background:#22c55e">Envoyer le lien</button>'
       +'<button class="abtn2" onclick="setAMode(\'login\')" style="margin-top:8px">← Retour</button>';
   }
 
@@ -2502,7 +2557,7 @@ function setAMode(m){_amode=m;renderAuth();}
 function togglePw(){
   var i=$('a-pw'), b=$('pw-eye'); if(!i) return;
   i.type=i.type==='password'?'text':'password';
-  if(b) b.textContent=i.type==='password'?'👁':'🙈';
+  if(b) b.innerHTML=i.type==='password'?IC.eye(18):IC.eyeoff(18);
 }
 
 function setBtnLoading(loading,label){
@@ -2554,7 +2609,7 @@ function doSignup(){
     if(data.session&&data.session.access_token){
       setSession(data.session); bootUser(); return;
     }
-    aok('✅ Compte créé ! Vérifie ton email pour confirmer.');
+    aok('Compte créé ! Vérifie ton email pour confirmer.');
     setBtnLoading(false,'Créer mon compte');
   }).catch(function(){
     aerr('Erreur réseau.');
@@ -2569,7 +2624,7 @@ function doForgot(){
   if(!validateEmail(email)){aerr('Email invalide.');return;}
   setBtnLoading(true,'Envoyer le lien');
   sbRecover(email).then(function(){
-    aok('✅ Email envoyé ! Vérifie ta boîte mail.');
+    aok('Email envoyé ! Vérifie ta boîte mail.');
     setBtnLoading(false,'Envoyer le lien');
   }).catch(function(){
     aerr('Erreur réseau.');
@@ -2582,7 +2637,7 @@ function doForgot(){
 function openDeleteAccount(){
   openM('Supprimer mon compte',
     '<div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:10px;padding:14px;margin-bottom:16px">'
-    +'<div style="font-size:13px;font-weight:700;color:#ef4444;margin-bottom:6px">⚠️ Action irréversible</div>'
+    +'<div style="font-size:13px;font-weight:700;color:#ef4444;margin-bottom:6px;display:flex;align-items:center;gap:5px">'+IC.warning(14,'#ef4444')+' Action irréversible</div>'
     +'<div style="font-size:13px;color:#7a869a;line-height:1.6">'
     +'En supprimant ton compte, tu perdras définitivement :<br>'
     +'• Toutes tes transactions<br>'
@@ -2651,7 +2706,7 @@ function confirmDeleteAccount(){
     setTimeout(function(){
       var err = document.getElementById('aok');
       if(err){
-        err.textContent='✅ Compte supprimé avec succès. À bientôt !';
+        err.textContent='Compte supprimé avec succès. À bientôt !';
         err.style.display='block';
       }
     }, 100);
@@ -2709,7 +2764,7 @@ var LIVRETS_REF = [
     name:'LEP', taux:2.5, tauxStr:'2,5 %',
     plafond:'10 000 €', defiscalise:true,
     info:'Sous conditions de revenus (RFR < 22 419 € seul / 34 393 € en couple)',
-    conseil:'⭐ Meilleur taux garanti de France si tu es éligible',
+    conseil:'Meilleur taux garanti de France si tu es éligible',
     miseAJour:'01/02/2026'
   },
   {
@@ -2776,14 +2831,14 @@ function livretsList(){
 function buildTutoSteps(){
   return [
     {
-      title: '🏦 Bienvenue dans les Épargnes',
+      title: IC.bank(16)+' Bienvenue dans les Épargnes',
       body: 'Cet onglet te permet de suivre <b>tous tes comptes d\'épargne</b> et objectifs financiers en un seul endroit.<br><br>'
         +'Tu vas apprendre à créer tes objectifs, renseigner tes livrets et suivre tes intérêts.',
       target: null,
       pos: 'center'
     },
     {
-      title: '🎯 Créer un objectif',
+      title: IC.target(16)+' Créer un objectif',
       body: 'Clique sur <b>"+ Nouvel objectif"</b> pour créer ton premier objectif d\'épargne.<br><br>'
         +'Exemples : Matelas de sécurité, Apport immobilier, Voyage, Nouvelle voiture...',
       target: null,
@@ -2791,34 +2846,34 @@ function buildTutoSteps(){
       pos: 'center'
     },
     {
-      title: '📋 Les livrets disponibles',
+      title: IC.notes(16)+' Les livrets disponibles',
       body: 'Voici les principaux livrets d\'épargne en France et leurs taux actuels :',
       extra: livretsList(),
       target: null,
       pos: 'center'
     },
     {
-      title: '💡 Choisir son livret',
+      title: IC.bulb(16)+' Choisir son livret',
       body: '<b>Comment choisir ? (taux au 01/02/2026)</b><br><br>'
-        +'🥇 <b>Priorité 1 — LEP à 2,5%</b> si tu y es éligible (revenus modestes). Meilleur taux garanti de France.<br><br>'
-        +'🥈 <b>Priorité 2 — Livret A (1,5%) + LDDS (1,5%)</b> pour le matelas de sécurité. Disponible immédiatement, défiscalisé.<br><br>'
-        +'🥉 <b>Priorité 3 — Assurance-vie (~2,6%)</b> pour du long terme (+8 ans). Meilleur rendement mais moins liquide.',
+        +'<span style="color:#ffd166;font-weight:700">1.</span> <b>Priorité 1 — LEP à 2,5%</b> si tu y es éligible (revenus modestes). Meilleur taux garanti de France.<br><br>'
+        +'<span style="color:#b0b0b0;font-weight:700">2.</span> <b>Priorité 2 — Livret A (1,5%) + LDDS (1,5%)</b> pour le matelas de sécurité. Disponible immédiatement, défiscalisé.<br><br>'
+        +'<span style="color:#cd7f32;font-weight:700">3.</span> <b>Priorité 3 — Assurance-vie (~2,6%)</b> pour du long terme (+8 ans). Meilleur rendement mais moins liquide.',
       target: null,
       pos: 'center'
     },
     {
-      title: '📝 Renseigner ton livret dans Trivio',
+      title: IC.pencil(16)+' Renseigner ton livret dans Trivio',
       body: 'Dans le formulaire de création d\'objectif, clique directement sur le livret pour remplir automatiquement le nom et le taux.<br><br>'
         +'• <b>Livret A ou LDDS</b> → 1,5% net (défiscalisé)<br>'
         +'• <b>LEP</b> → 2,5% net si tu es éligible<br>'
         +'• <b>PEL 2026</b> → 2% brut (soit ~1,4% net)<br>'
         +'• <b>Assurance-vie</b> → ~2,6% brut (variable selon contrat)<br><br>'
-        +'<span style=\"font-size:12px;color:#10b981\">✅ Trivio ajoute automatiquement tes intérêts chaque 1er janvier !</span>',
+        +'<span style=\"font-size:12px;color:#22c55e\">Trivio ajoute automatiquement tes intérêts chaque 1er janvier !</span>',
       target: null,
       pos: 'center'
     },
     {
-      title: '➕ Alimenter ton épargne',
+      title: IC.coins(16)+' Alimenter ton épargne',
       body: 'Chaque fois que tu épargnes, tu as deux options :<br><br>'
         +'1️⃣ <b>Boutons rapides</b> +50€, +100€, +200€ ou <b>"+ autre"</b> pour tout montant<br><br>'
         +'2️⃣ <b>Ajouter une transaction</b> dans l\'onglet Transactions avec la catégorie <b>Épargne</b> — ça débitera ton solde courant et alimentera tes objectifs.',
@@ -2826,7 +2881,7 @@ function buildTutoSteps(){
       pos: 'center'
     },
     {
-      title: '📊 Suivre sa progression',
+      title: IC.chart(16)+' Suivre sa progression',
       body: 'Pour chaque objectif tu vois :<br><br>'
         +'• La <b>barre de progression</b> vers ton objectif<br>'
         +'• Le <b>montant épargné</b> vs le <b>montant cible</b><br>'
@@ -2837,7 +2892,7 @@ function buildTutoSteps(){
       pos: 'center'
     },
     {
-      title: '🚀 C\'est parti !',
+      title: IC.rocket(16)+' C\'est parti !',
       body: 'Tu sais maintenant tout ce qu\'il faut pour gérer tes épargnes dans Trivio.<br><br>'
         +'<b>Commence maintenant</b> en cliquant sur <b>"+ Nouvel objectif"</b> et renseigne ton premier livret d\'épargne.',
       target: null,
@@ -2862,11 +2917,11 @@ function tutoRender(){
   var a = ACC[S.accent]||ACC.emeraude;
 
   document.getElementById('tuto-num').textContent = 'Étape '+(TUTO.step+1)+' / '+total;
-  document.getElementById('tuto-title').textContent = step.title;
+  document.getElementById('tuto-title').innerHTML = step.title;
 
   var body = step.body || '';
   if(step.highlight){
-    body += '<span class="highlight">💡 '+step.highlight+'</span>';
+    body += '<span class="highlight" style="display:flex;align-items:flex-start;gap:6px">'+IC.bulb(13)+' '+step.highlight+'</span>';
   }
   if(step.extra){
     body += step.extra;
@@ -2974,15 +3029,15 @@ var OB_STEPS = [
   },
   {
     id: 'situation',
-    icon: '💼',
+    icon: IC.user(22),
     title: function(){ return 'Bonjour '+OB.data.prenom+' !';},
     sub: 'Quelle est ta situation actuelle ?',
     render: function(){
       var choices = [
-        {v:'etudiant',    icon:'🎓', label:'Étudiant(e)',    sub:'Bourses, jobs, aides'},
-        {v:'salarie',     icon:'👔', label:'Salarié(e)',     sub:'CDI, CDD, temps partiel'},
-        {v:'independant', icon:'💻', label:'Indépendant(e)', sub:'Freelance, auto-entrepreneur'},
-        {v:'autre',       icon:'✨', label:'Autre',          sub:'Retraité, sans emploi...'},
+        {v:'etudiant',    icon:IC.notes(22), label:'Étudiant(e)',    sub:'Bourses, jobs, aides'},
+        {v:'salarie',     icon:IC.user(22),  label:'Salarié(e)',     sub:'CDI, CDD, temps partiel'},
+        {v:'independant', icon:IC.trending(22), label:'Indépendant(e)', sub:'Freelance, auto-entrepreneur'},
+        {v:'autre',       icon:IC.palette(22), label:'Autre',          sub:'Retraité, sans emploi...'},
       ];
       return choices.map(function(c){
         return '<div class="ob-choice'+(OB.data.situation===c.v?' sel':'')+'" onclick="obSitClick(this)" data-val="'+c.v+'">'
@@ -2999,7 +3054,7 @@ var OB_STEPS = [
   },
   {
     id: 'salaire',
-    icon: '💰',
+    icon: IC.coins(22),
     title: 'Tes revenus mensuels',
     sub: "Approximativement, combien tu touches par mois (net) ? C\'est confidentiel et stocké uniquement pour toi.",
     render: function(){
@@ -3022,17 +3077,17 @@ var OB_STEPS = [
   },
   {
     id: 'objectif',
-    icon: '🎯',
+    icon: IC.target(22),
     title: 'Ton objectif principal',
     sub: "Pourquoi tu utilises Trivio ? On va adapter l\'app à ton besoin.",
     render: function(){
       var choices = [
-        {v:'securite',  icon:'🛡️', label:'Sécurité financière', sub:'Constituer un matelas'},
-        {v:'projet',    icon:'🏠', label:'Financer un projet',   sub:'Immobilier, voiture...'},
-        {v:'retraite',  icon:'🌴', label:'Préparer la retraite', sub:'Investir sur le long terme'},
-        {v:'voyage',    icon:'✈️', label:'Voyager',              sub:'Financer des expériences'},
-        {v:'liberte',   icon:'💎', label:'Liberté financière',   sub:"Ne plus dépendre d\'un salaire"},
-        {v:'quotidien', icon:'📊', label:'Mieux gérer le quotidien', sub:'Suivre mes dépenses'},
+        {v:'securite',  icon:IC.shield(22), label:'Sécurité financière', sub:'Constituer un matelas'},
+        {v:'projet',    icon:IC.home(22), label:'Financer un projet',   sub:'Immobilier, voiture...'},
+        {v:'retraite',  icon:IC.coins(22), label:'Préparer la retraite', sub:'Investir sur le long terme'},
+        {v:'voyage',    icon:IC.rocket(22), label:'Voyager',              sub:'Financer des expériences'},
+        {v:'liberte',   icon:IC.target(22), label:'Liberté financière',   sub:"Ne plus dépendre d\'un salaire"},
+        {v:'quotidien', icon:IC.chart(22), label:'Mieux gérer le quotidien', sub:'Suivre mes dépenses'},
       ];
       return choices.map(function(c){
         return '<div class="ob-choice'+(OB.data.objectifPrincipal===c.v?' sel':'')+'" onclick="obObjClick(this)" data-val="'+c.v+'">'
@@ -3049,19 +3104,19 @@ var OB_STEPS = [
   },
   {
     id: 'regle',
-    icon: '⚖️',
+    icon: IC.palette(22),
     title: 'Ta règle budgétaire',
     sub: 'La règle 50/30/20 est un bon point de départ. Adapte-la selon ta situation. La somme doit faire 100%.',
     render: function(){
       var r = OB.data.regle;
       return '<div class="ob-regle">'
-        +'<div class="ob-regle-item"><span class="ob-regle-lbl">🏠 Charges fixes</span>'
+        +'<div class="ob-regle-item"><span class="ob-regle-lbl">'+IC.home(14)+' Charges fixes</span>'
         +'<input class="ob-regle-inp" id="ob-rc" type="number" value="'+r.charges+'" min="0" max="100" oninput="obRegleSync()"/>'
         +'<span style="font-size:11px;color:#7a869a">%</span></div>'
-        +'<div class="ob-regle-item"><span class="ob-regle-lbl">🎉 Plaisirs</span>'
+        +'<div class="ob-regle-item"><span class="ob-regle-lbl">'+IC.palette(14)+' Plaisirs</span>'
         +'<input class="ob-regle-inp" id="ob-rp" type="number" value="'+r.plaisirs+'" min="0" max="100" oninput="obRegleSync()"/>'
         +'<span style="font-size:11px;color:#7a869a">%</span></div>'
-        +'<div class="ob-regle-item"><span class="ob-regle-lbl">💰 Épargne</span>'
+        +'<div class="ob-regle-item"><span class="ob-regle-lbl">'+IC.coins(14)+' Épargne</span>'
         +'<input class="ob-regle-inp" id="ob-re" type="number" value="'+r.epargne+'" min="0" max="100" oninput="obRegleSync()"/>'
         +'<span style="font-size:11px;color:#7a869a">%</span></div>'
         +'</div>'
@@ -3084,7 +3139,7 @@ var OB_STEPS = [
   },
   {
     id: 'finish',
-    icon: '🚀',
+    icon: IC.rocket(22),
     title: function(){ return "C\'est parti, "+OB.data.prenom+" !"; },
     sub: function(){
       var labels={
@@ -3175,7 +3230,7 @@ function renderOBStep(){
     +'<div class="ob-nav">'
     +(OB.step>0?'<button class="ob-back" onclick="obBack()">← Retour</button>':'')
     +'<button class="ob-next" onclick="obNext()" style="background:'+a.main+'">'
-    +(step.isLast?'Commencer Trivio 🚀':'Continuer →')
+    +(step.isLast?'Commencer Trivio ':'Continuer →')
     +'</button></div>'
     +(OB.step===0?'<button class="ob-skip" onclick="obSkip()">Passer l\'onboarding</button>':'')
     +'</div>';
@@ -3359,7 +3414,7 @@ renderAuth();
           $('auth').style.display='flex';
           renderAuth();
           setTimeout(function(){
-            aok('✅ Email confirmé ! Connexion en cours...');
+            aok('Email confirmé ! Connexion en cours...');
             setTimeout(function(){ bootUser(); }, 1500);
           },200);
         }
@@ -3379,7 +3434,7 @@ renderAuth();
           $('auth').style.display='flex';
           renderAuth();
           setTimeout(function(){
-            aok('✅ Email confirmé ! Connexion en cours...');
+            aok('Email confirmé ! Connexion en cours...');
             setTimeout(function(){ bootUser(); }, 1500);
           },200);
         } else {
@@ -3434,7 +3489,7 @@ function pushRender(){
       +'Pour activer les notifications, ajoute Trivio à ton écran d\'accueil (iOS 16.4+ requis).</div>';
   } else if(st==='denied'){
     html='<div style="font-size:12px;color:#ffb4ab;padding:4px 0">'
-      +'🚫 Notifications bloquées dans les réglages de ton navigateur.</div>';
+      +'Notifications bloquées dans les réglages de ton navigateur.</div>';
   } else {
     var on=st==='subscribed';
     html='<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0">'
@@ -3450,14 +3505,14 @@ function pushRender(){
 }
 
 function pushSettingsHTML(){
-  return '<div class="card"><div class="ctit">🔔 Notifications push</div>'
+  return '<div class="card"><div class="ctit" style="display:flex;align-items:center;gap:6px">'+IC.bell(15)+' Notifications push</div>'
     +'<div id="push-toggle-area" style="min-height:36px"></div>'
     +'<div style="margin-top:16px;border-top:1px solid #252d3e;padding-top:16px">'
     +'<div style="font-size:12px;color:#7a869a;line-height:1.7">'
-    +'📊 <b>1er du mois</b> — rappel pour saisir tes revenus<br>'
-    +'🧾 <b>Chaque jour à midi</b> — rappel dépenses si rien saisi<br>'
-    +'🌙 <b>Chaque soir à 20h</b> — rappel dépenses si rien saisi<br>'
-    +'💰 <b>Chaque matin à 7h</b> — intérêts générés cette nuit'
+    +'<span style="display:flex;align-items:center;gap:5px;margin-bottom:4px">'+IC.chart(12)+' <span><b>1er du mois</b> — rappel pour saisir tes revenus</span></span>'
+    +'<span style="display:flex;align-items:center;gap:5px;margin-bottom:4px">'+IC.receipt(12)+' <span><b>Chaque jour à midi</b> — rappel dépenses si rien saisi</span></span>'
+    +'<span style="display:flex;align-items:center;gap:5px;margin-bottom:4px">'+IC.moon(12)+' <span><b>Chaque soir à 20h</b> — rappel dépenses si rien saisi</span></span>'
+    +'<span style="display:flex;align-items:center;gap:5px">'+IC.coins(12)+' <span><b>Chaque matin à 7h</b> — intérêts générés cette nuit</span></span>'
     +'</div></div></div>';
 }
 
@@ -3542,7 +3597,7 @@ function pushBannerShow(){
   if(!el) return;
   var a=acc();
   el.innerHTML='<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:#1a1e27;border:1px solid #252d3e;border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.5)">'
-    +'<div style="font-size:22px;flex-shrink:0">🔔</div>'
+    +'<div style="display:flex;align-items:center;justify-content:center;flex-shrink:0">'+IC.bell(22)+' </div>'
     +'<div style="flex:1;min-width:0">'
       +'<div style="font-size:13px;font-weight:600;color:#e8eaf0">Activer les notifications ?</div>'
       +'<div style="font-size:11px;color:#7a869a;margin-top:1px">Rappels dépenses, intérêts du jour…</div>'
