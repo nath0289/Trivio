@@ -72,7 +72,7 @@ body{
   font-family:'Geist',-apple-system,BlinkMacSystemFont,sans-serif;
   font-size:14px;
   color:var(--t1);
-  background:transparent;
+  background:var(--bg);
 }
 
 button{cursor:pointer;font-family:inherit;border:none;outline:none;}
@@ -317,6 +317,18 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
 .sic-res-label{font-size:10px;color:var(--t3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;}
 .sic-res-val{font-family:'Sora',sans-serif;font-size:18px;font-weight:700;letter-spacing:-.04em;}
 .sic-results-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;}
+/* SIC résultats en cartes */
+.sic-kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.sic-kpi{background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:var(--r2);padding:14px 16px;display:flex;flex-direction:column;gap:2px;}
+.sic-kpi-label{font-size:10px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+.sic-kpi-val{font-family:'Sora',sans-serif;font-size:20px;font-weight:700;letter-spacing:-.04em;}
+.sic-kpi-sub{font-size:11px;color:var(--t3);margin-top:2px;}
+.sic-kpi-wide{grid-column:1/-1;}
+/* Légende SIC dans une card */
+.sic-legend-card{background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:var(--r2);padding:14px 16px;margin-bottom:12px;}
+.sic-legend{display:flex;flex-direction:column;gap:8px;}
+.sic-legend-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--t2);font-weight:500;}
+.sic-legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
 .sic-table{width:100%;border-collapse:collapse;font-size:12px;}
 .sic-table th{padding:8px 10px;background:var(--s3);color:var(--t2);font-weight:600;text-align:right;letter-spacing:.02em;}
 .sic-table th:first-child{text-align:left;}
@@ -397,8 +409,8 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
 /* ═══════════════ MOBILE ═══════════════ */
 @media(max-width:768px){
 
-  /* show hamburger + settings btn */
-  #hbg{display:flex;}
+  /* hamburger hidden on mobile — bottom nav handles navigation */
+  #hbg{display:none;}
   #settings-btn{display:flex;}
 
   /* sidebar mobile : drawer depuis la gauche */
@@ -1949,6 +1961,7 @@ function pageSIC(){
     +'<div class="sic-canvas-wrap">'
     +'<div style="font-size:13px;font-weight:700;color:#e8eaf0;margin-bottom:12px">Évolution du capital dans le temps</div>'
     +'<canvas id="sic-chart" style="width:100%;height:260px;display:block"></canvas>'
+    +'<div class="sic-legend-card">'
     +'<div class="sic-legend">'
     +'<div class="sic-legend-item"><span class="sic-legend-dot" style="background:'+a.main+'"></span>Avec intérêts composés</div>'
     +'<div class="sic-legend-item"><span class="sic-legend-dot" style="background:#3b82f6"></span>Sans intérêts (versements seuls)</div>'
@@ -2092,21 +2105,23 @@ function sicCalc(){
   var gainInter = finalAvec - totalVers;
 
   document.getElementById('sic-res').innerHTML =
-    '<div class="sic-result">'
-    +'<div class="sic-result-label">Capital final avec intérêts</div>'
-    +'<div class="sic-result-val" style="color:'+a.main+'">'+Math.round(finalAvec).toLocaleString('fr-FR')+' €</div>'
-    +'<div class="sic-result-sub">après '+years+' an'+(years>1?'s':'')+'</div>'
+    '<div class="sic-kpis">'
+    +'<div class="sic-kpi">'
+    +'<div class="sic-kpi-label">Capital final</div>'
+    +'<div class="sic-kpi-val" style="color:'+a.main+'">'+Math.round(finalAvec).toLocaleString('fr-FR')+' €</div>'
+    +'<div class="sic-kpi-sub">avec intérêts · après '+years+' an'+(years>1?'s':'')+"</div>'
     +'</div>'
-    +'<div class="sic-result">'
-    +'<div class="sic-result-label">Intérêts générés</div>'
-    +'<div class="sic-result-val" style="color:#f59e0b">+'+Math.round(gainInter).toLocaleString('fr-FR')+' €</div>'
-    +'<div class="sic-result-sub">'+Math.round(gainInter/Math.max(totalVers,1)*100)+'% de plus qu\'en épargnant sans intérêts</div>'
+    +'<div class="sic-kpi">'
+    +'<div class="sic-kpi-label">Intérêts générés</div>'
+    +'<div class="sic-kpi-val" style="color:#f59e0b">+'+Math.round(gainInter).toLocaleString('fr-FR')+' €</div>'
+    +'<div class="sic-kpi-sub">'+Math.round(gainInter/Math.max(totalVers,1)*100)+'% de plus sans intérêts</div>'
     +'</div>'
-    +'<div class="sic-result">'
-    +'<div class="sic-result-label">Total versé</div>'
-    +'<div class="sic-result-val" style="color:#3b82f6">'+Math.round(totalVers).toLocaleString('fr-FR')+' €</div>'
-    +'<div class="sic-result-sub">capital + mensualités × '+years+' ans</div>'
-    +'</div>';
+    +'<div class="sic-kpi sic-kpi-wide">'
+    +'<div class="sic-kpi-label">Total versé</div>'
+    +'<div class="sic-kpi-val" style="color:#3b82f6">'+Math.round(totalVers).toLocaleString('fr-FR')+' €</div>'
+    +'<div class="sic-kpi-sub">capital + mensualités × '+years+' ans</div>'
+    +'</div>'
+    +'</div>'
 
   // Tableau
   var tbody = document.getElementById('sic-tbody');
