@@ -312,18 +312,18 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
 .sic-unit{padding:11px 14px 11px 6px;color:var(--t3);font-size:13px;font-weight:500;white-space:nowrap;flex-shrink:0;}
 .sic-ctrl-label{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;}
 .sic-inp-row{display:flex;align-items:center;gap:8px;}
-.sic-results{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;}
+.sic-results{display:block;margin-bottom:16px;}
 .sic-res-card{background:var(--s2);border:1px solid var(--border);border-radius:var(--r2);padding:14px;}
 .sic-res-label{font-size:10px;color:var(--t3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;}
 .sic-res-val{font-family:'Sora',sans-serif;font-size:18px;font-weight:700;letter-spacing:-.04em;}
 .sic-results-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;}
 /* SIC résultats en cartes */
-.sic-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;align-items:stretch;}
+
 .sic-kpi{background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:var(--r2);padding:12px 10px;display:flex;flex-direction:column;gap:2px;flex:1;}
 .sic-kpi-label{font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;line-height:1.3;}
 .sic-kpi-val{font-family:'Sora',sans-serif;font-size:16px;font-weight:700;letter-spacing:-.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .sic-kpi-sub{font-size:10px;color:var(--t3);margin-top:3px;line-height:1.35;}
-.sic-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;align-items:stretch;}
+.sic-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;width:100%;}
 /* Légende SIC dans une card */
 .sic-legend-card{background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:var(--r2);padding:14px 16px;margin-bottom:12px;}
 .sic-legend{display:flex;flex-direction:column;gap:8px;}
@@ -513,8 +513,6 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
 
 
 
-
-
   <script>
   // Service Worker — Trivio PWA (cache offline)
   if('serviceWorker' in navigator){
@@ -565,7 +563,6 @@ self.addEventListener('fetch',e=>{
     <div id="auth-form"></div>
   </div>
 </div>
-
 
 <!-- DIDACTICIEL -->
 <div id="tuto-overlay">
@@ -682,11 +679,27 @@ self.addEventListener('fetch',e=>{
 
 
 
-
-
 // ═══════════════════════════════════════════════════════
 // TRIVIO — Code propre v3
 // ═══════════════════════════════════════════════════════
+
+
+// ── NAV LOCK : empêche iOS de déplacer la nav au resize viewport ──
+(function(){
+  function lockNav(){
+    var nav = document.getElementById('bottom-nav');
+    if(!nav || getComputedStyle(nav).display==='none') return;
+    nav.style.setProperty('bottom','0px','important');
+    nav.style.setProperty('height','44px','important');
+  }
+  // Lancer au chargement et verrouiller sur chaque resize
+  window.addEventListener('load', lockNav);
+  window.addEventListener('resize', lockNav);
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize', lockNav);
+    window.visualViewport.addEventListener('scroll', lockNav);
+  }
+})();
 
 // ── CONFIG SUPABASE ──────────────────────────────────
 var _u=(function(){return atob('aHR0cHM6Ly94eXF6ZGJyZ3p0eGZkcGxjZm9mZi5zdXBhYmFzZS5jbw==');})();
@@ -774,7 +787,6 @@ var IC = {
   sliders: function(s,c){ return this._s('<line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/>',s,c); },
   user: function(s,c){ return this._s('<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',s,c); }
 };
-
 
 
 // ── HELPERS ──────────────────────────────────────────
@@ -1725,7 +1737,6 @@ function saveRegle(){
   dbSave(); renderNav(); pageParams();
 }
 
-
 // ═══════════════════════════════════════════════════════
 // DIDACTICIELS TOUS ONGLETS
 // ═══════════════════════════════════════════════════════
@@ -1927,7 +1938,6 @@ function launchTuto(page){
   };
   if(fns[page]) fns[page]();
 }
-
 
 // ═══════════════════════════════════════════════════════
 // SIMULATEUR INTÉRÊTS COMPOSÉS (SIC)
@@ -2453,7 +2463,6 @@ function doForgot(){
   });
 }
 
-
 // ── SUPPRESSION DE COMPTE ─────────────────────────────────────────────────────
 function openDeleteAccount(){
   openM('Supprimer mon compte',
@@ -2551,7 +2560,6 @@ function doLogout(){
 }
 
 // ── BOOT APRÈS LOGIN ──────────────────────────────────
-
 
 // ═══════════════════════════════════════════════════════
 // DIDACTICIEL ÉPARGNES
@@ -2801,7 +2809,6 @@ function tutoEnd(){
 function startTutoEpargnes(){
   tutoShow(buildTutoSteps(), 'epargnes');
 }
-
 
 // ═══════════════════════════════════════════════════════
 // ONBOARDING
@@ -3157,7 +3164,6 @@ function showOnboarding(){
   document.getElementById('ob').classList.add('show');
   renderOBStep();
 }
-
 
 // ══════════════════════════════════════════════════════
 // BACKUP — Export / Import / Restore
@@ -3541,8 +3547,6 @@ function pushBannerHide(){
     bootUser();
   });
 })();
-
-
 
 
 
