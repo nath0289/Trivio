@@ -32,6 +32,7 @@
 
 html {
   height: 100%;
+  background: #09090B;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -41,7 +42,6 @@ body {
   font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 14px;
   background: linear-gradient(160deg, #161618 0%, #0f0f11 45%, #09090B 100%);
-  background-attachment: fixed;
   color: #e5e1e4;
 }
 
@@ -92,9 +92,9 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 ══════════════════════ */
 #auth {
   position: fixed; inset: 0;
-  background: transparent;
+  background: linear-gradient(160deg, #161618 0%, #0f0f11 45%, #09090B 100%);
   display: flex; align-items: center; justify-content: center;
-  padding: 20px; z-index: 9999;
+  padding: env(safe-area-inset-top, 0px) 20px env(safe-area-inset-bottom, 20px); z-index: 9999;
 }
 .abox {
   background: var(--glass);
@@ -157,7 +157,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
    APP LAYOUT
 ══════════════════════ */
 #app { display: none; height: 100vh; height: 100dvh; overflow: hidden; }
-#app.show { display: flex; }
+#app.show { display: flex; width: 100%; }
 
 /* Sidebar desktop */
 #sb {
@@ -637,8 +637,8 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   #ov  { display: none !important; }
   #app { flex-direction: column; }
 
-  #hdr { padding: 10px 16px 8px; }
-  #cnt { padding: 0 16px calc(60px + env(safe-area-inset-bottom, 0px)); }
+  #hdr { padding: calc(env(safe-area-inset-top, 0px) + 8px) 16px 8px; }
+  #cnt { padding: 0 16px calc(64px + env(safe-area-inset-bottom, 0px)); }
   #psub { display: none; }
   #ptit { font-size: 18px !important; }
 
@@ -656,16 +656,16 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   .avatar-circle { width: 24px; height: 24px; font-size: 9px; }
   #uem { font-size: 11px; max-width: 70px; }
 
-  /* ── BOTTOM NAV ── */
-  #bottom-nav {
+  /* ── BOTTOM NAV — visible seulement quand l'app est active ── */
+  #app.show ~ #bottom-nav {
     display: flex;
     position: fixed;
     bottom: 0; left: 0; right: 0;
     background: #131315;
     border-top: 1px solid rgba(255,255,255,.06);
     z-index: 300;
-    padding-top: 2px;
-    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 2px);
+    padding-top: 4px;
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 4px);
     padding-left: max(env(safe-area-inset-left, 0px), 0px);
     padding-right: max(env(safe-area-inset-right, 0px), 0px);
   }
