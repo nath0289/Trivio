@@ -54,7 +54,7 @@
   --sab:env(safe-area-inset-bottom,0px);
   /* layout */
   --hdr:52px;
-  --nav:54px;
+  --nav:44px;
 }
 
 html{
@@ -319,11 +319,12 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
 .sic-results-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;}
 /* SIC résultats en cartes */
 .sic-kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
-.sic-kpi{background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:var(--r2);padding:14px 16px;display:flex;flex-direction:column;gap:2px;}
-.sic-kpi-label{font-size:10px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
-.sic-kpi-val{font-family:'Sora',sans-serif;font-size:20px;font-weight:700;letter-spacing:-.04em;}
-.sic-kpi-sub{font-size:11px;color:var(--t3);margin-top:2px;}
+.sic-kpi{background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:var(--r2);padding:12px 14px;display:flex;flex-direction:column;gap:2px;}
+.sic-kpi-label{font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;}
+.sic-kpi-val{font-family:'Sora',sans-serif;font-size:17px;font-weight:700;letter-spacing:-.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sic-kpi-sub{font-size:10px;color:var(--t3);margin-top:2px;line-height:1.4;}
 .sic-kpi-wide{grid-column:1/-1;}
+.sic-kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
 /* Légende SIC dans une card */
 .sic-legend-card{background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:var(--r2);padding:14px 16px;margin-bottom:12px;}
 .sic-legend{display:flex;flex-direction:column;gap:8px;}
@@ -2108,17 +2109,17 @@ function sicCalc(){
     '<div class="sic-kpis">'
     +'<div class="sic-kpi">'
     +'<div class="sic-kpi-label">Capital final</div>'
-    +'<div class="sic-kpi-val" style="color:'+a.main+'">'+Math.round(finalAvec).toLocaleString('fr-FR')+' €</div>'
+    +'<div class="sic-kpi-val" style="color:'+a.main+'">'+Math.round(finalAvec).toLocaleString('fr-FR',{useGrouping:false})+' €</div>'
     +'<div class="sic-kpi-sub">avec intérêts · après '+years+' an'+(years>1?'s':'')+' </div>'
     +'</div>'
     +'<div class="sic-kpi">'
     +'<div class="sic-kpi-label">Intérêts générés</div>'
-    +'<div class="sic-kpi-val" style="color:#f59e0b">+'+Math.round(gainInter).toLocaleString('fr-FR')+' €</div>'
+    +'<div class="sic-kpi-val" style="color:#f59e0b">+'+Math.round(gainInter).toLocaleString('fr-FR',{useGrouping:false})+' €</div>'
     +'<div class="sic-kpi-sub">'+Math.round(gainInter/Math.max(totalVers,1)*100)+'% de plus sans intérêts</div>'
     +'</div>'
     +'<div class="sic-kpi sic-kpi-wide">'
     +'<div class="sic-kpi-label">Total versé</div>'
-    +'<div class="sic-kpi-val" style="color:#3b82f6">'+Math.round(totalVers).toLocaleString('fr-FR')+' €</div>'
+    +'<div class="sic-kpi-val" style="color:#3b82f6">'+Math.round(totalVers).toLocaleString('fr-FR',{useGrouping:false})+' €</div>'
     +'<div class="sic-kpi-sub">capital + mensualités × '+years+' ans</div>'
     +'</div>'
     +'</div>'
