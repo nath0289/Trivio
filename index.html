@@ -60,7 +60,7 @@
 html{
   height:100%;
   height:100dvh;
-  background:var(--bg);
+  background:linear-gradient(160deg,#151517 0%,#0d0d0f 50%,var(--bg) 100%);
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
 }
@@ -72,7 +72,7 @@ body{
   font-family:'Geist',-apple-system,BlinkMacSystemFont,sans-serif;
   font-size:14px;
   color:var(--t1);
-  background:var(--bg);
+  background:transparent;
 }
 
 button{cursor:pointer;font-family:inherit;border:none;outline:none;}
@@ -84,7 +84,7 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
 /* ═══════════════ AUTH ═══════════════ */
 #auth{
   position:fixed;inset:0;
-  background:var(--bg);
+  background:linear-gradient(160deg,#151517 0%,#0d0d0f 50%,var(--bg) 100%);
   display:flex;align-items:center;justify-content:center;
   padding:calc(var(--sat) + 24px) 24px calc(var(--sab) + 24px);
   z-index:9999;
@@ -306,7 +306,12 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
 .sic-label{font-size:12px;font-weight:600;color:var(--t2);}
 .sic-slider{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:2px;background:var(--s4);outline:none;}
 .sic-slider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 0 8px var(--accent-glow);}
-.sic-inp{width:100%;padding:8px 12px;border-radius:var(--r1);border:1px solid var(--s4);background:var(--s2);color:var(--t1);font-size:14px;text-align:right;}
+.sic-inp-wrap{display:flex;align-items:center;border:1px solid var(--s4);border-radius:var(--r1);background:var(--s2);overflow:hidden;transition:border-color .2s;}
+.sic-inp-wrap:focus-within{border-color:var(--accent);}
+.sic-inp{flex:1;border:none;background:transparent;padding:11px 4px 11px 14px;color:var(--t1);font-size:16px;font-weight:600;text-align:right;min-width:0;}
+.sic-unit{padding:11px 14px 11px 6px;color:var(--t3);font-size:13px;font-weight:500;white-space:nowrap;flex-shrink:0;}
+.sic-ctrl-label{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;}
+.sic-inp-row{display:flex;align-items:center;gap:8px;}
 .sic-results{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;}
 .sic-res-card{background:var(--s2);border:1px solid var(--border);border-radius:var(--r2);padding:14px;}
 .sic-res-label{font-size:10px;color:var(--t3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;}
@@ -445,8 +450,8 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
     /* hauteur = icônes + safe-area : nav recouvre la safe-area proprement */
     height:calc(var(--nav) + var(--sab));
     padding-bottom:var(--sab);
-    background:#0b0b0e;
-    border-top:0.5px solid rgba(255,255,255,.1);
+    background:var(--bg);
+    border-top:0.5px solid rgba(255,255,255,.08);
     z-index:300;
     align-items:flex-start;
   }
@@ -1919,37 +1924,25 @@ function pageSIC(){
   var a = acc();
   $('cnt').innerHTML =
     '<div class="sic-controls">'
-    // Capital initial
     +'<div class="sic-ctrl">'
-    +'<div class="sic-ctrl-label">CAPITAL DE DÉPART</div>'
+    +'<div class="sic-ctrl-label">Capital de départ</div>'
     +'<input type="range" class="sic-slider" id="sic-cap" min="0" max="50000" step="500" value="'+SIC.capital+'" oninput="sicUpdSlider(\'cap\')">'
-    +'<div class="sic-inp-row">'
-    +'<input type="number" class="sic-inp" id="sic-i-cap" value="'+SIC.capital+'" min="0" max="500000" placeholder="Ex: 5000" oninput="sicUpdInput(\'cap\')">'
-    +'<span style="font-size:13px;color:#7a869a;flex-shrink:0">€</span></div>'
+    +'<div class="sic-inp-wrap"><input type="number" class="sic-inp" id="sic-i-cap" value="'+SIC.capital+'" min="0" max="500000" oninput="sicUpdInput(\'cap\')"><span class="sic-unit">€</span></div>'
     +'</div>'
-    // Versement mensuel
     +'<div class="sic-ctrl">'
-    +'<div class="sic-ctrl-label">VERSEMENT MENSUEL</div>'
+    +'<div class="sic-ctrl-label">Versement mensuel</div>'
     +'<input type="range" class="sic-slider" id="sic-men" min="0" max="2000" step="50" value="'+SIC.mensualite+'" oninput="sicUpdSlider(\'men\')">'
-    +'<div class="sic-inp-row">'
-    +'<input type="number" class="sic-inp" id="sic-i-men" value="'+SIC.mensualite+'" min="0" max="50000" placeholder="Ex: 200" oninput="sicUpdInput(\'men\')">'
-    +'<span style="font-size:13px;color:#7a869a;flex-shrink:0">€/mois</span></div>'
+    +'<div class="sic-inp-wrap"><input type="number" class="sic-inp" id="sic-i-men" value="'+SIC.mensualite+'" min="0" max="50000" oninput="sicUpdInput(\'men\')"><span class="sic-unit">€ / mois</span></div>'
     +'</div>'
-    // Taux
     +'<div class="sic-ctrl">'
-    +'<div class="sic-ctrl-label">TAUX ANNUEL</div>'
+    +'<div class="sic-ctrl-label">Taux annuel</div>'
     +'<input type="range" class="sic-slider" id="sic-taux" min="0.5" max="15" step="0.5" value="'+SIC.taux+'" oninput="sicUpdSlider(\'taux\')">'
-    +'<div class="sic-inp-row">'
-    +'<input type="number" class="sic-inp" id="sic-i-taux" value="'+SIC.taux+'" min="0" max="50" step="0.1" placeholder="Ex: 5" oninput="sicUpdInput(\'taux\')">'
-    +'<span style="font-size:13px;color:#7a869a;flex-shrink:0">% / an</span></div>'
+    +'<div class="sic-inp-wrap"><input type="number" class="sic-inp" id="sic-i-taux" value="'+SIC.taux+'" min="0" max="50" step="0.1" oninput="sicUpdInput(\'taux\')"><span class="sic-unit">% / an</span></div>'
     +'</div>'
-    // Durée
     +'<div class="sic-ctrl">'
-    +'<div class="sic-ctrl-label">DURÉE</div>'
+    +'<div class="sic-ctrl-label">Durée</div>'
     +'<input type="range" class="sic-slider" id="sic-dur" min="1" max="40" step="1" value="'+SIC.duree+'" oninput="sicUpdSlider(\'dur\')">'
-    +'<div class="sic-inp-row">'
-    +'<input type="number" class="sic-inp" id="sic-i-dur" value="'+SIC.duree+'" min="1" max="100" placeholder="Ex: 10" oninput="sicUpdInput(\'dur\')">'
-    +'<span style="font-size:13px;color:#7a869a;flex-shrink:0">ans</span></div>'
+    +'<div class="sic-inp-wrap"><input type="number" class="sic-inp" id="sic-i-dur" value="'+SIC.duree+'" min="1" max="100" oninput="sicUpdInput(\'dur\')"><span class="sic-unit">ans</span></div>'
     +'</div>'
     +'</div>'
     // Graphique
