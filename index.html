@@ -116,7 +116,7 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
 
 /* ═══════════════ APP LAYOUT ═══════════════ */
 #app{display:none;height:100vh;height:100dvh;overflow:hidden;}
-#app.show{display:flex;}
+#app.show{display:flex;padding-top:env(safe-area-inset-top,0px);}
 
 /* sidebar desktop */
 #sb{
@@ -415,12 +415,12 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   #app{flex-direction:column;}
 
   /* header : décalé vers le bas selon la Dynamic Island */
-  #hdr{padding:calc(var(--sat) + 10px) 16px 10px;}
+  #hdr{padding:10px 16px 10px;}
   #ptit{font-size:17px !important;}
   #psub{display:none;}
 
   /* content : padding en bas = nav + safe-area */
-  #cnt{padding:0 16px calc(var(--nav) + var(--sab) + 12px);}
+  #cnt{padding:16px 16px calc(var(--nav) + var(--sab) + 16px);}
 
   /* grids */
   .kgrid{grid-template-columns:repeat(2,1fr);gap:8px;}
@@ -440,22 +440,24 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   #app.show ~ #bottom-nav{
     display:flex;
     position:fixed;
-    bottom:var(--sab);        /* positionné AU-DESSUS de la safe-area */
+    bottom:0;
     left:0;right:0;
-    height:var(--nav);        /* hauteur fixe : icônes uniquement */
-    background:rgba(9,9,11,.96);
-    backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    /* hauteur = icônes + safe-area : nav recouvre la safe-area proprement */
+    height:calc(var(--nav) + var(--sab));
+    padding-bottom:var(--sab);
+    background:#0b0b0e;
     border-top:0.5px solid rgba(255,255,255,.1);
     z-index:300;
-    align-items:stretch;
+    align-items:flex-start;
   }
-  body.light #app.show ~ #bottom-nav{background:rgba(248,248,250,.96);}
+  body.light #app.show ~ #bottom-nav{background:#f5f5f7;}
 
   .bn-item{
     flex:1;
     display:flex;flex-direction:column;
     align-items:center;justify-content:center;
     gap:3px;
+    height:var(--nav);
     cursor:pointer;
     -webkit-tap-highlight-color:transparent;
     transition:opacity .1s;
