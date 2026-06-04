@@ -102,16 +102,34 @@ module.exports = async function handler(req, res) {
         if (o.taux > 0 && o.actuel > 0) return sum + (o.actuel * (o.taux / 100 / 365));
         return sum;
       }, 0);
-      if (daily < 0.0001) continue;
-      var fmt = daily < 0.01
-        ? daily.toFixed(4)
-        : daily.toFixed(2);
-      payload = {
-        title: '💰 +' + fmt + ' € d\'intérêts cette nuit',
-        body: 'Ton épargne travaille pour toi ! Continue comme ça.',
-        tag: 'interest',
-        url: '/?tab=epargnes'
-      };
+      if (daily >= 0.0001) {
+        // L'épargne génère des intérêts → message spécifique
+        var fmtAmt = daily < 0.01 ? daily.toFixed(4) : daily.toFixed(2);
+        payload = {
+          title: '+' + fmtAmt + ' € d\'intérêts cette nuit',
+          body: 'Ton épargne travaille pour toi pendant que tu dors !',
+          tag: 'interest',
+          url: '/?tab=epargnes'
+        };
+      } else {
+        // Pas d'intérêts calculables → message bonjour universel
+        var eTotal = objs.reduce(function(s, o) { return s + (o.actuel || 0); }, 0);
+        if (eTotal > 0) {
+          payload = {
+            title: 'Bonjour ! Ton épargne : ' + eTotal.toLocaleString('fr-FR', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' €',
+            body: 'Ajoute un taux sur tes livrets pour suivre tes intérêts.',
+            tag: 'interest',
+            url: '/?tab=epargnes'
+          };
+        } else {
+          payload = {
+            title: 'Bonjour ! Prêt pour une nouvelle journée ?',
+            body: 'Pense à noter tes dépenses dans Trivio.',
+            tag: 'interest',
+            url: '/'
+          };
+        }
+      }
     }
 
     if (!payload) continue;
