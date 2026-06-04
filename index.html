@@ -903,7 +903,7 @@ var TOKEN = null;
 var REFRESH = null;
 
 var S = {
-  theme:'sombre', accent:'emeraude',
+  theme:'sombre', accent:'emeraude', _backups:[],
   regle:{charges:50,plaisirs:30,epargne:20},
   page:'dashboard', stab:'compte',
   y: new Date().getFullYear(), m: new Date().getMonth(),
@@ -1096,15 +1096,24 @@ function dbLoad(){
 
 function dbSave(){
   if(!USER||!TOKEN) return;
+  // Snapshot des données actuelles
+  var snap = {
+    theme:S.theme, accent:S.accent, regle:S.regle,
+    revenus:S.revenus, txData:S.txData,
+    prelvs:S.prelvs, objs:S.objs, plDone:S.plDone,
+    tutoEpargneDone:S.tutoEpargneDone, onboardingDone:S.onboardingDone
+  };
+  // Backup roulant : garder max 5 versions (1 par heure min)
+  var _now = Date.now();
+  var bkps = Array.isArray(S._backups) ? S._backups : [];
+  var _lastBk = bkps.length ? new Date(bkps[0].ts).getTime() : 0;
+  if(_now - _lastBk > 3600000) {
+    bkps = [{ts:new Date().toISOString(), d:snap}].concat(bkps).slice(0,5);
+    S._backups = bkps;
+  }
   var payload = {
     user_id: USER.id,
-    data: {
-      theme:S.theme, accent:S.accent, regle:S.regle,
-      revenus:S.revenus, txData:S.txData,
-      prelvs:S.prelvs, objs:S.objs, plDone:S.plDone,
-      tutoEpargneDone:S.tutoEpargneDone,
-      onboardingDone:S.onboardingDone
-    },
+    data: Object.assign({}, snap, {_backups: S._backups||[]}),
     updated_at: new Date().toISOString()
   };
   var body = JSON.stringify(payload);
@@ -1154,6 +1163,7 @@ function applyData(data){
   if(data.plDone) S.plDone=data.plDone;
   if(data.tutoEpargneDone) S.tutoEpargneDone=data.tutoEpargneDone;
   if(data.onboardingDone) S.onboardingDone=data.onboardingDone;
+  if(Array.isArray(data._backups)) S._backups=data._backups;
 }
 
 // ── AUTO PRÉLÈVEMENTS ─────────────────────────────────
@@ -1831,6 +1841,18 @@ function pageParams(){
 
   var body='';
   if(S.stab==='compte'){
+    // Sauvegardes roulantes
+    var bkpRows = (S._backups||[]).map(function(bk,i){
+      var bd = new Date(bk.ts);
+      var label = bd.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'})+' '+bd.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+      var txCount = Object.values(bk.d.txData||{}).reduce(function(s,m){return s+(m?m.length:0);},0);
+      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)">'
+        +'<div><div style="font-size:13px;font-weight:600;color:#e8eaf0">'+label+'</div>'
+        +'<div style="font-size:11px;color:#7a869a">'+txCount+' tx · '+(bk.d.prelvs||[]).length+' prélèvements · '+(bk.d.objs||[]).length+' objectifs</div></div>'
+        +'<button onclick="restoreBackup('+i+')" style="font-size:11px;padding:5px 10px;border-radius:8px;background:rgba(34,197,94,.1);color:#22c55e;border:1px solid rgba(34,197,94,.25);cursor:pointer;flex-shrink:0">Restaurer</button>'
+        +'</div>';
+    }).join('');
+
     body='<div class="card" style="margin-bottom:14px"><div class="ctit">Mon compte</div>'
       +'<div style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:#20293a;border-radius:10px;border:1px solid #252d3e">'
       +'<div style="width:46px;height:46px;border-radius:10px;background:'+a.main+';display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:#fff">'+((USER&&USER.email)?USER.email[0].toUpperCase():'N')+'</div>'
@@ -1841,10 +1863,19 @@ function pageParams(){
       +'<div style="font-size:12px;color:#7a869a">Ferme ta session sur cet appareil</div></div>'
       +'<button onclick="doLogout()" class="bg" style="display:flex;align-items:center;gap:6px;font-size:13px;padding:7px 14px">'+IC.logout(14)+' Déconnexion</button>'
       +'</div></div>'
-      // Zone danger
+      +'<div class="card" style="margin-bottom:14px">'
+      +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">'
+      +'<div class="ctit" style="margin:0;display:flex;align-items:center;gap:6px">'+IC.shield(15)+' Sauvegardes</div>'
+      +'<div style="display:flex;gap:6px">'
+      +'<button onclick="exportData()" class="bg" style="font-size:11px;padding:5px 9px;display:flex;align-items:center;gap:4px">'+IC.notes(12)+' Exporter</button>'
+      +'<button onclick="importData()" class="bg" style="font-size:11px;padding:5px 9px;display:flex;align-items:center;gap:4px">'+IC.checkCircle(12)+' Importer</button>'
+      +'</div></div>'
+      +'<div style="font-size:11px;color:#7a869a;margin-bottom:8px">Auto toutes les heures · max 5 versions · restauration en 1 clic</div>'
+      +(bkpRows||'<div style="font-size:12px;color:#7a869a;padding:6px 0">Aucune sauvegarde pour l\'instant. Elles apparaîtront après 1h d\'utilisation.</div>')
+      +'</div>'
       +'<div class="card" style="border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.04)">'
       +'<div style="font-size:13px;font-weight:700;color:#ef4444;margin-bottom:4px">'+IC.warning(15,'#ef4444')+' Zone dangereuse</div>'
-      +'<div style="font-size:12px;color:#7a869a;margin-bottom:14px">La suppression de ton compte est <b style="color:#ef4444">irréversible</b>. Toutes tes données (transactions, épargnes, objectifs, prélèvements) seront définitivement effacées.</div>'
+      +'<div style="font-size:12px;color:#7a869a;margin-bottom:14px">La suppression de ton compte est <b style="color:#ef4444">irréversible</b>. Toutes tes données seront définitivement effacées.</div>'
       +'<button onclick="openDeleteAccount()" style="display:flex;align-items:center;gap:6px;padding:9px 16px;border-radius:8px;font-weight:600;font-size:13px;color:#ef4444;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);cursor:pointer">'+IC.trash(14,'#ef4444')+' Supprimer mon compte</button>'
       +'</div>';
   } else if(S.stab==='apparence'){
@@ -3339,6 +3370,63 @@ function showOnboarding(){
     regle:{charges:50,plaisirs:30,epargne:20},epargneActuelle:'',livret:''};
   document.getElementById('ob').classList.add('show');
   renderOBStep();
+}
+
+
+// ══════════════════════════════════════════════════════
+// BACKUP — Export / Import / Restore
+// ══════════════════════════════════════════════════════
+function exportData(){
+  var data = {
+    _version:1, _exportDate:new Date().toISOString(),
+    _email:(USER&&USER.email)||'',
+    theme:S.theme, accent:S.accent, regle:S.regle,
+    revenus:S.revenus, txData:S.txData,
+    prelvs:S.prelvs, objs:S.objs, onboardingDone:S.onboardingDone
+  };
+  var json = JSON.stringify(data, null, 2);
+  var blob = new Blob([json], {type:'application/json'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'trivio-backup-' + new Date().toISOString().split('T')[0] + '.json';
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 500);
+  aok('Sauvegarde exportée !');
+}
+
+function importData(){
+  var input = document.createElement('input');
+  input.type = 'file'; input.accept = '.json,application/json';
+  input.onchange = function(e){
+    var file = e.target.files[0]; if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev){
+      try {
+        var data = JSON.parse(ev.target.result);
+        if(!data.txData && !data.revenus && !data.prelvs){
+          aerr("Fichier invalide — ce n\'est pas une sauvegarde Trivio."); return;
+        }
+        applyData(data); dbSave();
+        applyTheme(); renderNav(); renderBottomNav(); render();
+        if(S.page==='params') pageParams();
+        aok('Données importées !');
+      } catch(err){ aerr('Fichier JSON invalide.'); }
+    };
+    reader.readAsText(file);
+  };
+  document.body.appendChild(input); input.click();
+  setTimeout(function(){ if(input.parentNode) document.body.removeChild(input); }, 2000);
+}
+
+function restoreBackup(idx){
+  var bk = (S._backups||[])[idx]; if(!bk) return;
+  var d = new Date(bk.ts).toLocaleString('fr-FR');
+  if(!confirm('Restaurer la sauvegarde du ' + d + ' ?\nLes modifications récentes seront perdues.')) return;
+  applyData(bk.d); dbSave();
+  applyTheme(); renderNav(); renderBottomNav(); render();
+  if(S.page==='params') pageParams();
+  aok('Sauvegarde restaurée !');
 }
 
 function bootUser(){
