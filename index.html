@@ -638,7 +638,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   #app { flex-direction: column; }
 
   #hdr { padding: calc(env(safe-area-inset-top, 0px) + 8px) 16px 8px; }
-  #cnt { padding: 0 16px calc(64px + env(safe-area-inset-bottom, 0px)); }
+  #cnt { padding: 0 16px calc(58px + env(safe-area-inset-bottom, 0px)); }
   #psub { display: none; }
   #ptit { font-size: 18px !important; }
 
@@ -659,22 +659,34 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   /* ── BOTTOM NAV — visible seulement quand l'app est active ── */
   #app.show ~ #bottom-nav {
     display: flex;
+    flex-direction: column;
     position: fixed;
     bottom: 0; left: 0; right: 0;
     background: #131315;
     border-top: 1px solid rgba(255,255,255,.06);
     z-index: 300;
-    padding-top: 4px;
-    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 4px);
     padding-left: max(env(safe-area-inset-left, 0px), 0px);
     padding-right: max(env(safe-area-inset-right, 0px), 0px);
+  }
+  /* Rangée d'icônes */
+  #bottom-nav .bn-row {
+    display: flex;
+    flex-direction: row;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  /* Spacer safe-area sous les icônes (home indicator) */
+  #bottom-nav .bn-safe {
+    height: env(safe-area-inset-bottom, 0px);
+    background: #131315;
+    width: 100%;
   }
   .bn-item {
     flex: 1; display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     gap: 3px; cursor: pointer; padding: 4px 2px;
     -webkit-tap-highlight-color: transparent;
-    min-height: 35px; transition: opacity .1s;
+    min-height: 34px; transition: opacity .1s;
     position: relative; min-width: 0;
   }
   .bn-item:active { opacity: .5; }
@@ -855,30 +867,33 @@ self.addEventListener('fetch',e=>{
   </div>
 </div>
 <div id="mroot"></div>
-<div id="push-banner" style="display:none;position:fixed;bottom:calc(env(safe-area-inset-bottom, 0px) + 64px);left:0;right:0;z-index:299;padding:0 14px"></div>
+<div id="push-banner" style="display:none;position:fixed;bottom:calc(env(safe-area-inset-bottom, 0px) + 58px);left:0;right:0;z-index:299;padding:0 14px"></div>
 
 <!-- BOTTOM NAV (mobile uniquement) -->
 <div id="bottom-nav">
-  <div class="bn-item" id="bn-dashboard" onclick="go('dashboard')">
-    <span class="bn-icon">⊞</span>
-    <span class="bn-label">Accueil</span>
+  <div class="bn-row">
+    <div class="bn-item" id="bn-dashboard" onclick="go('dashboard')">
+      <span class="bn-icon">⊞</span>
+      <span class="bn-label">Accueil</span>
+    </div>
+    <div class="bn-item" id="bn-transactions" onclick="go('transactions')">
+      <span class="bn-icon">⇄</span>
+      <span class="bn-label">Transactions</span>
+    </div>
+    <div class="bn-item" id="bn-epargnes" onclick="go('epargnes')">
+      <span class="bn-icon">◆</span>
+      <span class="bn-label">Épargnes</span>
+    </div>
+    <div class="bn-item" id="bn-prelvs" onclick="go('prelvs')">
+      <span class="bn-icon">◷</span>
+      <span class="bn-label">Charges</span>
+    </div>
+    <div class="bn-item" id="bn-sic" onclick="go('sic')">
+      <span class="bn-icon">∑</span>
+      <span class="bn-label">SIC</span>
+    </div>
   </div>
-  <div class="bn-item" id="bn-transactions" onclick="go('transactions')">
-    <span class="bn-icon">⇄</span>
-    <span class="bn-label">Transactions</span>
-  </div>
-  <div class="bn-item" id="bn-epargnes" onclick="go('epargnes')">
-    <span class="bn-icon">◆</span>
-    <span class="bn-label">Épargnes</span>
-  </div>
-  <div class="bn-item" id="bn-prelvs" onclick="go('prelvs')">
-    <span class="bn-icon">◷</span>
-    <span class="bn-label">Charges</span>
-  </div>
-  <div class="bn-item" id="bn-sic" onclick="go('sic')">
-    <span class="bn-icon">∑</span>
-    <span class="bn-label">SIC</span>
-  </div>
+  <div class="bn-safe"></div>
 </div>
 
 <script>
@@ -3343,14 +3358,21 @@ function bootUser(){
   $('auth').style.display='none';
   $('app').classList.add('show');
   updateBadge();
+
+  // Clé locale pour savoir si cet utilisateur a déjà été onboardé
+  var _obKey = '_trivio_ob_' + (USER && USER.id);
+
   dbLoad().then(function(data){
-    var isNewUser = !data;
+    var hasLocalData = false;
     if(data){
       applyData(data);
+      // Marquer l'utilisateur comme connu dès qu'on a ses données Supabase
+      try{ localStorage.setItem(_obKey, '1'); }catch(e){}
     } else {
+      // Pas de données Supabase → essai localStorage backup
       try{
-        var local=localStorage.getItem('_td_'+USER.id);
-        if(local){ applyData(JSON.parse(local)); isNewUser=false; }
+        var local = localStorage.getItem('_td_'+USER.id);
+        if(local){ applyData(JSON.parse(local)); hasLocalData = true; }
       }catch(e){}
     }
     applyTheme();
@@ -3360,14 +3382,24 @@ function bootUser(){
     renderBottomNav();
     setHdr();
     render();
-    // Onboarding uniquement pour les nouveaux comptes
-    if(isNewUser && !S.onboardingDone){
+
+    // Onboarding SEULEMENT si c'est un vrai nouveau compte :
+    // aucune donnée Supabase, aucun backup local, et jamais onboardé
+    var alreadyKnown = false;
+    try{ alreadyKnown = !!localStorage.getItem(_obKey); }catch(e){}
+    var isRealNewUser = !data && !hasLocalData && !alreadyKnown;
+    if(isRealNewUser && !S.onboardingDone){
       setTimeout(showOnboarding, 300);
     }
     pushSetup();
   }).catch(function(){
-    applyTheme(); renderNav(); setHdr(); render();
-    if(!S.onboardingDone) setTimeout(showOnboarding, 300);
+    // Erreur réseau : afficher l'app avec les données locales disponibles
+    try{
+      var local = localStorage.getItem('_td_'+USER.id);
+      if(local){ applyData(JSON.parse(local)); }
+    }catch(e){}
+    applyTheme(); renderNav(); renderBottomNav(); setHdr(); render();
+    // Ne JAMAIS déclencher l'onboarding sur une erreur réseau
     pushSetup();
   });
 }
