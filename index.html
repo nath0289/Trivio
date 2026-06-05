@@ -2931,6 +2931,65 @@ var OB_STEPS = [
     }
   },
   {
+    id: 'matelas',
+    icon: IC.shield(22),
+    title: function(){
+      var sit = OB.data.situation;
+      if(sit==='salarie') return 'Ton matelas : 3 à 4 mois de salaire';
+      if(sit==='independant') return 'Ton matelas : 6 à 8 mois de revenus';
+      if(sit==='etudiant') return 'Ton matelas : 2 à 3 mois de dépenses';
+      return 'Ton matelas de sécurité : 4 à 6 mois';
+    },
+    sub: 'Trivio crée cet objectif automatiquement. Priorité absolue avant tout investissement.',
+    render: function(){
+      var sit = OB.data.situation;
+      var sal = OB.data.salaire || 0;
+      var moisMin, moisMax, desc, conseil;
+      if(sit==='salarie'){
+        moisMin=3; moisMax=4;
+        desc='Salarié(e) — revenus stables';
+        conseil='En CDI, 3 à 4 mois de salaire net te protègent en cas de coup dur.';
+      } else if(sit==='independant'){
+        moisMin=6; moisMax=8;
+        desc='Indépendant(e) — revenus variables';
+        conseil='Freelance/auto-entrepreneur : vise 6 à 8 mois car tes revenus fluctuent.';
+      } else if(sit==='etudiant'){
+        moisMin=2; moisMax=3;
+        desc='Étudiant(e) — petit budget';
+        conseil='Commence avec 2 à 3 mois de dépenses pour couvrir les imprévus.';
+      } else {
+        moisMin=4; moisMax=6;
+        desc='Situation variée';
+        conseil='Vise 4 à 6 mois de dépenses pour une sécurité solide.';
+      }
+      var cibleMin = sal>0 ? sal*moisMin : moisMin*500;
+      var cibleMax = sal>0 ? sal*moisMax : moisMax*500;
+      var fmtMin = cibleMin.toLocaleString('fr-FR',{maximumFractionDigits:0})+' €';
+      var fmtMax = cibleMax.toLocaleString('fr-FR',{maximumFractionDigits:0})+' €';
+      var a = acc();
+      return '<div class="card" style="margin-bottom:12px">'
+        +'<div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">'+desc+'</div>'
+        +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'
+        +'<span style="font-size:13px;color:var(--t2)">Objectif minimum</span>'
+        +'<span style="font-family:Sora,sans-serif;font-size:18px;font-weight:700;color:'+a.main+'">'+fmtMin+'</span>'
+        +'</div>'
+        +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">'
+        +'<span style="font-size:13px;color:var(--t2)">Objectif idéal</span>'
+        +'<span style="font-family:Sora,sans-serif;font-size:18px;font-weight:700;color:'+a.main+'">'+fmtMax+'</span>'
+        +'</div>'
+        +'<div style="font-size:12px;color:var(--t2);line-height:1.5;border-top:1px solid var(--border);padding-top:10px">'+conseil+'</div>'
+        +'</div>'
+        +'<div style="background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);border-radius:12px;padding:14px">'
+        +'<div style="font-size:12px;font-weight:700;color:#ef4444;margin-bottom:6px;display:flex;align-items:center;gap:6px">'+IC.warning(13,'#ef4444')+' Important à retenir</div>'
+        +'<div style="font-size:12px;color:var(--t2);line-height:1.6">'
+        +'Ce matelas est <b style="color:var(--t1)">séparé de ton argent plaisir</b>. '
+        +'Il sert uniquement aux <b style="color:var(--t1)">imprévus</b> '
+        +'(chômage, réparation, santé).<br><br>'
+        +'<b style="color:#ef4444">Remplis-le avant de placer ou investir.</b>'
+        +'</div></div>';
+    }
+  },
+  {
     id: 'regle',
     icon: IC.palette(22),
     title: 'Ta règle budgétaire',
@@ -3048,7 +3107,7 @@ function renderOBStep(){
   var bodyHTML=step.render();
   var wrapClass=step.wrapClass||'';
 
-  var imgKey=['welcome','situation','revenus','objectif','regle','finish'];
+  var imgKey=['welcome','situation','revenus','objectif','matelas','regle','finish'];
   var imgSrc=OB_SVG[imgKey[OB.step]]||OB_SVG.welcome;
   var html='<div class="ob-step show">'
     +'<div class="ob-img"><img src="'+imgSrc+'" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:12px"/></div>'
@@ -3120,7 +3179,7 @@ function obFinish(){
   // Objectif 1 : Matelas de sécurité (PRIORITÉ 1)
   S.objs.push({
     id:Date.now(),
-    nom:'🛡️ Matelas de sécurité',
+    nom:'Matelas de sécurité',
     cible:cibleIdeal,
     actuel:OB.data.epargneActuelle||0,
     echeance:'',
