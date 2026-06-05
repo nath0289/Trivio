@@ -1030,7 +1030,7 @@ var NAVS=[
   {id:'dashboard',   icon:'⊞',label:'Tableau de bord'},
   {id:'transactions',icon:'⇄',label:'Transactions'},
   {id:'epargnes',    icon:'◆',label:'Épargnes'},
-  {id:'prelvs',      icon:'◷',label:'Prélèvements'},
+  {id:'prelvs',      icon:'◷',label:'Charges fixes'},
   {id:'sic',         icon:'∿', label:'Simulateur'},
 ];
 
@@ -1071,8 +1071,8 @@ function setHdr(){
     dashboard:{t:'Tableau de bord',s:"Vue d'ensemble de vos finances"},
     revenus:{t:'Transactions',s:mlab},
     transactions:{t:'Transactions',s:mlab},
-    epargnes:{t:'Épargnes & Objectifs',s:fmt(totA)+' épargnés sur '+fmt(totC)},
-    prelvs:{t:'Prélèvements récurrents',s:'Total mensuel : '+fmt(totPl)},
+    epargnes:{t:'Épargne',s:fmt(totA)+' épargnés sur '+fmt(totC)},
+    prelvs:{t:'Charges fixes',s:'Total mensuel : '+fmt(totPl)},
     params:{t:'Paramètres',s:'Personnalisez votre expérience Trivio'},
     sic:{t:"Simulateur d'intérêts composés",s:"Visualise la puissance de l'épargne dans le temps"},
   };
@@ -1231,7 +1231,7 @@ function pageDashboard(){
   var epHTML='';
   if(S.objs.length){
     epHTML='<div class="card" style="margin-top:14px">'
-      +'<div class="srow"><div class="ctit" style="margin:0;display:flex;align-items:center;gap:6px">'+IC.bank(15)+' Épargnes & Objectifs</div>'
+      +'<div class="srow"><div class="ctit" style="margin:0;display:flex;align-items:center;gap:6px">'+IC.bank(15)+' Épargne</div>'
       +'<button class="bg" onclick="go(\'epargnes\')" style="font-size:12px;padding:5px 10px">Voir tout →</button></div>'
       +S.objs.slice(0,2).map(function(o){
         var pct=o.cible>0?Math.min(100,(o.actuel/o.cible)*100):0;
@@ -1601,11 +1601,11 @@ function pagePrelevements(){
 
   $('cnt').innerHTML=
     '<div class="notif-bar">'+'<div class="notif-icon" style="display:flex;align-items:center">'+IC.calendar(18)+'</div>'+'<div class="notif-text">'
-    +'<b>Prélèvements automatiques</b> — débités automatiquement le jour configuré.</div></div>'
+    +'<b>Charges fixes récurrentes</b> — débitées automatiquement le jour configuré.</div></div>'
     +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">'
     +'<div>Total mensuel : <b>'+fmt(tot)+'</b></div>'
     +'<button class="bp" onclick="openPlForm(null)" style="background:'+a.main+'">+ Ajouter</button></div>'
-    +'<div class="card"><div class="ctit">'+S.prelvs.length+' prélèvement(s)</div>'+rows+'</div>';
+    +'<div class="card"><div class="ctit">'+S.prelvs.length+' charge(s) fixe(s)</div>'+rows+'</div>';
 }
 
 var _epid=null;
