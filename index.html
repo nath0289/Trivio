@@ -72,7 +72,7 @@ body{
   font-family:'Geist',-apple-system,BlinkMacSystemFont,sans-serif;
   font-size:14px;
   color:var(--t1);
-  background:transparent;
+  background:linear-gradient(to top,#1c1c1e 0%,#111113 40%,#09090B 100%);
 }
 
 button{cursor:pointer;font-family:inherit;border:none;outline:none;}
@@ -445,8 +445,7 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   #psub{display:none;}
 
   /* content : padding en bas = nav + safe-area */
-  /* padding-bottom = nav + safe-area estimée (34px) + marge */
-  #cnt{padding:16px 16px calc(var(--nav) + 34px + 16px);}
+  #cnt{padding:16px 16px calc(var(--nav) + env(safe-area-inset-bottom,34px) + 16px);}
 
   /* grids */
   .kgrid{grid-template-columns:repeat(2,1fr);gap:8px;}
@@ -461,15 +460,15 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   .avatar-circle{width:24px;height:24px;font-size:9px;}
   #uem{font-size:11px;max-width:65px;}
 
-  /* ─ BOTTOM NAV : positionné AU-DESSUS de la safe-area ─ */
-  /* Nav fixe au bas de l'écran — hauteur constante, pas de dépendance env() */
+  /* ─ BOTTOM NAV : couvre la safe-area, remplace la barre blanche ─ */
   #app.show ~ #bottom-nav{
     display:flex;
+    flex-direction:column;
     position:fixed;
     bottom:0;
     left:0;right:0;
-    /* Hauteur fixe uniquement — aucune variable env() qui peut fluctuer au démarrage */
-    height:var(--nav);
+    /* Hauteur = icônes (44px) + home indicator iOS (~34px) */
+    height:calc(var(--nav) + env(safe-area-inset-bottom,0px));
     padding:0;
     background:var(--bg);
     border-top:0.5px solid rgba(255,255,255,.08);
@@ -483,6 +482,8 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
     display:flex;flex-direction:column;
     align-items:center;justify-content:center;
     gap:3px;
+    /* Limité à la zone des icônes (var(--nav) = 44px) */
+    max-height:var(--nav);
     cursor:pointer;
     -webkit-tap-highlight-color:transparent;
     transition:opacity .1s;
@@ -690,8 +691,9 @@ self.addEventListener('fetch',e=>{
   function lockNav(){
     var nav = document.getElementById('bottom-nav');
     if(!nav || getComputedStyle(nav).display==='none') return;
+    // Verrouiller uniquement la position, pas la hauteur
+    // (CSS gère height avec env(safe-area-inset-bottom) de façon stable)
     nav.style.setProperty('bottom','0px','important');
-    nav.style.setProperty('height','44px','important');
   }
   // Lancer au chargement et verrouiller sur chaque resize
   window.addEventListener('load', lockNav);
