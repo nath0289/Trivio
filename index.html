@@ -54,13 +54,13 @@
   --sab:env(safe-area-inset-bottom,0px);
   /* layout */
   --hdr:52px;
-  --nav:44px;
+  --nav:49px;
 }
 
 html{
   height:100%;
   height:100dvh;
-  background:linear-gradient(to top,#1c1c1e 0%,#111113 40%,#09090B 100%);
+  background:linear-gradient(to bottom,#1a1a26 0%,#0f0f16 45%,#09090B 100%);
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
 }
@@ -72,7 +72,7 @@ body{
   font-family:'Geist',-apple-system,BlinkMacSystemFont,sans-serif;
   font-size:14px;
   color:var(--t1);
-  background:linear-gradient(to top,#1c1c1e 0%,#111113 40%,#09090B 100%);
+  background:linear-gradient(to bottom,#1a1a26 0%,#0f0f16 45%,#09090B 100%);
 }
 
 button{cursor:pointer;font-family:inherit;border:none;outline:none;}
@@ -86,6 +86,7 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
   position:fixed;inset:0;
   background:linear-gradient(to top,#1c1c1e 0%,#111113 40%,#09090B 100%);
   display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(to bottom,#1a1a26 0%,#0f0f16 45%,#09090B 100%);
   padding:calc(var(--sat) + 24px) 24px calc(var(--sab) + 24px);
   z-index:9999;
 }
@@ -463,13 +464,15 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   /* ─ BOTTOM NAV : couvre la safe-area, remplace la barre blanche ─ */
   #app.show ~ #bottom-nav{
     display:flex;
-    flex-direction:column;
+    flex-direction:row;
     position:fixed;
     bottom:0;
     left:0;right:0;
-    /* Hauteur = icônes (44px) + home indicator iOS (~34px) */
+    /* Hauteur = tab bar Apple iOS (49px) + home indicator (~34px) */
     height:calc(var(--nav) + env(safe-area-inset-bottom,0px));
-    padding:0;
+    padding-bottom:env(safe-area-inset-bottom,0px);
+    padding-left:max(env(safe-area-inset-left,0px), 8px);
+    padding-right:max(env(safe-area-inset-right,0px), 8px);
     background:var(--bg);
     border-top:0.5px solid rgba(255,255,255,.08);
     z-index:300;
@@ -1070,7 +1073,7 @@ function setHdr(){
   var totA=S.objs.reduce(function(s,o){return s+o.actuel;},0);
   var totPl=S.prelvs.reduce(function(s,p){return s+p.montant;},0);
   var PI={
-    dashboard:{t:'Tableau de bord',s:"Vue d'ensemble de vos finances"},
+    dashboard:{t:'Trivio',s:"Vue d'ensemble de vos finances"},
     revenus:{t:'Transactions',s:mlab},
     transactions:{t:'Transactions',s:mlab},
     epargnes:{t:'Épargne',s:fmt(totA)+' épargnés sur '+fmt(totC)},
@@ -1248,10 +1251,10 @@ function pageDashboard(){
 
   $('cnt').innerHTML=mnavHTML()+pHTML
     +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">'
-    +'<div class="kpi" style="background:'+a.main+'"><div class="klab" style="color:rgba(255,255,255,.7);display:flex;align-items:center;gap:4px">'+IC.card(11,'rgba(255,255,255,.7)')+' Solde disponible</div><div class="kval" style="color:#fff">'+fmt(Math.max(0,sold))+'</div><div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:2px">Compte courant</div></div>'
-    +'<div class="stat-card"><div class="stat-label" style="display:flex;align-items:center;gap:4px">'+IC.bank(11)+' Total épargné</div><div class="stat-amount yel">'+fmt(eTotal)+'</div></div>'
-    +'<div class="kpi card"><div class="klab">Revenus</div><div class="kval grn">'+fmt(revT)+'</div></div>'
-    +'<div class="kpi card"><div class="klab">Dépenses</div><div class="kval red">'+fmt(dC+dP)+'</div></div>'
+    +'<div class="kpi" style="background:'+a.main+'"><div class="klab" style="color:rgba(255,255,255,.7);display:flex;align-items:center;gap:4px">'+IC.card(11,'rgba(255,255,255,.7)')+' Solde disponible</div><div class="kval" style="color:#fff">'+fmt(Math.max(0,sold))+'</div><div style="font-size:11px;color:rgba(255,255,255,.45);margin-top:3px">Compte courant</div></div>'
+    +'<div class="kpi"><div class="klab" style="display:flex;align-items:center;gap:4px">'+IC.bank(11)+' Total épargné</div><div class="kval yel">'+fmt(eTotal)+'</div><div style="font-size:11px;color:var(--t3);margin-top:3px">Tous objectifs</div></div>'
+    +'<div class="kpi"><div class="klab">Revenus</div><div class="kval grn">'+fmt(revT)+'</div><div style="font-size:11px;color:var(--t3);margin-top:3px">Ce mois</div></div>'
+    +'<div class="kpi"><div class="klab">Dépenses</div><div class="kval red">'+fmt(dC+dP)+'</div><div style="font-size:11px;color:var(--t3);margin-top:3px">Ce mois</div></div>'
     +'</div>'
     +'<div class="g2 g2pie">'
     +'<div class="card"><div class="ctit">Règle '+S.regle.charges+'/'+S.regle.plaisirs+'/'+S.regle.epargne+'</div>'+ruleHTML+'</div>'
@@ -1656,21 +1659,21 @@ function pageParams(){
       var bd = new Date(bk.ts);
       var label = bd.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'})+' '+bd.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
       var txCount = Object.values(bk.d.txData||{}).reduce(function(s,m){return s+(m?m.length:0);},0);
-      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)">'
-        +'<div><div style="font-size:13px;font-weight:600;color:#e8eaf0">'+label+'</div>'
-        +'<div style="font-size:11px;color:#7a869a">'+txCount+' tx · '+(bk.d.prelvs||[]).length+' prélèvements · '+(bk.d.objs||[]).length+' objectifs</div></div>'
+      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">'
+        +'<div><div style="font-size:13px;font-weight:600;color:var(--t1)">'+label+'</div>'
+        +'<div style="font-size:11px;color:var(--t2)">'+txCount+' tx · '+(bk.d.prelvs||[]).length+' prélèvements · '+(bk.d.objs||[]).length+' objectifs</div></div>'
         +'<button onclick="restoreBackup('+i+')" style="font-size:11px;padding:5px 10px;border-radius:8px;background:rgba(34,197,94,.1);color:#22c55e;border:1px solid rgba(34,197,94,.25);cursor:pointer;flex-shrink:0">Restaurer</button>'
         +'</div>';
     }).join('');
 
     body='<div class="card" style="margin-bottom:14px"><div class="ctit">Mon compte</div>'
-      +'<div style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:#20293a;border-radius:10px;border:1px solid #252d3e">'
+      +'<div style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--s3);border-radius:10px;border:1px solid var(--s4)">'
       +'<div style="width:46px;height:46px;border-radius:10px;background:'+a.main+';display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:#fff">'+((USER&&USER.email)?USER.email[0].toUpperCase():'N')+'</div>'
-      +'<div><div style="font-weight:700;font-size:15px">'+san((USER&&USER.email)||'')+'</div>'
+      +'<div><div style="font-weight:700;font-size:15px;color:var(--t1)">'+san((USER&&USER.email)||'')+'</div>'
       +'<span style="font-size:11px;background:'+a.bg+';color:'+a.main+';padding:2px 8px;border-radius:20px;font-weight:600">Connecté</span></div></div>'
       +'<div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center">'
-      +'<div><div style="font-size:13px;font-weight:600;color:#e8eaf0">Se déconnecter</div>'
-      +'<div style="font-size:12px;color:#7a869a">Ferme ta session sur cet appareil</div></div>'
+      +'<div><div style="font-size:13px;font-weight:600;color:var(--t1)">Se déconnecter</div>'
+      +'<div style="font-size:12px;color:var(--t2)">Ferme ta session sur cet appareil</div></div>'
       +'<button onclick="doLogout()" class="bg" style="display:flex;align-items:center;gap:6px;font-size:13px;padding:7px 14px">'+IC.logout(14)+' Déconnexion</button>'
       +'</div></div>'
       +'<div class="card" style="margin-bottom:14px">'
@@ -1680,8 +1683,8 @@ function pageParams(){
       +'<button onclick="exportData()" class="bg" style="font-size:11px;padding:5px 9px;display:flex;align-items:center;gap:4px">'+IC.notes(12)+' Exporter</button>'
       +'<button onclick="importData()" class="bg" style="font-size:11px;padding:5px 9px;display:flex;align-items:center;gap:4px">'+IC.checkCircle(12)+' Importer</button>'
       +'</div></div>'
-      +'<div style="font-size:11px;color:#7a869a;margin-bottom:8px">Auto toutes les heures · max 5 versions · restauration en 1 clic</div>'
-      +(bkpRows||'<div style="font-size:12px;color:#7a869a;padding:6px 0">Aucune sauvegarde pour l\'instant. Elles apparaîtront après 1h d\'utilisation.</div>')
+      +'<div style="font-size:11px;color:var(--t2);margin-bottom:8px">Auto toutes les heures · max 5 versions · restauration en 1 clic</div>'
+      +(bkpRows||'<div style="font-size:12px;color:var(--t2);padding:6px 0">Aucune sauvegarde pour l\'instant. Elles apparaîtront après 1h d\'utilisation.</div>')
       +'</div>'
       +'<div class="card" style="border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.04)">'
       +'<div style="font-size:13px;font-weight:700;color:#ef4444;margin-bottom:4px">'+IC.warning(15,'#ef4444')+' Zone dangereuse</div>'
@@ -1691,13 +1694,13 @@ function pageParams(){
   } else if(S.stab==='apparence'){
     var cBtns=Object.keys(ACC).map(function(k){
       var v=ACC[k],act=S.accent===k;
-      return '<button onclick="setAccent(\''+k+'\')" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 14px;border-radius:10px;border:2px solid '+(act?v.main:'#252d3e')+';background:'+(act?v.bg:'#20293a')+';cursor:pointer">'
+      return '<button onclick="setAccent(\''+k+'\')" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 14px;border-radius:10px;border:2px solid '+(act?v.main:'var(--s4)')+';background:'+(act?v.bg:'var(--s3)')+';cursor:pointer">'
         +'<div style="width:30px;height:30px;border-radius:50%;background:'+v.main+';display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px">'+(act?'✓':'')+'</div>'
         +'<span style="font-size:12px;color:#e8eaf0">'+k.charAt(0).toUpperCase()+k.slice(1)+'</span></button>';
     }).join('');
     var tBtns=['clair','sombre'].map(function(t){
       var act=S.theme===t;
-      return '<button onclick="setTheme(\''+t+'\')" style="flex:1;padding:18px 10px;border-radius:10px;border:2px solid '+(act?a.main:'#252d3e')+';background:'+(t==='clair'?'#fff':'#0f1117')+';cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px">'
+      return '<button onclick="setTheme(\''+t+'\')" style="flex:1;padding:18px 10px;border-radius:10px;border:2px solid '+(act?a.main:'var(--s4)')+';background:'+(t==='clair'?'#f0f0f2':'#0f1117')+';cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px">'
         +'<span style="font-size:22px">'+(t==='clair'?IC.sun(22):IC.moon(22))+'</span>'
         +'<span style="font-size:13px;font-weight:600;color:'+(t==='clair'?'#1a1f2e':'#e8eaf0')+'">Mode '+t+'</span>'
         +(act?'<span style="color:'+a.main+';font-size:16px">✓</span>':'')+'</button>';
@@ -2184,7 +2187,7 @@ function sicDrawChart(dataAvec, dataSans, dataInter, years, a){
     ctx.lineWidth = 1;
     ctx.beginPath(); ctx.moveTo(pad.l, gy); ctx.lineTo(W-pad.r, gy); ctx.stroke();
     // Labels axe Y
-    ctx.fillStyle = '#4a5568';
+    ctx.fillStyle = '#6b7280';
     ctx.font = '10px -apple-system,sans-serif';
     ctx.textAlign = 'right';
     var labelVal = Math.round(maxV * g / gridLines);
@@ -2248,15 +2251,40 @@ function sicDrawChart(dataAvec, dataSans, dataInter, years, a){
   ctx.fillStyle = a.main;
   ctx.fill();
 
-  // Labels axe X (années)
-  ctx.fillStyle = '#4a5568';
+  // Labels axe X — intervalles propres, sans chevauchement
   ctx.font = '10px -apple-system,sans-serif';
   ctx.textAlign = 'center';
-  var step = Math.max(1, Math.floor(years/6));
-  for(var i=0; i<n; i+=step){
-    ctx.fillText(i===0?'Auj.':i+' an'+(i>1?'s':''), xOf(i), H-8);
+
+  // Choisir l'intervalle minimal qui donne ≤ 5 subdivisions
+  var niceSteps = [1, 2, 5, 10, 20, 25, 50];
+  var interval = niceSteps[niceSteps.length - 1];
+  for(var k = 0; k < niceSteps.length; k++){
+    if(Math.floor(years / niceSteps[k]) <= 5 && Math.floor(years / niceSteps[k]) > 0){
+      interval = niceSteps[k]; break;
+    }
   }
-  ctx.fillText(years+' an'+(years>1?'s':''), xOf(n-1), H-8);
+
+  // Construire la liste des ticks
+  var ticks = [];
+  for(var t = 0; t <= years; t += interval) ticks.push(t);
+  if(ticks[ticks.length - 1] !== years) ticks.push(years);
+
+  // Supprimer le pénultième s'il est trop proche du dernier (< 13 % de cW)
+  if(ticks.length >= 2){
+    if(xOf(ticks[ticks.length - 1]) - xOf(ticks[ticks.length - 2]) < cW * 0.13)
+      ticks.splice(ticks.length - 2, 1);
+  }
+
+  ticks.forEach(function(t){
+    var x = xOf(t);
+    // Petite marque de tick
+    ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(x, pad.t + cH); ctx.lineTo(x, pad.t + cH + 4); ctx.stroke();
+    // Label
+    ctx.fillStyle = t === years ? 'rgba(255,255,255,0.55)' : '#6b7280';
+    ctx.fillText(t === 0 ? 'Auj.' : t + ' an' + (t > 1 ? 's' : ''), x, H - 5);
+  });
 
   // Annotation delta
   if(dataAvec[n-1] > dataSans[n-1]*1.05){
@@ -3259,9 +3287,12 @@ function exportData(){
 
 function importData(){
   var input = document.createElement('input');
-  input.type = 'file'; input.accept = '.json,application/json';
+  input.type = 'file'; input.accept = '.json,application/json,image/*,*/*';
   input.onchange = function(e){
     var file = e.target.files[0]; if(!file) return;
+    if(file.type.startsWith('image/')){
+      aerr('Ce fichier est une photo — sélectionne le fichier .json de ta sauvegarde Trivio.'); return;
+    }
     var reader = new FileReader();
     reader.onload = function(ev){
       try {
@@ -3273,7 +3304,7 @@ function importData(){
         applyTheme(); renderNav(); renderBottomNav(); render();
         if(S.page==='params') pageParams();
         aok('Données importées !');
-      } catch(err){ aerr('Fichier JSON invalide.'); }
+      } catch(err){ aerr('Fichier JSON invalide — vérifie que c\'est bien une sauvegarde Trivio.'); }
     };
     reader.readAsText(file);
   };
