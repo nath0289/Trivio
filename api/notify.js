@@ -98,37 +98,43 @@ module.exports = async function handler(req, res) {
       var uData = await supabase
         .from('trivio_data').select('data').eq('user_id', sub.user_id).single();
       var objs = (uData.data && uData.data.data && uData.data.data.objs) || [];
+
+      // Intérêts exacts (taux renseigné sur au moins un objectif)
       var daily = objs.reduce(function(sum, o) {
         if (o.taux > 0 && o.actuel > 0) return sum + (o.actuel * (o.taux / 100 / 365));
         return sum;
       }, 0);
+
+      // Épargne totale (avec ou sans taux)
+      var eTotal = objs.reduce(function(s, o) { return s + (o.actuel || 0); }, 0);
+
       if (daily >= 0.0001) {
-        // L'épargne génère des intérêts → message spécifique
+        // ✅ Cas 1 : taux configuré → montant exact
         var fmtAmt = daily < 0.01 ? daily.toFixed(4) : daily.toFixed(2);
         payload = {
-          title: '+' + fmtAmt + ' € d\'intérêts cette nuit',
-          body: 'Ton épargne travaille pour toi pendant que tu dors !',
+          title: '+' + fmtAmt + ' € d\'intérêts cette nuit 📈',
+          body: 'Ton épargne travaille pour toi pendant que tu dors. Belle journée !',
+          tag: 'interest',
+          url: '/?tab=epargnes'
+        };
+      } else if (eTotal > 0) {
+        // ✅ Cas 2 : épargne sans taux → estimation au taux Livret A (3 %)
+        var estDaily = eTotal * (3 / 100 / 365);
+        var estFmt = estDaily < 0.01 ? estDaily.toFixed(4) : estDaily.toFixed(2);
+        payload = {
+          title: '~' + estFmt + ' € d\'intérêts estimés 💡',
+          body: 'Estimation à 3 % (Livret A). Renseigne le vrai taux de tes livrets pour un calcul exact.',
           tag: 'interest',
           url: '/?tab=epargnes'
         };
       } else {
-        // Pas d'intérêts calculables → message bonjour universel
-        var eTotal = objs.reduce(function(s, o) { return s + (o.actuel || 0); }, 0);
-        if (eTotal > 0) {
-          payload = {
-            title: 'Bonjour ! Ton épargne : ' + eTotal.toLocaleString('fr-FR', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' €',
-            body: 'Ajoute un taux sur tes livrets pour suivre tes intérêts.',
-            tag: 'interest',
-            url: '/?tab=epargnes'
-          };
-        } else {
-          payload = {
-            title: 'Bonjour ! Prêt pour une nouvelle journée ?',
-            body: 'Pense à noter tes dépenses dans Trivio.',
-            tag: 'interest',
-            url: '/'
-          };
-        }
+        // ✅ Cas 3 : pas encore d'épargne → message motivant sur les intérêts composés
+        payload = {
+          title: '☀️ Bonjour ! Place aux intérêts composés',
+          body: 'Même 50 € / mois à 3 % → +2 000 € d\'intérêts en 10 ans. Lance ton premier objectif aujourd\'hui !',
+          tag: 'interest',
+          url: '/?tab=epargnes'
+        };
       }
     }
 
