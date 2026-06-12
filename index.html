@@ -468,12 +468,17 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   .avatar-circle{width:24px;height:24px;font-size:9px;}
   #uem{font-size:11px;max-width:65px;}
 
-  /* ─ BOTTOM NAV : 49 px fixes, rien d'autre ─ */
+  /* ─ BOTTOM NAV ─────────────────────────────────────────────────────
+     bottom:34px  → flotte AU-DESSUS du home indicator iOS (34px standard
+                    sur tous les iPhone Face ID, jamais modifié par Apple)
+     height:49px  → taille standard Apple tab bar, jamais modifiée
+     ::after      → prolonge le fond sous la nav pour couvrir le home indicator
+     Zéro env(), zéro calc(), zéro JS de mesure — valeurs absolues. ─ */
   #app.show ~ #bottom-nav{
     display:flex;
     flex-direction:row;
     position:fixed;
-    bottom:0;
+    bottom:34px;
     left:0;right:0;
     height:49px;
     padding:0 8px;
@@ -482,7 +487,17 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
     z-index:300;
     align-items:stretch;
   }
+  #app.show ~ #bottom-nav::after{
+    content:'';
+    position:absolute;
+    bottom:-34px;
+    left:0;right:0;
+    height:34px;
+    background:var(--bg);
+    pointer-events:none;
+  }
   body.light #app.show ~ #bottom-nav{background:#f5f5f7;}
+  body.light #app.show ~ #bottom-nav::after{background:#f5f5f7;}
 
   .bn-item{
     flex:1;
@@ -692,13 +707,14 @@ self.addEventListener('fetch',e=>{
 
 
 // ── NAV LOCK ─────────────────────────────────────────────────────────
-// ── NAV LOCK : maintient bottom:0 quoi qu'il arrive ──────────────────
-// Hauteur : 49 px fixes dans le CSS — aucun JS ne la touche.
-// Seul bottom:0 est verrouillé ici pour éviter tout déplacement iOS.
+// ── NAV LOCK ──────────────────────────────────────────────────────────
+// Verrouille bottom:34px ET height:49px avec !important sur tout événement.
+// 34px = home indicator iOS standard (tous iPhone Face ID, valeur fixe Apple).
+// Aucun env(), aucune mesure, aucune variable — valeurs absolues.
 function lockNav(){
   var nav = document.getElementById('bottom-nav');
   if(!nav) return;
-  nav.style.setProperty('bottom','0px','important');
+  nav.style.setProperty('bottom','34px','important');
   nav.style.setProperty('height','49px','important');
 }
 
