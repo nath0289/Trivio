@@ -705,47 +705,34 @@ self.addEventListener('fetch',e=>{
 
 
 // ── NAV LOCK ─────────────────────────────────────────────────────────
-// Problème iOS : env(safe-area-inset-bottom) en CSS retourne une valeur
-// incorrecte au 1er rendu (trop grande sur certains modèles), ce qui rend
-// la nav trop haute. Solution : mesurer la safe-area via offsetHeight d'un
-// élément probe (force un reflow synchrone avec la vraie valeur) et
-// l'appliquer en JS directement sur la nav.
+// Racine du bug : lockNav() au window.load était trop tôt — à ce moment
+// #app n'a pas encore .show, donc la nav est display:none et la fonction
+// repartait immédiatement sans rien faire. La nav n'était corrigée qu'au
+// premier visualViewport.resize (= clic sur Import). Fix : lockNav est
+// exposé globalement et appelé depuis bootUser() juste après .classList.add('show').
+
+function lockNav(){
+  var nav = document.getElementById('bottom-nav');
+  if(!nav || getComputedStyle(nav).display==='none') return;
+
+  // Probe : mesure env(safe-area-inset-bottom) via offsetHeight
+  // (force un reflow synchrone → valeur réelle du moteur iOS)
+  var p = document.createElement('div');
+  p.style.cssText = 'position:fixed;bottom:0;left:0;width:0;' +
+    'height:env(safe-area-inset-bottom,0px);pointer-events:none;visibility:hidden';
+  document.body.appendChild(p);
+  var sab = p.offsetHeight || 0;
+  document.body.removeChild(p);
+
+  nav.style.setProperty('bottom','0px','important');
+  nav.style.setProperty('height',(49+sab)+'px','important');
+  nav.style.setProperty('padding-bottom',sab+'px','important');
+
+  var cnt = document.getElementById('cnt');
+  if(cnt) cnt.style.setProperty('padding-bottom',(49+sab+16)+'px','important');
+}
+
 (function(){
-
-  function getSAB(){
-    // Probe element : sa height CSS = env(safe-area-inset-bottom)
-    // offsetHeight déclenche un reflow et lit la valeur réelle du moteur
-    var p = document.createElement('div');
-    p.style.cssText = 'position:fixed;bottom:0;left:0;width:0;' +
-      'height:env(safe-area-inset-bottom,0px);pointer-events:none;visibility:hidden';
-    document.body.appendChild(p);
-    var h = p.offsetHeight || 0;
-    document.body.removeChild(p);
-    return h;
-  }
-
-  function lockNav(){
-    var nav = document.getElementById('bottom-nav');
-    if(!nav || getComputedStyle(nav).display==='none') return;
-    var sab = getSAB();
-    // Position
-    nav.style.setProperty('bottom','0px','important');
-    // Hauteur exacte : 49px (tab bar Apple) + safe area réelle
-    nav.style.setProperty('height',(49+sab)+'px','important');
-    nav.style.setProperty('padding-bottom',sab+'px','important');
-    // Contenu scrollable : doit s'arrêter au-dessus de la nav
-    var cnt = document.getElementById('cnt');
-    if(cnt) cnt.style.setProperty('padding-bottom',(49+sab+16)+'px','important');
-  }
-
-  // Double rAF au chargement : laisse iOS initialiser ses safe areas
-  // avant la première mesure
-  window.addEventListener('load', function(){
-    requestAnimationFrame(function(){
-      requestAnimationFrame(lockNav);
-    });
-  });
-
   window.addEventListener('resize', lockNav);
   if(window.visualViewport){
     window.visualViewport.addEventListener('resize', lockNav);
@@ -3408,6 +3395,9 @@ function restoreBackup(idx){
 function bootUser(){
   $('auth').style.display='none';
   $('app').classList.add('show');
+  // La nav vient de devenir visible — on recalcule sa hauteur maintenant
+  // (lockNav() au window.load était trop tôt : la nav était encore display:none)
+  requestAnimationFrame(function(){ requestAnimationFrame(lockNav); });
   updateBadge();
 
   // Clé locale pour savoir si cet utilisateur a déjà été onboardé
