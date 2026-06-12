@@ -453,7 +453,7 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   #psub{display:none;}
 
   /* content : espace sous le contenu = items nav (49px) + safe area + marge */
-  #cnt{padding:16px 16px calc(49px + env(safe-area-inset-bottom,34px) + 16px);}
+  #cnt{padding:16px 16px 99px;} /* 49 nav + 34 home indicator + 16 marge */
 
   /* grids */
   .kgrid{grid-template-columns:repeat(2,1fr);gap:8px;}
@@ -468,21 +468,15 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   .avatar-circle{width:24px;height:24px;font-size:9px;}
   #uem{font-size:11px;max-width:65px;}
 
-  /* ─ BOTTOM NAV : hauteur fixe CSS, safe-area injectée par lockNav() ─ */
+  /* ─ BOTTOM NAV : 49 px fixes, rien d'autre ─ */
   #app.show ~ #bottom-nav{
     display:flex;
     flex-direction:row;
     position:fixed;
     bottom:0;
     left:0;right:0;
-    /* Hauteur de base fixe — lockNav() ajoute la safe-area via JS */
-    /* Pas de height explicite — la nav se dimensionne sur les items (49px)
-       + padding-bottom pour le home indicator. Ce padding est évalué au
-       moment où #app.show est ajouté par JS (après session restore) :
-       env() retourne sa valeur correcte à ce moment-là. */
-    padding-bottom:env(safe-area-inset-bottom,34px);
-    padding-left:max(env(safe-area-inset-left,0px),8px);
-    padding-right:max(env(safe-area-inset-right,0px),8px);
+    height:49px;
+    padding:0 8px;
     background:var(--bg);
     border-top:0.5px solid rgba(255,255,255,.08);
     z-index:300;
@@ -495,7 +489,6 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
     display:flex;flex-direction:column;
     align-items:center;justify-content:center;
     gap:3px;
-    height:49px; /* Hauteur fixe — détermine la hauteur de la nav */
     cursor:pointer;
     -webkit-tap-highlight-color:transparent;
     transition:opacity .1s;
@@ -699,18 +692,14 @@ self.addEventListener('fetch',e=>{
 
 
 // ── NAV LOCK ─────────────────────────────────────────────────────────
-// Racine du bug : lockNav() au window.load était trop tôt — à ce moment
-// #app n'a pas encore .show, donc la nav est display:none et la fonction
-// repartait immédiatement sans rien faire. La nav n'était corrigée qu'au
-// premier visualViewport.resize (= clic sur Import). Fix : lockNav est
-// exposé globalement et appelé depuis bootUser() juste après .classList.add('show').
-
+// ── NAV LOCK : maintient bottom:0 quoi qu'il arrive ──────────────────
+// Hauteur : 49 px fixes dans le CSS — aucun JS ne la touche.
+// Seul bottom:0 est verrouillé ici pour éviter tout déplacement iOS.
 function lockNav(){
-  // Verrouille uniquement la position — la hauteur est gérée par le CSS
-  // (padding-bottom:env() évalué quand #app.show est ajouté, valeur correcte)
   var nav = document.getElementById('bottom-nav');
-  if(!nav || getComputedStyle(nav).display==='none') return;
+  if(!nav) return;
   nav.style.setProperty('bottom','0px','important');
+  nav.style.setProperty('height','49px','important');
 }
 
 (function(){
@@ -3376,9 +3365,7 @@ function restoreBackup(idx){
 function bootUser(){
   $('auth').style.display='none';
   $('app').classList.add('show');
-  // La nav vient de devenir visible — on recalcule sa hauteur maintenant
-  // (lockNav() au window.load était trop tôt : la nav était encore display:none)
-  requestAnimationFrame(function(){ requestAnimationFrame(lockNav); });
+  lockNav();
   updateBadge();
 
   // Clé locale pour savoir si cet utilisateur a déjà été onboardé
