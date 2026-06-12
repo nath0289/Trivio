@@ -756,6 +756,7 @@ var ACC = {
   violet:  {main:'#b388ff',dark:'#6c3fc1',bg:'rgba(179,136,255,.1)'},
   rose:    {main:'#ff80ab',dark:'#c51162',bg:'rgba(255,128,171,.1)'},
   orange:  {main:'#ffab40',dark:'#e65100',bg:'rgba(255,171,64,.1)'},
+  or:      {main:'#ffd166',dark:'#c9941a',bg:'rgba(255,209,102,.1)'},
   ardoise: {main:'#90a4ae',dark:'#37474f',bg:'rgba(144,164,174,.1)'}
 };
 
@@ -2395,6 +2396,42 @@ function ahide(){
   var o=$('aok'); if(o) o.style.display='none';
 }
 
+// Toast global visible partout dans l'app (aerr/aok n'existent que dans #auth)
+function showToast(msg, type){
+  var existing = document.getElementById('_toast');
+  if(existing) existing.parentNode.removeChild(existing);
+  var t = document.createElement('div');
+  t.id = '_toast';
+  var isErr = type === 'err';
+  t.style.cssText = [
+    'position:fixed',
+    'top:calc(env(safe-area-inset-top,0px) + 64px)',
+    'left:50%',
+    'transform:translateX(-50%)',
+    'max-width:300px',
+    'width:calc(100% - 40px)',
+    'background:' + (isErr ? '#2a1010' : '#0f2a1a'),
+    'color:'      + (isErr ? '#ff6b6b' : '#22c55e'),
+    'border:1px solid ' + (isErr ? 'rgba(255,107,107,.35)' : 'rgba(34,197,94,.35)'),
+    'border-radius:12px',
+    'padding:12px 16px',
+    'font-size:13px',
+    'font-weight:500',
+    'line-height:1.4',
+    'z-index:99999',
+    'box-shadow:0 8px 32px rgba(0,0,0,.6)',
+    'pointer-events:none',
+    'text-align:center',
+    'transition:opacity .3s'
+  ].join(';');
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(function(){
+    t.style.opacity = '0';
+    setTimeout(function(){ if(t.parentNode) t.parentNode.removeChild(t); }, 320);
+  }, 3000);
+}
+
 function renderAuth(){
   var f=$('auth-form'); if(!f) return;
   var t=$('auth-title'), s=$('auth-sub');
@@ -3310,20 +3347,20 @@ function importData(){
   input.onchange = function(e){
     var file = e.target.files[0]; if(!file) return;
     if(file.type.startsWith('image/')){
-      aerr('Ce fichier est une photo — sélectionne le fichier .json de ta sauvegarde Trivio.'); return;
+      showToast('Ce fichier est une photo — sélectionne le fichier .json de ta sauvegarde Trivio.', 'err'); return;
     }
     var reader = new FileReader();
     reader.onload = function(ev){
       try {
         var data = JSON.parse(ev.target.result);
         if(!data.txData && !data.revenus && !data.prelvs){
-          aerr("Fichier invalide — ce n\'est pas une sauvegarde Trivio."); return;
+          showToast("Fichier invalide — ce n\'est pas une sauvegarde Trivio.", 'err'); return;
         }
         applyData(data); dbSave();
         applyTheme(); renderNav(); renderBottomNav(); render();
         if(S.page==='params') pageParams();
-        aok('Données importées !');
-      } catch(err){ aerr('Fichier JSON invalide — vérifie que c\'est bien une sauvegarde Trivio.'); }
+        showToast('Données importées avec succès !', 'ok');
+      } catch(err){ showToast('Fichier JSON invalide — vérifie que c\'est bien une sauvegarde Trivio.', 'err'); }
     };
     reader.readAsText(file);
   };
