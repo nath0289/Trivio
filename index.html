@@ -452,8 +452,8 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   #ptit{font-size:17px !important;}
   #psub{display:none;}
 
-  /* content : padding de base — lockNav() ajuste le padding-bottom exact */
-  #cnt{padding:16px 16px 80px;}
+  /* content : espace sous le contenu = items nav (49px) + safe area + marge */
+  #cnt{padding:16px 16px calc(49px + env(safe-area-inset-bottom,34px) + 16px);}
 
   /* grids */
   .kgrid{grid-template-columns:repeat(2,1fr);gap:8px;}
@@ -476,10 +476,13 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
     bottom:0;
     left:0;right:0;
     /* Hauteur de base fixe — lockNav() ajoute la safe-area via JS */
-    height:49px;
-    padding-bottom:0;
-    padding-left:max(env(safe-area-inset-left,0px), 8px);
-    padding-right:max(env(safe-area-inset-right,0px), 8px);
+    /* Pas de height explicite — la nav se dimensionne sur les items (49px)
+       + padding-bottom pour le home indicator. Ce padding est évalué au
+       moment où #app.show est ajouté par JS (après session restore) :
+       env() retourne sa valeur correcte à ce moment-là. */
+    padding-bottom:env(safe-area-inset-bottom,34px);
+    padding-left:max(env(safe-area-inset-left,0px),8px);
+    padding-right:max(env(safe-area-inset-right,0px),8px);
     background:var(--bg);
     border-top:0.5px solid rgba(255,255,255,.08);
     z-index:300;
@@ -492,8 +495,7 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
     display:flex;flex-direction:column;
     align-items:center;justify-content:center;
     gap:3px;
-    /* Limité à la zone des icônes (var(--nav) = 44px) */
-    max-height:var(--nav);
+    height:49px; /* Hauteur fixe — détermine la hauteur de la nav */
     cursor:pointer;
     -webkit-tap-highlight-color:transparent;
     transition:opacity .1s;
@@ -704,24 +706,11 @@ self.addEventListener('fetch',e=>{
 // exposé globalement et appelé depuis bootUser() juste après .classList.add('show').
 
 function lockNav(){
+  // Verrouille uniquement la position — la hauteur est gérée par le CSS
+  // (padding-bottom:env() évalué quand #app.show est ajouté, valeur correcte)
   var nav = document.getElementById('bottom-nav');
   if(!nav || getComputedStyle(nav).display==='none') return;
-
-  // Probe : mesure env(safe-area-inset-bottom) via offsetHeight
-  // (force un reflow synchrone → valeur réelle du moteur iOS)
-  var p = document.createElement('div');
-  p.style.cssText = 'position:fixed;bottom:0;left:0;width:0;' +
-    'height:env(safe-area-inset-bottom,0px);pointer-events:none;visibility:hidden';
-  document.body.appendChild(p);
-  var sab = p.offsetHeight || 0;
-  document.body.removeChild(p);
-
   nav.style.setProperty('bottom','0px','important');
-  nav.style.setProperty('height',(49+sab)+'px','important');
-  nav.style.setProperty('padding-bottom',sab+'px','important');
-
-  var cnt = document.getElementById('cnt');
-  if(cnt) cnt.style.setProperty('padding-bottom',(49+sab+16)+'px','important');
 }
 
 (function(){
