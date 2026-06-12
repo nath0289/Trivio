@@ -460,8 +460,8 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   #ptit{font-size:17px !important;}
   #psub{display:none;}
 
-  /* content : padding en bas = nav + safe-area */
-  #cnt{padding:16px 16px calc(var(--nav) + env(safe-area-inset-bottom,34px) + 16px);}
+  /* content : padding de base — lockNav() ajuste le padding-bottom exact */
+  #cnt{padding:16px 16px 80px;}
 
   /* grids */
   .kgrid{grid-template-columns:repeat(2,1fr);gap:8px;}
@@ -476,16 +476,16 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   .avatar-circle{width:24px;height:24px;font-size:9px;}
   #uem{font-size:11px;max-width:65px;}
 
-  /* ─ BOTTOM NAV : couvre la safe-area, remplace la barre blanche ─ */
+  /* ─ BOTTOM NAV : hauteur fixe CSS, safe-area injectée par lockNav() ─ */
   #app.show ~ #bottom-nav{
     display:flex;
     flex-direction:row;
     position:fixed;
     bottom:0;
     left:0;right:0;
-    /* Hauteur = tab bar Apple iOS (49px) + home indicator (~34px) */
-    height:calc(var(--nav) + env(safe-area-inset-bottom,0px));
-    padding-bottom:env(safe-area-inset-bottom,0px);
+    /* Hauteur de base fixe — lockNav() ajoute la safe-area via JS */
+    height:49px;
+    padding-bottom:0;
     padding-left:max(env(safe-area-inset-left,0px), 8px);
     padding-right:max(env(safe-area-inset-right,0px), 8px);
     background:var(--bg);
@@ -704,21 +704,48 @@ self.addEventListener('fetch',e=>{
 // ═══════════════════════════════════════════════════════
 
 
-// ── NAV LOCK : empêche iOS de déplacer la nav au resize viewport ──
+// ── NAV LOCK ─────────────────────────────────────────────────────────
+// Problème iOS : env(safe-area-inset-bottom) en CSS retourne une valeur
+// incorrecte au 1er rendu (trop grande sur certains modèles), ce qui rend
+// la nav trop haute. Solution : mesurer la safe-area via offsetHeight d'un
+// élément probe (force un reflow synchrone avec la vraie valeur) et
+// l'appliquer en JS directement sur la nav.
 (function(){
+
+  function getSAB(){
+    // Probe element : sa height CSS = env(safe-area-inset-bottom)
+    // offsetHeight déclenche un reflow et lit la valeur réelle du moteur
+    var p = document.createElement('div');
+    p.style.cssText = 'position:fixed;bottom:0;left:0;width:0;' +
+      'height:env(safe-area-inset-bottom,0px);pointer-events:none;visibility:hidden';
+    document.body.appendChild(p);
+    var h = p.offsetHeight || 0;
+    document.body.removeChild(p);
+    return h;
+  }
+
   function lockNav(){
     var nav = document.getElementById('bottom-nav');
     if(!nav || getComputedStyle(nav).display==='none') return;
+    var sab = getSAB();
+    // Position
     nav.style.setProperty('bottom','0px','important');
+    // Hauteur exacte : 49px (tab bar Apple) + safe area réelle
+    nav.style.setProperty('height',(49+sab)+'px','important');
+    nav.style.setProperty('padding-bottom',sab+'px','important');
+    // Contenu scrollable : doit s'arrêter au-dessus de la nav
+    var cnt = document.getElementById('cnt');
+    if(cnt) cnt.style.setProperty('padding-bottom',(49+sab+16)+'px','important');
   }
-  // Double rAF : attend que iOS ait stabilisé env(safe-area-inset-bottom)
-  // avant de verrouiller, sinon la barre blanche peut rester visible
-  function lockNavDeferred(){
+
+  // Double rAF au chargement : laisse iOS initialiser ses safe areas
+  // avant la première mesure
+  window.addEventListener('load', function(){
     requestAnimationFrame(function(){
       requestAnimationFrame(lockNav);
     });
-  }
-  window.addEventListener('load', lockNavDeferred);
+  });
+
   window.addEventListener('resize', lockNav);
   if(window.visualViewport){
     window.visualViewport.addEventListener('resize', lockNav);
