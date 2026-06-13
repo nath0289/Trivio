@@ -473,15 +473,14 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   #uem{font-size:11px;max-width:65px;}
 
   /* ─ BOTTOM NAV ────────────────────────────────────────────────────────
-     Pilule à bottom:34px = juste au-dessus de la zone home indicator (34px).
-     ::after couvre exactement les 34px sous la pilule → zéro barre noire.
-     overscroll-behavior:none sur html/body bloque le rubber-band pull-to-
-     refresh qui déplaçait les éléments fixed. ─ */
+     env(safe-area-inset-bottom) = hauteur exacte de la zone home indicator
+     sur chaque iPhone. La pilule se pose pile au-dessus, rien en dessous.
+     overscroll-behavior:none bloque le rubber-band qui déplaçait les fixed. ─ */
   #app.show ~ #bottom-nav{
     display:flex;
     flex-direction:row;
     position:fixed;
-    bottom:34px;
+    bottom:env(safe-area-inset-bottom,34px);
     left:12px;right:12px;
     height:60px;
     padding:0 6px;
@@ -494,22 +493,10 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
     z-index:300;
     align-items:center;
   }
-  /* couvre exactement la zone home indicator (34px) sous la pilule */
-  #app.show ~ #bottom-nav::after{
-    content:'';
-    position:absolute;
-    top:100%;
-    left:-12px;right:-12px;
-    height:34px;
-    background:rgba(22,23,25,0.85);
-  }
   body.light #app.show ~ #bottom-nav{
     background:rgba(245,245,247,0.85);
     border:0.5px solid rgba(0,0,0,.1);
     box-shadow:0 4px 24px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.8);
-  }
-  body.light #app.show ~ #bottom-nav::after{
-    background:rgba(245,245,247,0.85);
   }
 
   .bn-item{
