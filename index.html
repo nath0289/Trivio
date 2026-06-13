@@ -457,7 +457,7 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   #psub{display:none;}
 
   /* content : espace sous le contenu = items nav (49px) + safe area + marge */
-  #cnt{padding:16px 16px 82px;} /* 58 nav + 6 bottom + 18 marge */
+  #cnt{padding:16px 16px 74px;} /* 58 nav + 16 marge */
 
   /* grids */
   .kgrid{grid-template-columns:repeat(2,1fr);gap:8px;}
@@ -473,30 +473,30 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   #uem{font-size:11px;max-width:65px;}
 
   /* ─ BOTTOM NAV ────────────────────────────────────────────────────────
-     env(safe-area-inset-bottom) = hauteur exacte de la zone home indicator
-     sur chaque iPhone. La pilule se pose pile au-dessus, rien en dessous.
-     overscroll-behavior:none bloque le rubber-band qui déplaçait les fixed. ─ */
+     bottom:0 left:0 right:0 → collé aux 3 bords, zéro rectangle visible.
+     Coins arrondis en haut uniquement. Home indicator iOS s'affiche
+     par-dessus en natif. overscroll-behavior:none = pas de mouvement. ─ */
   #app.show ~ #bottom-nav{
     display:flex;
     flex-direction:row;
     position:fixed;
-    bottom:6px;
-    left:12px;right:12px;
+    bottom:0;
+    left:0;right:0;
     height:58px;
-    padding:0 6px;
-    background:rgba(22,23,25,0.85);
+    padding:0 12px;
+    background:rgba(18,19,21,0.88);
     -webkit-backdrop-filter:blur(32px) saturate(180%);
     backdrop-filter:blur(32px) saturate(180%);
-    border:0.5px solid rgba(255,255,255,.1);
-    border-radius:9999px;
-    box-shadow:0 4px 24px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.06);
+    border-top:0.5px solid rgba(255,255,255,.1);
+    border-radius:22px 22px 0 0;
+    box-shadow:0 -4px 24px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.06);
     z-index:300;
     align-items:center;
   }
   body.light #app.show ~ #bottom-nav{
-    background:rgba(245,245,247,0.85);
-    border:0.5px solid rgba(0,0,0,.1);
-    box-shadow:0 4px 24px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.8);
+    background:rgba(245,245,247,0.88);
+    border-top:0.5px solid rgba(0,0,0,.1);
+    box-shadow:0 -4px 24px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.9);
   }
 
   .bn-item{
@@ -720,11 +720,11 @@ self.addEventListener('fetch',e=>{
 function lockNav(){
   var nav = document.getElementById('bottom-nav');
   if(!nav) return;
-  nav.style.setProperty('bottom','6px','important');
-  nav.style.setProperty('left','12px','important');
-  nav.style.setProperty('right','12px','important');
+  nav.style.setProperty('bottom','0','important');
+  nav.style.setProperty('left','0','important');
+  nav.style.setProperty('right','0','important');
   nav.style.setProperty('height','58px','important');
-  nav.style.setProperty('border-radius','9999px','important');
+  nav.style.setProperty('border-radius','22px 22px 0 0','important');
 }
 
 (function(){
