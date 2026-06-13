@@ -60,17 +60,19 @@
 html{
   height:100%;
   height:100dvh;
-  /* Couleur solide en fallback : couvre le fond blanc iOS sous 100dvh */
   background-color:#09090B;
   background:linear-gradient(to bottom,#1a1a26 0%,#0f0f16 45%,#09090B 100%) #09090B;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
+  /* empêche le rubber-band iOS de déplacer les éléments fixed */
+  overscroll-behavior:none;
 }
 
 body{
   height:100%;
   height:100dvh;
   overflow:hidden;
+  overscroll-behavior:none;
   font-family:'Geist',-apple-system,BlinkMacSystemFont,sans-serif;
   font-size:14px;
   color:var(--t1);
@@ -455,7 +457,7 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   #psub{display:none;}
 
   /* content : espace sous le contenu = items nav (49px) + safe area + marge */
-  #cnt{padding:16px 16px 90px;} /* 60 nav + 8 bottom + 22 marge */
+  #cnt{padding:16px 16px 112px;} /* 60 nav + 34 bottom + 18 marge */
 
   /* grids */
   .kgrid{grid-template-columns:repeat(2,1fr);gap:8px;}
@@ -470,20 +472,20 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   .avatar-circle{width:24px;height:24px;font-size:9px;}
   #uem{font-size:11px;max-width:65px;}
 
-  /* ─ BOTTOM NAV — pilule flottante style Finary ──────────────────────
-     bottom:8px   → flotte juste au-dessus du bas écran, home indicator
-                    iOS s'affiche par-dessus (c'est son comportement natif).
-     height:60px  → taille fixe, zéro calc, zéro env().
-     left/right:12px → marges latérales, full border-radius = pilule. ─ */
+  /* ─ BOTTOM NAV ────────────────────────────────────────────────────────
+     Pilule à bottom:34px = juste au-dessus de la zone home indicator (34px).
+     ::after couvre exactement les 34px sous la pilule → zéro barre noire.
+     overscroll-behavior:none sur html/body bloque le rubber-band pull-to-
+     refresh qui déplaçait les éléments fixed. ─ */
   #app.show ~ #bottom-nav{
     display:flex;
     flex-direction:row;
     position:fixed;
-    bottom:8px;
+    bottom:34px;
     left:12px;right:12px;
     height:60px;
     padding:0 6px;
-    background:rgba(22,23,25,0.82);
+    background:rgba(22,23,25,0.85);
     -webkit-backdrop-filter:blur(32px) saturate(180%);
     backdrop-filter:blur(32px) saturate(180%);
     border:0.5px solid rgba(255,255,255,.1);
@@ -492,24 +494,22 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
     z-index:300;
     align-items:center;
   }
-  /* strip sous la pilule : couvre le gap de 8px + la zone home indicator */
+  /* couvre exactement la zone home indicator (34px) sous la pilule */
   #app.show ~ #bottom-nav::after{
     content:'';
     position:absolute;
     top:100%;
     left:-12px;right:-12px;
-    height:50px;
-    background:rgba(22,23,25,0.92);
-    -webkit-backdrop-filter:blur(32px) saturate(180%);
-    backdrop-filter:blur(32px) saturate(180%);
+    height:34px;
+    background:rgba(22,23,25,0.85);
   }
   body.light #app.show ~ #bottom-nav{
-    background:rgba(245,245,247,0.82);
+    background:rgba(245,245,247,0.85);
     border:0.5px solid rgba(0,0,0,.1);
     box-shadow:0 4px 24px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.8);
   }
   body.light #app.show ~ #bottom-nav::after{
-    background:rgba(245,245,247,0.92);
+    background:rgba(245,245,247,0.85);
   }
 
   .bn-item{
@@ -733,7 +733,7 @@ self.addEventListener('fetch',e=>{
 function lockNav(){
   var nav = document.getElementById('bottom-nav');
   if(!nav) return;
-  nav.style.setProperty('bottom','8px','important');
+  nav.style.setProperty('bottom','34px','important');
   nav.style.setProperty('left','12px','important');
   nav.style.setProperty('right','12px','important');
   nav.style.setProperty('height','60px','important');
