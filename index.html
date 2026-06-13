@@ -3409,6 +3409,8 @@ function bootUser(){
     renderBottomNav();
     setHdr();
     render();
+    lockNav();
+    setTimeout(lockNav, 100);
 
     // Onboarding SEULEMENT si c'est un vrai nouveau compte :
     // aucune donnée Supabase, aucun backup local, et jamais onboardé
@@ -3426,6 +3428,8 @@ function bootUser(){
       if(local){ applyData(JSON.parse(local)); }
     }catch(e){}
     applyTheme(); renderNav(); renderBottomNav(); setHdr(); render();
+    lockNav();
+    setTimeout(lockNav, 100);
     // Ne JAMAIS déclencher l'onboarding sur une erreur réseau
     pushSetup();
   });
