@@ -52,6 +52,7 @@
   /* safe areas */
   --sat:env(safe-area-inset-top,0px);
   --sab:env(safe-area-inset-bottom,0px);
+  --sab-raw:env(safe-area-inset-bottom,0px);
   /* layout */
   --hdr:52px;
   --nav:49px;
@@ -3396,6 +3397,23 @@ function bootUser(){
   $('app').classList.add('show');
   lockNav();
   updateBadge();
+  // DIAGNOSTIC TEMPORAIRE — à supprimer après
+  setTimeout(function(){
+    var nav = document.getElementById('bottom-nav');
+    var sab = getComputedStyle(document.documentElement).getPropertyValue('--sab') || '?';
+    var navRect = nav ? nav.getBoundingClientRect() : {};
+    var standalone = window.navigator.standalone;
+    var d = document.createElement('div');
+    d.id = '_dbg';
+    d.style.cssText = 'position:fixed;top:60px;left:10px;right:10px;background:rgba(255,0,0,0.85);color:#fff;font-size:11px;padding:8px 10px;border-radius:8px;z-index:9999;font-family:monospace;line-height:1.6';
+    d.innerHTML = 'safe-area-bottom: <b>' + getComputedStyle(document.documentElement).getPropertyValue('--sab') + '</b><br>'
+      + 'nav.bottom (getBCR): <b>' + Math.round(navRect.bottom) + 'px</b><br>'
+      + 'nav.height: <b>' + Math.round(navRect.height) + 'px</b><br>'
+      + 'window.innerHeight: <b>' + window.innerHeight + 'px</b><br>'
+      + 'screen.height: <b>' + screen.height + 'px</b><br>'
+      + 'standalone: <b>' + standalone + '</b>';
+    document.body.appendChild(d);
+  }, 500);
 
   // Clé locale pour savoir si cet utilisateur a déjà été onboardé
   var _obKey = '_trivio_ob_' + (USER && USER.id);
