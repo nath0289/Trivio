@@ -543,26 +543,14 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
 
 
   <script>
-  // Service Worker — Trivio PWA (cache offline)
+  // Désinstalle tous les anciens service workers (ils causaient des problèmes de cache sur iOS)
   if('serviceWorker' in navigator){
-    var swCode = `
-const CACHE='trivio-v4';
-const FILES=['/'];
-self.addEventListener('install',e=>{
-  e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)));
-  self.skipWaiting();
-});
-self.addEventListener('activate',e=>{
-  e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))));
-  self.clients.claim();
-});
-self.addEventListener('fetch',e=>{
-  e.respondWith(fetch(e.request).catch(()=>caches.match(e.request)));
-});
-`;
-    var blob = new Blob([swCode],{type:'application/javascript'});
-    var swUrl = URL.createObjectURL(blob);
-    navigator.serviceWorker.register(swUrl).catch(function(){});
+    navigator.serviceWorker.getRegistrations().then(function(regs){
+      regs.forEach(function(r){ r.unregister(); });
+    });
+    caches.keys().then(function(keys){
+      keys.forEach(function(k){ caches.delete(k); });
+    });
   }
   </script>
 </head>
