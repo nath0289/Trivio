@@ -455,7 +455,7 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   #psub{display:none;}
 
   /* content : espace sous le contenu = items nav (49px) + safe area + marge */
-  #cnt{padding:16px 16px 110px;} /* 58 pilule + 34 bottom + 18 marge */
+  #cnt{padding:16px 16px 108px;} /* 92 dock + 16 marge */
 
   /* grids */
   .kgrid{grid-template-columns:repeat(2,1fr);gap:8px;}
@@ -470,30 +470,30 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   .avatar-circle{width:24px;height:24px;font-size:9px;}
   #uem{font-size:11px;max-width:65px;}
 
-  /* ─ BOTTOM NAV — pilule flottante ──────────────────────────────────
-     bottom:34px = ras du home indicator iPhone Face ID (valeur fixe Apple).
-     Pas de ::after — la pilule flotte, le fond de body couvre le reste. ─ */
+  /* ─ BOTTOM NAV — dock natif ─────────────────────────────────────────
+     bottom:0 → colle au bas de l'écran, élimine la barre noire.
+     height:92px → 58px icônes + 34px home indicator recouvert.
+     padding-bottom:34px → icônes dans la moitié haute, home indicator libre.
+     border-radius top only → look app native iOS. ─ */
   #app.show ~ #bottom-nav{
     display:flex;
     flex-direction:row;
     position:fixed;
-    bottom:34px;
-    left:16px;right:16px;
-    height:58px;
-    padding:0 4px;
-    background:rgba(22,24,26,0.88);
+    bottom:0;
+    left:0;right:0;
+    height:92px;
+    padding:0 8px 34px;
+    background:rgba(14,15,17,0.96);
     -webkit-backdrop-filter:blur(24px);
     backdrop-filter:blur(24px);
-    border:0.5px solid rgba(255,255,255,.1);
-    border-radius:9999px;
-    box-shadow:0 8px 32px rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.3);
+    border-top:0.5px solid rgba(255,255,255,.08);
+    border-radius:20px 20px 0 0;
     z-index:300;
     align-items:center;
   }
   body.light #app.show ~ #bottom-nav{
-    background:rgba(245,245,247,.88);
-    border:0.5px solid rgba(0,0,0,.08);
-    box-shadow:0 8px 32px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.06);
+    background:rgba(248,248,250,.96);
+    border-top:0.5px solid rgba(0,0,0,.08);
   }
 
   .bn-item{
@@ -504,8 +504,7 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
     cursor:pointer;
     -webkit-tap-highlight-color:transparent;
     transition:opacity .1s;
-    border-radius:9999px;
-    padding:6px 4px;
+    padding:6px 4px 0;
   }
   .bn-item:active{opacity:.5;}
   .bn-icon{
@@ -716,11 +715,12 @@ self.addEventListener('fetch',e=>{
 function lockNav(){
   var nav = document.getElementById('bottom-nav');
   if(!nav) return;
-  nav.style.setProperty('bottom','34px','important');
-  nav.style.setProperty('height','58px','important');
-  nav.style.setProperty('left','16px','important');
-  nav.style.setProperty('right','16px','important');
-  nav.style.setProperty('border-radius','9999px','important');
+  nav.style.setProperty('bottom','0','important');
+  nav.style.setProperty('height','92px','important');
+  nav.style.setProperty('left','0','important');
+  nav.style.setProperty('right','0','important');
+  nav.style.setProperty('border-radius','20px 20px 0 0','important');
+  nav.style.setProperty('padding-bottom','34px','important');
 }
 
 (function(){
