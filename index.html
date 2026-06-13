@@ -457,8 +457,8 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   #ptit{font-size:17px !important;}
   #psub{display:none;}
 
-  /* content : espace sous le contenu = items nav (49px) + safe area + marge */
-  #cnt{padding:16px 16px 100px;} /* 49 nav + 34 safe-area + 17 marge */
+  /* content : espace sous le contenu = nav 60px + safe-area 34px + gap 8px + marge */
+  #cnt{padding:16px 16px 118px;} /* 60 nav + 34 safe-area + 8 gap + 16 marge */
 
   /* grids */
   .kgrid{grid-template-columns:repeat(2,1fr);gap:8px;}
@@ -473,32 +473,31 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   .avatar-circle{width:24px;height:24px;font-size:9px;}
   #uem{font-size:11px;max-width:65px;}
 
-  /* ─ BOTTOM NAV ─────────────────────────────────────────────────────────
-     Pattern standard iOS PWA :
-     - bottom:0 left:0 right:0 = collé au bas, aucun espace possible en dessous
-     - height = 49px (icônes) + env(safe-area-inset-bottom) = couvre le home indicator
-     - padding-bottom = env(safe-area-inset-bottom) = icônes au-dessus du home indicator
-     - align-items:flex-start + padding-top:8px = icônes en haut de la zone 49px ─ */
+  /* ─ BOTTOM NAV — pilule flottante style Finary ─────────────────────────
+     Diagnostiqué iPhone 17 Pro : safe-area-bottom=34px, window.innerHeight=812px.
+     La nav flotte AU-DESSUS du home indicator (42px du bas = 34px safe + 8px gap).
+     height:60px = zone icônes only, border-radius:20px = pilule complète.
+     Le fond app (#09090B) remplit naturellement la zone home indicator. ─ */
   #app.show ~ #bottom-nav{
     display:flex;
     flex-direction:row;
     position:fixed;
-    bottom:0;
-    left:0;right:0;
-    height:calc(49px + env(safe-area-inset-bottom,34px));
-    padding:0 8px env(safe-area-inset-bottom,34px);
+    bottom:calc(env(safe-area-inset-bottom,34px) + 8px);
+    left:12px;right:12px;
+    height:60px;
+    padding:0 4px;
     background:rgba(18,19,21,0.92);
     -webkit-backdrop-filter:blur(32px) saturate(180%);
     backdrop-filter:blur(32px) saturate(180%);
-    border-top:0.5px solid rgba(255,255,255,.1);
-    border-radius:22px 22px 0 0;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+    border:0.5px solid rgba(255,255,255,.1);
+    border-radius:20px;
+    box-shadow:0 4px 24px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06);
     z-index:300;
     align-items:center;
   }
   body.light #app.show ~ #bottom-nav{
     background:rgba(248,248,250,0.92);
-    border-top:0.5px solid rgba(0,0,0,.1);
+    border:0.5px solid rgba(0,0,0,.1);
   }
 
   .bn-item{
@@ -714,19 +713,17 @@ self.addEventListener('fetch',e=>{
 // ═══════════════════════════════════════════════════════
 
 
-// ── NAV LOCK ─────────────────────────────────────────────────────────
 // ── NAV LOCK ──────────────────────────────────────────────────────────
-// Verrouille bottom:34px ET height:49px avec !important sur tout événement.
-// 34px = home indicator iOS standard (tous iPhone Face ID, valeur fixe Apple).
-// Aucun env(), aucune mesure, aucune variable — valeurs absolues.
+// Pilule flottante : diagnostiqué iPhone 17 Pro (safe-area=34px).
+// Valeurs = bottom:calc(env()+8px), left/right:12px, h:60px, r:20px.
 function lockNav(){
   var nav = document.getElementById('bottom-nav');
   if(!nav) return;
-  nav.style.setProperty('bottom','0','important');
-  nav.style.setProperty('left','0','important');
-  nav.style.setProperty('right','0','important');
-  nav.style.setProperty('border-radius','22px 22px 0 0','important');
-  /* height laissé au CSS avec env() — ne pas écraser */
+  nav.style.setProperty('bottom','calc(env(safe-area-inset-bottom,34px) + 8px)','important');
+  nav.style.setProperty('left','12px','important');
+  nav.style.setProperty('right','12px','important');
+  nav.style.setProperty('height','60px','important');
+  nav.style.setProperty('border-radius','20px','important');
 }
 
 (function(){
@@ -3397,23 +3394,6 @@ function bootUser(){
   $('app').classList.add('show');
   lockNav();
   updateBadge();
-  // DIAGNOSTIC TEMPORAIRE — à supprimer après
-  setTimeout(function(){
-    var nav = document.getElementById('bottom-nav');
-    var sab = getComputedStyle(document.documentElement).getPropertyValue('--sab') || '?';
-    var navRect = nav ? nav.getBoundingClientRect() : {};
-    var standalone = window.navigator.standalone;
-    var d = document.createElement('div');
-    d.id = '_dbg';
-    d.style.cssText = 'position:fixed;top:60px;left:10px;right:10px;background:rgba(255,0,0,0.85);color:#fff;font-size:11px;padding:8px 10px;border-radius:8px;z-index:9999;font-family:monospace;line-height:1.6';
-    d.innerHTML = 'safe-area-bottom: <b>' + getComputedStyle(document.documentElement).getPropertyValue('--sab') + '</b><br>'
-      + 'nav.bottom (getBCR): <b>' + Math.round(navRect.bottom) + 'px</b><br>'
-      + 'nav.height: <b>' + Math.round(navRect.height) + 'px</b><br>'
-      + 'window.innerHeight: <b>' + window.innerHeight + 'px</b><br>'
-      + 'screen.height: <b>' + screen.height + 'px</b><br>'
-      + 'standalone: <b>' + standalone + '</b>';
-    document.body.appendChild(d);
-  }, 500);
 
   // Clé locale pour savoir si cet utilisateur a déjà été onboardé
   var _obKey = '_trivio_ob_' + (USER && USER.id);
