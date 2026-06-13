@@ -1521,10 +1521,14 @@ function pageEpargnes(){
       +'</div>';
   }).join('');
 
-  $('cnt').innerHTML='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;align-items:start">'
-    +'<div class="kpi card" style="margin-bottom:0"><div class="klab">Total épargné</div><div class="kval yel">'+fmt(totA)+'</div></div>'
-    +'<div class="kpi card" style="margin-bottom:0"><div class="klab">Objectif total</div><div class="kval">'+fmt(totC)+'</div></div>'
-    +'<div class="kpi card" style="margin-bottom:0"><div class="klab">Progression</div><div class="kval" style="color:'+a.main+'">'+pct.toFixed(1)+'%</div></div></div>'
+  var _kc='background:var(--glass);border:1px solid var(--border);border-radius:var(--r2);padding:12px 10px;margin:0';
+  var _kl='font-size:9px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px';
+  var _kv='font-family:\'Sora\',sans-serif;font-size:15px;font-weight:700;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis';
+  $('cnt').innerHTML='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">'
+    +'<div style="'+_kc+'"><div style="'+_kl+'">Total épargné</div><div style="'+_kv+';color:#ffd166">'+fmt(totA)+'</div></div>'
+    +'<div style="'+_kc+'"><div style="'+_kl+'">Objectif total</div><div style="'+_kv+';color:var(--t1)">'+fmt(totC)+'</div></div>'
+    +'<div style="'+_kc+'"><div style="'+_kl+'">Progression</div><div style="'+_kv+';color:'+a.main+'">'+pct.toFixed(1)+'%</div></div>'
+    +'</div>'
     +'<div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:14px">'
     +'<button class="bg" onclick="startTutoEpargnes()" style="display:flex;align-items:center;gap:5px;padding:8px 12px" title="Aide épargnes">'+IC.bulb(13)+' Guide</button>'
     +'<button class="bp" onclick="openObjForm(null)" style="background:'+a.main+'">+ Nouvel objectif</button></div>'
