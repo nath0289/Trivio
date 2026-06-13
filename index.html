@@ -546,7 +546,7 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   // Service Worker — Trivio PWA (cache offline)
   if('serviceWorker' in navigator){
     var swCode = `
-const CACHE='trivio-v3';
+const CACHE='trivio-v4';
 const FILES=['/'];
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)));
@@ -714,12 +714,13 @@ self.addEventListener('fetch',e=>{
 
 
 // ── NAV LOCK ──────────────────────────────────────────────────────────
-// Pilule flottante : diagnostiqué iPhone 17 Pro (safe-area=34px).
-// Valeurs = bottom:calc(env()+8px), left/right:12px, h:60px, r:20px.
+// Lit --sab via getComputedStyle (env() résolu par le browser) puis
+// applique la valeur en px — fiable sur iOS standalone.
 function lockNav(){
   var nav = document.getElementById('bottom-nav');
   if(!nav) return;
-  nav.style.setProperty('bottom','calc(env(safe-area-inset-bottom,34px) + 8px)','important');
+  var sab = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sab')) || 34;
+  nav.style.setProperty('bottom',(sab + 8)+'px','important');
   nav.style.setProperty('left','12px','important');
   nav.style.setProperty('right','12px','important');
   nav.style.setProperty('height','60px','important');
