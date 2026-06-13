@@ -455,7 +455,7 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   #psub{display:none;}
 
   /* content : espace sous le contenu = items nav (49px) + safe area + marge */
-  #cnt{padding:16px 16px 108px;} /* 92 dock + 16 marge */
+  #cnt{padding:16px 16px 104px;} /* 54 nav + 34 safe-area + 16 marge */
 
   /* grids */
   .kgrid{grid-template-columns:repeat(2,1fr);gap:8px;}
@@ -470,58 +470,60 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   .avatar-circle{width:24px;height:24px;font-size:9px;}
   #uem{font-size:11px;max-width:65px;}
 
-  /* ─ BOTTOM NAV — dock natif ─────────────────────────────────────────
-     bottom:0 → colle au bas de l'écran, élimine la barre noire.
-     height:92px → 58px icônes + 34px home indicator recouvert.
-     padding-bottom:34px → icônes dans la moitié haute, home indicator libre.
-     border-radius top only → look app native iOS. ─ */
+  /* ─ BOTTOM NAV — liquid glass natif iOS ────────────────────────────
+     bottom:0 + env(safe-area-inset-bottom) → colle au bas, home indicator
+     recouvert par la nav elle-même. En PWA standalone env() est fiable dès
+     le premier render. Fond semi-transparent → contenu visible en scroll. ─ */
   #app.show ~ #bottom-nav{
     display:flex;
     flex-direction:row;
     position:fixed;
     bottom:0;
     left:0;right:0;
-    height:92px;
-    padding:0 8px 34px;
-    background:rgba(14,15,17,0.96);
-    -webkit-backdrop-filter:blur(24px);
-    backdrop-filter:blur(24px);
-    border-top:0.5px solid rgba(255,255,255,.08);
-    border-radius:20px 20px 0 0;
+    height:calc(54px + env(safe-area-inset-bottom,34px));
+    padding:0 6px env(safe-area-inset-bottom,34px);
+    background:rgba(12,13,15,0.55);
+    -webkit-backdrop-filter:blur(40px) saturate(180%) brightness(0.95);
+    backdrop-filter:blur(40px) saturate(180%) brightness(0.95);
+    border-top:0.5px solid rgba(255,255,255,.12);
+    border-radius:22px 22px 0 0;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
     z-index:300;
     align-items:center;
   }
   body.light #app.show ~ #bottom-nav{
-    background:rgba(248,248,250,.96);
-    border-top:0.5px solid rgba(0,0,0,.08);
+    background:rgba(242,242,247,0.55);
+    border-top:0.5px solid rgba(0,0,0,.1);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.5);
   }
 
   .bn-item{
     flex:1;
     display:flex;flex-direction:column;
     align-items:center;justify-content:center;
-    gap:4px;
+    gap:3px;
     cursor:pointer;
     -webkit-tap-highlight-color:transparent;
     transition:opacity .1s;
-    padding:6px 4px 0;
+    padding:0 2px;
   }
-  .bn-item:active{opacity:.5;}
+  .bn-item:active{opacity:.45;}
   .bn-icon{
-    width:24px;height:24px;
+    width:26px;height:26px;
     display:flex;align-items:center;justify-content:center;
-    font-size:18px;
-    color:rgba(255,255,255,.38);
-    transition:color .15s;flex-shrink:0;
+    font-size:20px;
+    color:rgba(255,255,255,.4);
+    transition:color .2s;flex-shrink:0;
   }
   .bn-label{
     font-size:9px;font-weight:600;
-    color:rgba(255,255,255,.38);
-    letter-spacing:.02em;text-transform:uppercase;
-    transition:color .15s;
+    color:rgba(255,255,255,.4);
+    letter-spacing:.03em;text-transform:uppercase;
+    transition:color .2s;
     font-family:'Geist',sans-serif;
+    white-space:nowrap;
   }
-  body.light .bn-icon,body.light .bn-label{color:rgba(0,0,0,.35);}
+  body.light .bn-icon,body.light .bn-label{color:rgba(0,0,0,.38);}
   .bn-item.active .bn-icon,.bn-item.active .bn-label{color:var(--accent);}
   body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:var(--accent);}
 
@@ -716,11 +718,9 @@ function lockNav(){
   var nav = document.getElementById('bottom-nav');
   if(!nav) return;
   nav.style.setProperty('bottom','0','important');
-  nav.style.setProperty('height','92px','important');
   nav.style.setProperty('left','0','important');
   nav.style.setProperty('right','0','important');
-  nav.style.setProperty('border-radius','20px 20px 0 0','important');
-  nav.style.setProperty('padding-bottom','34px','important');
+  nav.style.setProperty('border-radius','22px 22px 0 0','important');
 }
 
 (function(){
