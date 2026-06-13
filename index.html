@@ -457,7 +457,7 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   #psub{display:none;}
 
   /* content : espace sous le contenu = items nav (49px) + safe area + marge */
-  #cnt{padding:16px 16px 112px;} /* 60 nav + 34 bottom + 18 marge */
+  #cnt{padding:16px 16px 82px;} /* 58 nav + 6 bottom + 18 marge */
 
   /* grids */
   .kgrid{grid-template-columns:repeat(2,1fr);gap:8px;}
@@ -480,9 +480,9 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
     display:flex;
     flex-direction:row;
     position:fixed;
-    bottom:env(safe-area-inset-bottom,34px);
+    bottom:6px;
     left:12px;right:12px;
-    height:60px;
+    height:58px;
     padding:0 6px;
     background:rgba(22,23,25,0.85);
     -webkit-backdrop-filter:blur(32px) saturate(180%);
@@ -720,10 +720,10 @@ self.addEventListener('fetch',e=>{
 function lockNav(){
   var nav = document.getElementById('bottom-nav');
   if(!nav) return;
-  nav.style.setProperty('bottom','34px','important');
+  nav.style.setProperty('bottom','6px','important');
   nav.style.setProperty('left','12px','important');
   nav.style.setProperty('right','12px','important');
-  nav.style.setProperty('height','60px','important');
+  nav.style.setProperty('height','58px','important');
   nav.style.setProperty('border-radius','9999px','important');
 }
 
