@@ -455,7 +455,7 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   #psub{display:none;}
 
   /* content : espace sous le contenu = items nav (49px) + safe area + marge */
-  #cnt{padding:16px 16px 99px;} /* 49 nav + 34 home indicator + 16 marge */
+  #cnt{padding:16px 16px 122px;} /* 58 pilule + 44 bottom + 20 marge */
 
   /* grids */
   .kgrid{grid-template-columns:repeat(2,1fr);gap:8px;}
@@ -470,61 +470,61 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   .avatar-circle{width:24px;height:24px;font-size:9px;}
   #uem{font-size:11px;max-width:65px;}
 
-  /* ─ BOTTOM NAV ─────────────────────────────────────────────────────
-     bottom:34px  → flotte AU-DESSUS du home indicator iOS (34px standard
-                    sur tous les iPhone Face ID, jamais modifié par Apple)
-     height:49px  → taille standard Apple tab bar, jamais modifiée
-     ::after      → prolonge le fond sous la nav pour couvrir le home indicator
-     Zéro env(), zéro calc(), zéro JS de mesure — valeurs absolues. ─ */
+  /* ─ BOTTOM NAV — pilule flottante ──────────────────────────────────
+     Flotte à 44px du bas (10px au-dessus du home indicator iOS 34px).
+     Pas de ::after — la pilule ne couvre pas le bord, le fond de body suffit. ─ */
   #app.show ~ #bottom-nav{
     display:flex;
     flex-direction:row;
     position:fixed;
-    bottom:34px;
-    left:0;right:0;
-    height:49px;
-    padding:0 8px;
-    background:var(--bg);
-    border-top:0.5px solid rgba(255,255,255,.08);
+    bottom:44px;
+    left:16px;right:16px;
+    height:58px;
+    padding:0 4px;
+    background:rgba(22,24,26,0.88);
+    -webkit-backdrop-filter:blur(24px);
+    backdrop-filter:blur(24px);
+    border:0.5px solid rgba(255,255,255,.1);
+    border-radius:9999px;
+    box-shadow:0 8px 32px rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.3);
     z-index:300;
-    align-items:stretch;
+    align-items:center;
   }
-  #app.show ~ #bottom-nav::after{
-    content:'';
-    position:absolute;
-    bottom:-34px;
-    left:0;right:0;
-    height:34px;
-    background:var(--bg);
-    pointer-events:none;
+  body.light #app.show ~ #bottom-nav{
+    background:rgba(245,245,247,.88);
+    border:0.5px solid rgba(0,0,0,.08);
+    box-shadow:0 8px 32px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.06);
   }
-  body.light #app.show ~ #bottom-nav{background:#f5f5f7;}
-  body.light #app.show ~ #bottom-nav::after{background:#f5f5f7;}
 
   .bn-item{
     flex:1;
     display:flex;flex-direction:column;
     align-items:center;justify-content:center;
-    gap:3px;
+    gap:4px;
     cursor:pointer;
     -webkit-tap-highlight-color:transparent;
     transition:opacity .1s;
+    border-radius:9999px;
+    padding:6px 4px;
   }
   .bn-item:active{opacity:.5;}
   .bn-icon{
     width:24px;height:24px;
     display:flex;align-items:center;justify-content:center;
-    color:rgba(255,255,255,.4);
+    font-size:18px;
+    color:rgba(255,255,255,.38);
     transition:color .15s;flex-shrink:0;
   }
   .bn-label{
     font-size:9px;font-weight:600;
-    color:rgba(255,255,255,.4);
+    color:rgba(255,255,255,.38);
     letter-spacing:.02em;text-transform:uppercase;
     transition:color .15s;
     font-family:'Geist',sans-serif;
   }
+  body.light .bn-icon,body.light .bn-label{color:rgba(0,0,0,.35);}
   .bn-item.active .bn-icon,.bn-item.active .bn-label{color:var(--accent);}
+  body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:var(--accent);}
 
 }
 
@@ -716,8 +716,11 @@ self.addEventListener('fetch',e=>{
 function lockNav(){
   var nav = document.getElementById('bottom-nav');
   if(!nav) return;
-  nav.style.setProperty('bottom','34px','important');
-  nav.style.setProperty('height','49px','important');
+  nav.style.setProperty('bottom','44px','important');
+  nav.style.setProperty('height','58px','important');
+  nav.style.setProperty('left','16px','important');
+  nav.style.setProperty('right','16px','important');
+  nav.style.setProperty('border-radius','9999px','important');
 }
 
 (function(){
