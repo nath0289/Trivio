@@ -1521,10 +1521,10 @@ function pageEpargnes(){
       +'</div>';
   }).join('');
 
-  $('cnt').innerHTML='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">'
-    +'<div class="kpi card"><div class="klab">Total épargné</div><div class="kval yel">'+fmt(totA)+'</div></div>'
-    +'<div class="kpi card"><div class="klab">Objectif total</div><div class="kval">'+fmt(totC)+'</div></div>'
-    +'<div class="kpi card"><div class="klab">Progression</div><div class="kval" style="color:'+a.main+'">'+pct.toFixed(1)+'%</div></div></div>'
+  $('cnt').innerHTML='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;align-items:start">'
+    +'<div class="kpi card" style="margin-bottom:0"><div class="klab">Total épargné</div><div class="kval yel">'+fmt(totA)+'</div></div>'
+    +'<div class="kpi card" style="margin-bottom:0"><div class="klab">Objectif total</div><div class="kval">'+fmt(totC)+'</div></div>'
+    +'<div class="kpi card" style="margin-bottom:0"><div class="klab">Progression</div><div class="kval" style="color:'+a.main+'">'+pct.toFixed(1)+'%</div></div></div>'
     +'<div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:14px">'
     +'<button class="bg" onclick="startTutoEpargnes()" style="display:flex;align-items:center;gap:5px;padding:8px 12px" title="Aide épargnes">'+IC.bulb(13)+' Guide</button>'
     +'<button class="bp" onclick="openObjForm(null)" style="background:'+a.main+'">+ Nouvel objectif</button></div>'
