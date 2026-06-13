@@ -455,7 +455,7 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   #psub{display:none;}
 
   /* content : espace sous le contenu = items nav (49px) + safe area + marge */
-  #cnt{padding:16px 16px 104px;} /* 54 nav + 34 safe-area + 16 marge */
+  #cnt{padding:16px 16px 90px;} /* 60 nav + 8 bottom + 22 marge */
 
   /* grids */
   .kgrid{grid-template-columns:repeat(2,1fr);gap:8px;}
@@ -470,31 +470,32 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
   .avatar-circle{width:24px;height:24px;font-size:9px;}
   #uem{font-size:11px;max-width:65px;}
 
-  /* ─ BOTTOM NAV — liquid glass natif iOS ────────────────────────────
-     bottom:0 + env(safe-area-inset-bottom) → colle au bas, home indicator
-     recouvert par la nav elle-même. En PWA standalone env() est fiable dès
-     le premier render. Fond semi-transparent → contenu visible en scroll. ─ */
+  /* ─ BOTTOM NAV — pilule flottante style Finary ──────────────────────
+     bottom:8px   → flotte juste au-dessus du bas écran, home indicator
+                    iOS s'affiche par-dessus (c'est son comportement natif).
+     height:60px  → taille fixe, zéro calc, zéro env().
+     left/right:12px → marges latérales, full border-radius = pilule. ─ */
   #app.show ~ #bottom-nav{
     display:flex;
     flex-direction:row;
     position:fixed;
-    bottom:0;
-    left:0;right:0;
-    height:calc(54px + env(safe-area-inset-bottom,34px));
-    padding:0 6px env(safe-area-inset-bottom,34px);
-    background:rgba(12,13,15,0.55);
-    -webkit-backdrop-filter:blur(40px) saturate(180%) brightness(0.95);
-    backdrop-filter:blur(40px) saturate(180%) brightness(0.95);
-    border-top:0.5px solid rgba(255,255,255,.12);
-    border-radius:22px 22px 0 0;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+    bottom:8px;
+    left:12px;right:12px;
+    height:60px;
+    padding:0 6px;
+    background:rgba(22,23,25,0.82);
+    -webkit-backdrop-filter:blur(32px) saturate(180%);
+    backdrop-filter:blur(32px) saturate(180%);
+    border:0.5px solid rgba(255,255,255,.1);
+    border-radius:9999px;
+    box-shadow:0 4px 24px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.06);
     z-index:300;
     align-items:center;
   }
   body.light #app.show ~ #bottom-nav{
-    background:rgba(242,242,247,0.55);
-    border-top:0.5px solid rgba(0,0,0,.1);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.5);
+    background:rgba(245,245,247,0.82);
+    border:0.5px solid rgba(0,0,0,.1);
+    box-shadow:0 4px 24px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.8);
   }
 
   .bn-item{
@@ -506,18 +507,19 @@ body.light .bn-item.active .bn-icon,body.light .bn-item.active .bn-label{color:v
     -webkit-tap-highlight-color:transparent;
     transition:opacity .1s;
     padding:0 2px;
+    height:100%;
   }
   .bn-item:active{opacity:.45;}
   .bn-icon{
-    width:26px;height:26px;
+    width:24px;height:24px;
     display:flex;align-items:center;justify-content:center;
-    font-size:20px;
-    color:rgba(255,255,255,.4);
+    font-size:19px;
+    color:rgba(255,255,255,.38);
     transition:color .2s;flex-shrink:0;
   }
   .bn-label{
     font-size:9px;font-weight:600;
-    color:rgba(255,255,255,.4);
+    color:rgba(255,255,255,.38);
     letter-spacing:.03em;text-transform:uppercase;
     transition:color .2s;
     font-family:'Geist',sans-serif;
@@ -717,10 +719,11 @@ self.addEventListener('fetch',e=>{
 function lockNav(){
   var nav = document.getElementById('bottom-nav');
   if(!nav) return;
-  nav.style.setProperty('bottom','0','important');
-  nav.style.setProperty('left','0','important');
-  nav.style.setProperty('right','0','important');
-  nav.style.setProperty('border-radius','22px 22px 0 0','important');
+  nav.style.setProperty('bottom','8px','important');
+  nav.style.setProperty('left','12px','important');
+  nav.style.setProperty('right','12px','important');
+  nav.style.setProperty('height','60px','important');
+  nav.style.setProperty('border-radius','9999px','important');
 }
 
 (function(){
@@ -729,18 +732,6 @@ function lockNav(){
     window.visualViewport.addEventListener('resize', lockNav);
     window.visualViewport.addEventListener('scroll', lockNav);
   }
-  // MutationObserver : re-verrouille si quoi que ce soit touche le style de la nav
-  document.addEventListener('DOMContentLoaded', function(){
-    var nav = document.getElementById('bottom-nav');
-    if(!nav || !window.MutationObserver) return;
-    var _locked = false;
-    new MutationObserver(function(){
-      if(_locked) return;
-      _locked = true;
-      lockNav();
-      _locked = false;
-    }).observe(nav, {attributes:true, attributeFilter:['style']});
-  });
 })();
 
 // ── CONFIG SUPABASE ──────────────────────────────────
